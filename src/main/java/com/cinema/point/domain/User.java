@@ -17,11 +17,11 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue
-//    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
-    //    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(name = "first_name")
@@ -43,7 +43,16 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany
-    @JoinColumn(name = "user_id", nullable = false)
+    @OneToMany(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "user_id")
     private List<Ticket> tickets;
+
+    public void addTicket(Ticket ticket) {
+        this.tickets.add(ticket);
+
+    }
+
+    public void removeTicket(Ticket ticket) {
+        this.tickets.remove(ticket);
+    }
 }
