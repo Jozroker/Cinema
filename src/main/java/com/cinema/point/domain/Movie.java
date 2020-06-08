@@ -34,7 +34,6 @@ public class Movie {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(nullable = false)
     private byte[] picture;
 
     @ManyToMany(cascade = CascadeType.REFRESH)
