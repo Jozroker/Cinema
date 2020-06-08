@@ -44,6 +44,6 @@ public class User {
     private Role role;
 
     @OneToMany
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private List<Ticket> tickets;
 }

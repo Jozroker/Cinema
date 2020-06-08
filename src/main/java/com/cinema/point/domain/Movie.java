@@ -34,22 +34,21 @@ public class Movie {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(nullable = false)
     private byte[] picture;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(name = "movie_actor",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
     private Set<Actor> actors = new HashSet<>();
 
-//    public void addActor(Actor actor) {
-//        this.actors.add(actor);
-//
-//    }
-//
-//    public void removeActor(Actor actor) {
-//        this.actors.remove(actor);
-//    }
+    public void addActor(Actor actor) {
+        this.actors.add(actor);
+
+    }
+
+    public void removeActor(Actor actor) {
+        this.actors.remove(actor);
+    }
 }
