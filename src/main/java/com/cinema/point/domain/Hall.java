@@ -31,7 +31,7 @@ public class Hall {
     private Integer freePlaces;
 
     @Column(name = "reserved_places")
-    private Integer reservedPlaces;
+    private Integer reservedPlaces = 0;
 
     //    @ManyToOne
 //    @JoinColumn(name = "hall_id")
