@@ -12,5 +12,5 @@ public class ActorDTO {
     @NotEmpty
     private String lastName;
 
-    private byte[] profilePicture;
+    private String profilePicture;
 }

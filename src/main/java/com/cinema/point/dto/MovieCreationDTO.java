@@ -24,7 +24,7 @@ public class MovieCreationDTO {
     private Long duration;
 
     @NotNull
-    private byte[] picture;
+    private String picture;
 
     private Set<ActorDTO> actors = new HashSet<>();
 }
