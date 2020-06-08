@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Hall {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
 
@@ -33,8 +33,6 @@ public class Hall {
     @Column(name = "reserved_places")
     private Integer reservedPlaces = 0;
 
-    //    @ManyToOne
-//    @JoinColumn(name = "hall_id")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private HallType type;

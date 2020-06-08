@@ -17,7 +17,7 @@ import java.sql.Date;
 public class Ticket {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
 
@@ -30,7 +30,7 @@ public class Ticket {
     @Column(name = "seance_date", nullable = false)
     private Date seanceDate;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "seance_id", nullable = false)
     private Seance seance;
 

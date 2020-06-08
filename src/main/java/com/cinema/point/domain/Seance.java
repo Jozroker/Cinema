@@ -21,7 +21,7 @@ import java.util.Set;
 public class Seance {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
 
@@ -40,22 +40,15 @@ public class Seance {
     @Column(name = "ticket_price", nullable = false)
     private BigDecimal ticketPrice;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "hall_id", nullable = false)
     private Hall hall;
 
-    //    @ManyToMany
     @ElementCollection(targetClass = Day.class)
-//    @JoinTable(name = "tblShopTypes", joinColumns = @JoinColumn(name = "id"))
-//    @Column(name = "shopType", nullable = false)
-//    @JoinTable(name = "seance_day",
-//            joinColumns = @JoinColumn(name = "seance_id", nullable = false),
-//            inverseJoinColumns = @JoinColumn(name = "day_id", nullable = false)
-//    )
     @Enumerated(EnumType.STRING)
     private Set<Day> day = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
 }
