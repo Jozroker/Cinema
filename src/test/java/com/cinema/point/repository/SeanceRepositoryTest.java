@@ -107,9 +107,9 @@ class SeanceRepositoryTest {
     @Test
     @Order(7)
     void findByTimeLineInSeason() {
-        System.out.println(sr.findByTimeLineInSeason(new Time(9L)));
-        System.out.println(sr.findByTimeLineInSeason(new Time(21L)));
-        System.out.println(sr.findByTimeLineInSeason(new Time(15L)));
+        System.out.println(sr.findByTimeLineInSeance(new Time(9L)));
+        System.out.println(sr.findByTimeLineInSeance(new Time(21L)));
+        System.out.println(sr.findByTimeLineInSeance(new Time(15L)));
     }
 
     @Test

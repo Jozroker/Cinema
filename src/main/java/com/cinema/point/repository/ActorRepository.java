@@ -11,9 +11,11 @@ import java.util.Optional;
 @Repository
 public interface ActorRepository extends JpaRepository<Actor, Long> {
 
+    //unusable
     @Query("select a from Actor a where a.firstName = ?1 and a.lastName = ?2")
     Optional<Actor> findActor(String firstName, String lastName);
 
+    //unusable
     @Query("select m.actors from Movie m")
     List<Actor> findByMovieId(Long id);
 }

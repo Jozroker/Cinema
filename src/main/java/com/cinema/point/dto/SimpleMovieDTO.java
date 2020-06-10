@@ -5,15 +5,13 @@ import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 
 @Data
-public class ActorDTO {
+public class SimpleMovieDTO {
 
     private Long id;
 
     @NotEmpty
-    private String firstName;
+    private String name;
 
     @NotEmpty
-    private String lastName;
-
-    private byte[] profilePicture;
+    private byte[] picture;
 }

@@ -1,6 +1,5 @@
 package com.cinema.point.repository;
 
-import com.cinema.point.domain.Seance;
 import com.cinema.point.domain.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +13,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 //    @Query("select u from User u where ?1 member of u.tickets")
 //    Optional<User> findUserByTicket(Ticket ticket);
 
-    List<Ticket> findBySeance(Seance seance);
+    List<Ticket> findBySeanceId(Long id);
 
     @Query("select u.tickets from User u where u.id = ?1")
     List<Ticket> findByUserId(Long id);
