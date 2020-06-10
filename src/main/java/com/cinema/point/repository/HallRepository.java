@@ -7,15 +7,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface HallRepository extends JpaRepository<Hall, Long> {
 
     @Query("select h.freePlaces from Hall h where h.id = ?1")
-    Integer findFreePlaces(Long id);
+    Optional<Integer> findFreePlaces(Long id);
 
     @Query("select h.reservedPlaces from Hall h where h.id = ?1")
-    Integer findReversedPlaces(Long id);
+    Optional<Integer> findReversedPlaces(Long id);
 
     List<Hall> findByType(HallType type);
 }
