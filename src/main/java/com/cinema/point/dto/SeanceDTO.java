@@ -22,5 +22,6 @@ public class SeanceDTO {
     @NotEmpty
     private Long hallId;
 
-    private MovieDTO movie;
+//    private MovieDTO movie;
+private Long movieId;
 }

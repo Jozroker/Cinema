@@ -1,6 +1,5 @@
 package com.cinema.point.dto;
 
-import com.cinema.point.domain.Hall;
 import lombok.Data;
 
 import javax.validation.constraints.*;
@@ -28,13 +27,12 @@ public class SeanceCreationDTO {
     @Digits(integer = 6, fraction = 2)
     private BigDecimal ticketPrice;
 
-//    @NotEmpty
-//    private Long hallId;
-
     @NotNull
-    private Hall hall;
+//    private Hall hall;
+    private Long hallId;
 
-    private MovieDTO movie;
+    //    private MovieDTO movie;
+    private Long movieId;
 
 
 }

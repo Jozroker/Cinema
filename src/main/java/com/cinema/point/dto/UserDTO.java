@@ -38,5 +38,6 @@ public class UserDTO {
     @NotEmpty
     private String confirmPassword;
 
-    private List<TicketDTO> tickets;
+//    private List<TicketDTO> tickets;
+private List<Long> ticketsId;
 }

@@ -26,5 +26,6 @@ public class MovieCreationDTO {
     @NotNull
     private String picture;
 
-    private Set<ActorDTO> actors = new HashSet<>();
+//    private Set<ActorDTO> actors = new HashSet<>();
+private Set<Long> actorsId = new HashSet<>();
 }

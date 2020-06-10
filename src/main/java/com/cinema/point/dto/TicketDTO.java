@@ -20,5 +20,6 @@ public class TicketDTO {
     @NotNull(message = "required field")
     private Date seanceDate;
 
-    private SeanceDTO seance;
+//    private SeanceDTO seance;
+private Long seanceId;
 }
