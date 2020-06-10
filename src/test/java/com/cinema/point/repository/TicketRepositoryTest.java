@@ -105,11 +105,11 @@ class TicketRepositoryTest {
         tr.save(ticket);
     }
 
-    @Test
-    @Order(5)
-    void findBySeance() {
-        System.out.println(tr.findBySeance(ticket.getSeance()));
-    }
+//    @Test
+//    @Order(5)
+//    void findBySeance() {
+//        System.out.println(tr.findBySeance(ticket.getSeance()));
+//    }
 
     @Test
     @Order(6)
