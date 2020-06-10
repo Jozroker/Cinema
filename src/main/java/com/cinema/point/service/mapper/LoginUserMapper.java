@@ -4,7 +4,7 @@ import com.cinema.point.domain.User;
 import com.cinema.point.dto.LoginUserDTO;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface LoginUserMapper {
 
     LoginUserDTO toDTO(User user);

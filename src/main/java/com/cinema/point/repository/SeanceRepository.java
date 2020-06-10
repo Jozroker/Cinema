@@ -17,10 +17,12 @@ public interface SeanceRepository extends JpaRepository<Seance, Long> {
 
     @Query("select s from Seance s where s.movieBeginTime < ?1 and s" +
             ".movieEndTime > ?1")
-    Optional<Seance> findByTimeLineInSeason(Time time);
+    Optional<Seance> findByTimeLineInSeance(Time time);
 
+    //filters
     List<Seance> findByHall(Hall hall);
 
+    //filters
     List<Seance> findByHallType(HallType type);
 
 //    @Query("select s.movie from Seance s where s.hall = ?1")
@@ -35,5 +37,5 @@ public interface SeanceRepository extends JpaRepository<Seance, Long> {
     List<Seance> findByMovie(Movie movie);
 
     @Query("select t.seance from Ticket t where t.id = ?1")
-    List<Seance> findByTicketId(Long id);
+    Optional<Seance> findByTicketId(Long id);
 }

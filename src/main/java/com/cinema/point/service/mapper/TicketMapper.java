@@ -5,7 +5,7 @@ import com.cinema.point.dto.TicketDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface TicketMapper {
 
     @Mapping(source = "seance.id", target = "seanceId")

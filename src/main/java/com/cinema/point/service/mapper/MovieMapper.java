@@ -1,21 +1,48 @@
 package com.cinema.point.service.mapper;
 
+import com.cinema.point.domain.Actor;
 import com.cinema.point.domain.Movie;
 import com.cinema.point.dto.MovieDTO;
 import com.cinema.point.dto.SimpleMovieDTO;
+import com.cinema.point.errors.ResourceNotFoundException;
+import com.cinema.point.repository.ActorRepository;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface MovieMapper {
+public abstract class MovieMapper {
 
-    //    @Mapping(source = "actors", target = "actorsId")
-    MovieDTO toDTO(Movie movie);
+    @Autowired
+    ActorRepository actorRepository;
 
-    //
-//    @Mapping(source = "actorsId", target = "actors")
-    Movie toEntity(MovieDTO movieDTO);
+//    public MovieMapper(ActorRepository actorRepository) {
+//        this.actorRepository = actorRepository;
+//    }
 
-    SimpleMovieDTO toSimpleDTO(Movie movie);
+    @Mapping(source = "actors", target = "actorsId", qualifiedByName =
+            "mapToActorsIds")
+    public abstract MovieDTO toDTO(Movie movie);
 
-    Movie toEntity(SimpleMovieDTO movieDTO);
+    @Mapping(source = "actorsId", target = "actors", qualifiedByName =
+            "mapToActors")
+    public abstract Movie toEntity(MovieDTO movieDTO);
+
+    public abstract SimpleMovieDTO toSimpleDTO(Movie movie);
+
+    public abstract Movie toEntity(SimpleMovieDTO movieDTO);
+
+    Set<Long> mapToActorsIds(Set<Actor> actors) {
+        return actors.stream().map(Actor::getId).collect(Collectors.toSet());
+    }
+
+    Set<Actor> mapToActors(Set<Long> actorsIds) {
+        return actorsIds.stream().map(id -> actorRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Actor", id))).collect(Collectors.toSet());
+    }
+
 }
+

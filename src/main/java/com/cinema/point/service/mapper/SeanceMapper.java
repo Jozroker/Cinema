@@ -6,7 +6,7 @@ import com.cinema.point.dto.SeanceDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface SeanceMapper {
 
     @Mapping(source = "hall.id", target = "hallId")
