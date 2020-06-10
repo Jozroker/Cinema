@@ -1,6 +1,8 @@
 package com.cinema.point.service.mapper;
 
 import com.cinema.point.domain.User;
+import com.cinema.point.dto.LoginUserDTO;
+import com.cinema.point.dto.RegisterUserDTO;
 import com.cinema.point.dto.UserDTO;
 import org.mapstruct.Mapper;
 
@@ -12,4 +14,8 @@ public interface UserMapper {
 
     //    @Mapping(source = "ticketsId", target = "tickets.id")
     User toEntity(UserDTO userDTO);
+
+    User toEntity(LoginUserDTO userDTO);
+
+    User toEntity(RegisterUserDTO userDTO);
 }
