@@ -3,7 +3,7 @@ package com.cinema.point.dto;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -13,30 +13,31 @@ public class UserDTO {
 
     private Long id;
 
-    @NotNull(message = "required field")
+    @NotEmpty
     private String username;
 
-    @NotNull(message = "required field")
+    @NotEmpty
     @Pattern(regexp = "\\D*")
     private String firstName;
 
-    @NotNull(message = "required field")
+    @NotEmpty
     @Pattern(regexp = "\\D*")
     private String lastName;
 
-    @NotNull(message = "required field")
+    @NotEmpty
     @Email(message = "invalid mail value")
     private String email;
 
-    @NotNull(message = "required field")
+    @NotEmpty
     @Size(min = 10, max = 10, message = "invalid phone value")
     private String phone;
 
-    @NotNull(message = "required field")
+    @NotEmpty
     private String password;
 
-    @NotNull(message = "required field")
+    @NotEmpty
     private String confirmPassword;
 
-    private List<TicketDTO> tickets;
+//    private List<TicketDTO> tickets;
+private List<Long> ticketsId;
 }

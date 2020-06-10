@@ -2,10 +2,7 @@ package com.cinema.point.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
@@ -26,14 +23,16 @@ public class SeanceCreationDTO {
     @NotNull(message = "required field")
     private Time movieBeginTime;
 
-    @NotNull(message = "required field")
+    @NotEmpty
     @Digits(integer = 6, fraction = 2)
     private BigDecimal ticketPrice;
 
-    @NotNull(message = "required field")
+    @NotNull
+//    private Hall hall;
     private Long hallId;
 
-    private MovieDTO movie;
+    //    private MovieDTO movie;
+    private Long movieId;
 
 
 }

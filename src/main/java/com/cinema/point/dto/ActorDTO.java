@@ -1,14 +1,10 @@
 package com.cinema.point.dto;
 
-import lombok.Data;
-
-import javax.persistence.Basic;
-import javax.persistence.FetchType;
-import javax.persistence.Lob;
 import javax.validation.constraints.NotEmpty;
 
-@Data
 public class ActorDTO {
+
+    private Long id;
 
     @NotEmpty
     private String firstName;
@@ -16,7 +12,5 @@ public class ActorDTO {
     @NotEmpty
     private String lastName;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    private byte[] profilePicture;
+    private String profilePicture;
 }

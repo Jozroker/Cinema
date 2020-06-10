@@ -2,13 +2,13 @@ package com.cinema.point.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 @Data
 public class MovieDTO {
 
     private Long id;
 
-    @NotNull(message = "required field")
+    @NotEmpty
     private String name;
 }
