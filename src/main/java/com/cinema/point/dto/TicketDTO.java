@@ -2,6 +2,7 @@ package com.cinema.point.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
@@ -10,14 +11,15 @@ public class TicketDTO {
 
     private Long id;
 
-    @NotNull(message = "required field")
+    @NotEmpty
     private int row;
 
-    @NotNull(message = "required field")
+    @NotEmpty
     private int column;
 
     @NotNull(message = "required field")
     private Date seanceDate;
 
-    private SeanceDTO seance;
+//    private SeanceDTO seance;
+private Long seanceId;
 }
