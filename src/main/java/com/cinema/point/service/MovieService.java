@@ -11,6 +11,8 @@ public interface MovieService {
 
     void deleteById(Long id);
 
+    MovieDTO update(MovieDTO movieDTO);
+
     MovieDTO findById(Long id);
 
     SimpleMovieDTO findSimpleById(Long id);

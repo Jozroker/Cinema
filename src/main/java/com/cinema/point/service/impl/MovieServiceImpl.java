@@ -27,7 +27,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieDTO create(MovieDTO movieDTO) {
-        log.debug("creating movie {}", movieDTO);
+        log.debug("creating new movie {}", movieDTO);
         Movie movie = movieMapper.toEntity(movieDTO);
         return movieMapper.toDTO(movieRepository.save(movie));
     }
@@ -36,6 +36,13 @@ public class MovieServiceImpl implements MovieService {
     public void deleteById(Long id) {
         log.debug("deleting movie by id {}", id);
         movieRepository.deleteById(id);
+    }
+
+    @Override
+    public MovieDTO update(MovieDTO movieDTO) {
+        log.debug("updating movie {}", movieDTO);
+        Movie movie = movieMapper.toEntity(movieDTO);
+        return movieMapper.toDTO(movieRepository.save(movie));
     }
 
     @Override

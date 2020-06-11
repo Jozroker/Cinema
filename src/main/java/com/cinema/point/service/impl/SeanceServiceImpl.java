@@ -44,6 +44,13 @@ public class SeanceServiceImpl implements SeanceService {
     }
 
     @Override
+    public SeanceDTO update(SeanceCreationDTO seanceDTO) {
+        log.debug("updating seance {}", seanceDTO);
+        return seanceMapper.toDTO(seanceRepository.save(seanceMapper
+                .toEntity(seanceDTO)));
+    }
+
+    @Override
     public List<SeanceCreationDTO> findCreationAll() {
         log.debug("finding all seances: to creation seance");
         return seanceRepository.findAll().stream().map(seanceMapper::toCreationDTO)

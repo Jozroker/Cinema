@@ -1,15 +1,19 @@
 package com.cinema.point.service.impl;
 
+import com.cinema.point.domain.Hall;
 import com.cinema.point.domain.Ticket;
 import com.cinema.point.dto.TicketDTO;
 import com.cinema.point.errors.ResourceNotFoundException;
+import com.cinema.point.repository.HallRepository;
 import com.cinema.point.repository.TicketRepository;
 import com.cinema.point.service.TicketService;
 import com.cinema.point.service.mapper.TicketMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,11 +21,15 @@ import java.util.stream.Collectors;
 public class TicketServiceImpl implements TicketService {
 
     TicketRepository ticketRepository;
+    HallRepository hallRepository;
     TicketMapper ticketMapper;
 
-    public TicketServiceImpl(TicketRepository ticketRepository, TicketMapper ticketMapper) {
+    public TicketServiceImpl(TicketRepository ticketRepository,
+                             TicketMapper ticketMapper,
+                             HallRepository hallRepository) {
         this.ticketRepository = ticketRepository;
         this.ticketMapper = ticketMapper;
+        this.hallRepository = hallRepository;
     }
 
     @Override
@@ -63,5 +71,23 @@ public class TicketServiceImpl implements TicketService {
         log.debug("finding tickets by user id {}", id);
         return ticketRepository.findByUserId(id).stream()
                 .map(ticketMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<Integer, Integer> findReservedPlaces(List<TicketDTO> tickets) {
+        log.debug("finding reserved rows and columns by tickets");
+        Map<Integer, Integer> map = new HashMap<>();
+        tickets.forEach(t -> map.put(t.getRow(), t.getColumn()));
+        return map;
+    }
+
+    @Override
+    public Map<Integer, Integer> findPlacesByHallId(Long id) {
+        log.debug("finding rows and columns count by hall id {}", id);
+        Map<Integer, Integer> map = new HashMap<>();
+        Hall hall =
+                hallRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hall", id));
+        map.put(hall.getRows(), hall.getColumns());
+        return map;
     }
 }

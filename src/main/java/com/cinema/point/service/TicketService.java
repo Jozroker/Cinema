@@ -3,6 +3,7 @@ package com.cinema.point.service;
 import com.cinema.point.dto.TicketDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TicketService {
 
@@ -17,4 +18,8 @@ public interface TicketService {
     List<TicketDTO> findBySeanceId(Long id);
 
     List<TicketDTO> findByUserId(Long id);
+
+    Map<Integer, Integer> findReservedPlaces(List<TicketDTO> tickets);
+
+    Map<Integer, Integer> findPlacesByHallId(Long id);
 }
