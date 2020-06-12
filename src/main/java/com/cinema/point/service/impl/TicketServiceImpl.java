@@ -1,15 +1,21 @@
 package com.cinema.point.service.impl;
 
 import com.cinema.point.domain.Hall;
+import com.cinema.point.domain.Seance;
 import com.cinema.point.domain.Ticket;
+import com.cinema.point.domain.User;
 import com.cinema.point.dto.TicketDTO;
 import com.cinema.point.errors.ResourceNotFoundException;
 import com.cinema.point.repository.HallRepository;
+import com.cinema.point.repository.SeanceRepository;
 import com.cinema.point.repository.TicketRepository;
 import com.cinema.point.service.TicketService;
+import com.cinema.point.service.UserService;
 import com.cinema.point.service.mapper.TicketMapper;
+import com.cinema.point.service.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,20 +27,49 @@ import java.util.stream.Collectors;
 public class TicketServiceImpl implements TicketService {
 
     TicketRepository ticketRepository;
-    HallRepository hallRepository;
     TicketMapper ticketMapper;
+    UserMapper userMapper;
+    UserService userService;
+    SeanceRepository seanceRepository;
+    HallRepository hallRepository;
 
-    public TicketServiceImpl(TicketRepository ticketRepository,
-                             TicketMapper ticketMapper,
-                             HallRepository hallRepository) {
+    public TicketServiceImpl(TicketRepository ticketRepository, TicketMapper ticketMapper, UserMapper userMapper, UserService userService, SeanceRepository seanceRepository, HallRepository hallRepository) {
         this.ticketRepository = ticketRepository;
         this.ticketMapper = ticketMapper;
+        this.userMapper = userMapper;
+        this.userService = userService;
+        this.seanceRepository = seanceRepository;
         this.hallRepository = hallRepository;
     }
 
     @Override
     public TicketDTO create(TicketDTO ticketDTO) {
         log.debug("creating new ticket {}", ticketDTO);
+        Ticket ticket = ticketMapper.toEntity(ticketDTO);
+        return ticketMapper.toDTO(ticketRepository.save(ticket));
+    }
+
+    @Override
+    @Transactional
+    public TicketDTO createByUser(TicketDTO ticketDTO, Long userId) {
+        log.debug("creating new ticket {} by user with id {}", ticketDTO,
+                userId);
+        User user =
+                userMapper.toEntity(userService.findById(userId));
+        ticketDTO = create(ticketDTO);
+        Ticket ticket = ticketMapper.toEntity(ticketDTO);
+        Seance seance = seanceRepository.findById(ticketDTO.getSeanceId())
+                .orElseThrow(() -> new ResourceNotFoundException("Seance", ticket.getSeance().getId()));
+        ticket.setSeance(seance);
+        user.addTicket(ticket);
+//        ticketDTO = update(ticketDTO);
+        userService.update(userMapper.toDTO(user));
+        return ticketDTO;
+    }
+
+    @Override
+    public TicketDTO update(TicketDTO ticketDTO) {
+        log.debug("updating ticket {}", ticketDTO);
         Ticket ticket = ticketMapper.toEntity(ticketDTO);
         return ticketMapper.toDTO(ticketRepository.save(ticket));
     }

@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Actor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(nullable = false)
     private Long id;
 

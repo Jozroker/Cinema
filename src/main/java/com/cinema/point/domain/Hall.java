@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Hall {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(nullable = false)
     private Long id;
 

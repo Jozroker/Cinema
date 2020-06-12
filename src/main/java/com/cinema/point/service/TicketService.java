@@ -9,6 +9,10 @@ public interface TicketService {
 
     TicketDTO create(TicketDTO ticketDTO);
 
+    TicketDTO createByUser(TicketDTO ticketDTO, Long userId);
+
+    TicketDTO update(TicketDTO ticketDTO);
+
     void deleteById(Long id);
 
     List<TicketDTO> findAll();

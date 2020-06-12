@@ -21,7 +21,7 @@ import java.util.Set;
 public class Seance {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(nullable = false)
     private Long id;
 

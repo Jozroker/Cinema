@@ -13,6 +13,8 @@ public interface UserService {
 
     UserDTO update(RegisterUserDTO userDTO);
 
+    UserDTO update(UserDTO userDTO);
+
     UserDTO findById(Long id);
 
     UserDTO findByFirstNameAndLastName(String firstName, String lastName);

@@ -1,9 +1,11 @@
 package com.cinema.point.service.impl;
 
+import com.cinema.point.domain.Ticket;
 import com.cinema.point.domain.User;
 import com.cinema.point.dto.RegisterUserDTO;
 import com.cinema.point.dto.UserDTO;
 import com.cinema.point.errors.ResourceNotFoundException;
+import com.cinema.point.repository.TicketRepository;
 import com.cinema.point.repository.UserRepository;
 import com.cinema.point.service.UserService;
 import com.cinema.point.service.mapper.UserMapper;
@@ -19,10 +21,12 @@ public class UserServiceImpl implements UserService {
 
     UserRepository userRepository;
     UserMapper userMapper;
+    TicketRepository ticketRepository;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, TicketRepository ticketRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.ticketRepository = ticketRepository;
     }
 
     @Override
@@ -42,6 +46,18 @@ public class UserServiceImpl implements UserService {
     public UserDTO update(RegisterUserDTO userDTO) {
         log.debug("updating user {}", userDTO);
         User user = userMapper.toEntity(userDTO);
+        return userMapper.toDTO(userRepository.save(user));
+    }
+
+    @Override
+    public UserDTO update(UserDTO userDTO) {
+        log.debug("updating user {}", userDTO);
+        User user = userMapper.toEntity(userDTO);
+        List<Ticket> tickets =
+                userDTO.getTicketsId().stream().map(id -> ticketRepository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException("Ticket", id)))
+                        .collect(Collectors.toList());
+        user.setTickets(tickets);
         return userMapper.toDTO(userRepository.save(user));
     }
 

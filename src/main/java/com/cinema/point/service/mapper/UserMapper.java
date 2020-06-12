@@ -26,6 +26,8 @@ public interface UserMapper {
 
     User toEntity(RegisterUserDTO userDTO);
 
+    User toEntity(UserDTO userDTO);
+
     default List<Long> mapToTicketsIds(List<Ticket> tickets) {
         return tickets.stream().map(Ticket::getId).collect(Collectors.toList());
     }
