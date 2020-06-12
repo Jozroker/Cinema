@@ -9,7 +9,7 @@ public interface TicketService {
 
     TicketDTO create(TicketDTO ticketDTO);
 
-    TicketDTO createByUser(TicketDTO ticketDTO, Long userId);
+    TicketDTO addTicketToUser(TicketDTO ticketDTO, Long userId);
 
     TicketDTO update(TicketDTO ticketDTO);
 

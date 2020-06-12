@@ -46,12 +46,16 @@ public class TicketServiceImpl implements TicketService {
     public TicketDTO create(TicketDTO ticketDTO) {
         log.debug("creating new ticket {}", ticketDTO);
         Ticket ticket = ticketMapper.toEntity(ticketDTO);
+        Seance seance = seanceRepository.findById(ticketDTO.getSeanceId())
+                .orElseThrow(() -> new ResourceNotFoundException("Seance",
+                        ticketDTO.getSeanceId()));
+        ticket.setSeance(seance);
         return ticketMapper.toDTO(ticketRepository.save(ticket));
     }
 
     @Override
     @Transactional
-    public TicketDTO createByUser(TicketDTO ticketDTO, Long userId) {
+    public TicketDTO addTicketToUser(TicketDTO ticketDTO, Long userId) {
         log.debug("creating new ticket {} by user with id {}", ticketDTO,
                 userId);
         User user =
@@ -62,7 +66,6 @@ public class TicketServiceImpl implements TicketService {
                 .orElseThrow(() -> new ResourceNotFoundException("Seance", ticket.getSeance().getId()));
         ticket.setSeance(seance);
         user.addTicket(ticket);
-//        ticketDTO = update(ticketDTO);
         userService.update(userMapper.toDTO(user));
         return ticketDTO;
     }
@@ -71,6 +74,10 @@ public class TicketServiceImpl implements TicketService {
     public TicketDTO update(TicketDTO ticketDTO) {
         log.debug("updating ticket {}", ticketDTO);
         Ticket ticket = ticketMapper.toEntity(ticketDTO);
+        Seance seance = seanceRepository.findById(ticketDTO.getSeanceId())
+                .orElseThrow(() -> new ResourceNotFoundException("Seance",
+                        ticketDTO.getSeanceId()));
+        ticket.setSeance(seance);
         return ticketMapper.toDTO(ticketRepository.save(ticket));
     }
 

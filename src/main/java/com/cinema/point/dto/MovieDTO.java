@@ -27,5 +27,5 @@ public class MovieDTO {
     private byte[] picture;
 
     //    private Set<ActorDTO> actors = new HashSet<>();
-    private Set<Long> actorsId = new HashSet<>();
+    private Set<Long> actorsIds = new HashSet<>();
 }
