@@ -1,5 +1,6 @@
 package com.cinema.point.dto;
 
+import com.cinema.point.domain.Role;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -35,6 +36,9 @@ public class UserDTO {
     @NotEmpty
     private String password;
 
-//    private List<TicketDTO> tickets;
-private List<Long> ticketsId;
+    @NotEmpty
+    private Role role;
+
+    //    private List<TicketDTO> tickets;
+    private List<Long> ticketsId;
 }

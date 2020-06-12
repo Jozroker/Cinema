@@ -9,8 +9,12 @@ import org.mapstruct.Mapping;
 public interface TicketMapper {
 
     @Mapping(source = "seance.id", target = "seanceId")
+    @Mapping(source = "placeRow", target = "row")
+    @Mapping(source = "placeColumn", target = "column")
     TicketDTO toDTO(Ticket ticket);
 
     @Mapping(source = "seanceId", target = "seance.id")
+    @Mapping(source = "row", target = "placeRow")
+    @Mapping(source = "column", target = "placeColumn")
     Ticket toEntity(TicketDTO ticketDTO);
 }

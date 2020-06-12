@@ -1,12 +1,11 @@
 package com.cinema.point.service.impl;
 
-import com.cinema.point.domain.Day;
-import com.cinema.point.domain.Hall;
-import com.cinema.point.domain.HallType;
-import com.cinema.point.domain.Movie;
+import com.cinema.point.domain.*;
 import com.cinema.point.dto.SeanceCreationDTO;
 import com.cinema.point.dto.SeanceDTO;
 import com.cinema.point.errors.ResourceNotFoundException;
+import com.cinema.point.repository.HallRepository;
+import com.cinema.point.repository.MovieRepository;
 import com.cinema.point.repository.SeanceRepository;
 import com.cinema.point.service.SeanceService;
 import com.cinema.point.service.mapper.SeanceMapper;
@@ -23,24 +22,51 @@ import java.util.stream.Collectors;
 public class SeanceServiceImpl implements SeanceService {
 
     SeanceRepository seanceRepository;
+    HallRepository hallRepository;
+    MovieRepository movieRepository;
     SeanceMapper seanceMapper;
 
-    public SeanceServiceImpl(SeanceRepository seanceRepository, SeanceMapper seanceMapper) {
+    public SeanceServiceImpl(SeanceRepository seanceRepository, HallRepository hallRepository, MovieRepository movieRepository, SeanceMapper seanceMapper) {
         this.seanceRepository = seanceRepository;
+        this.hallRepository = hallRepository;
+        this.movieRepository = movieRepository;
         this.seanceMapper = seanceMapper;
     }
 
     @Override
     public SeanceCreationDTO create(SeanceCreationDTO seanceDTO) {
         log.debug("creating new seance {}", seanceDTO);
-        return seanceMapper.toCreationDTO(seanceRepository.save(seanceMapper
-                .toEntity(seanceDTO)));
+        Seance seance = seanceMapper.toEntity(seanceDTO);
+        Hall hall = hallRepository.findById(seanceDTO.getHallId())
+                .orElseThrow(() -> new ResourceNotFoundException("Hall",
+                        seanceDTO.getHallId()));
+        Movie movie = movieRepository.findById(seanceDTO.getMovieId())
+                .orElseThrow(() -> new ResourceNotFoundException("Movie",
+                        seanceDTO.getMovieId()));
+        seance.setHall(hall);
+        seance.setMovie(movie);
+        return seanceMapper.toCreationDTO(seanceRepository.save(seance));
     }
 
     @Override
     public void deleteById(Long id) {
         log.debug("deleting seance by id {}", id);
         seanceRepository.deleteById(id);
+    }
+
+    @Override
+    public SeanceDTO update(SeanceCreationDTO seanceDTO) {
+        log.debug("updating seance {}", seanceDTO);
+        Seance seance = seanceMapper.toEntity(seanceDTO);
+        Hall hall = hallRepository.findById(seanceDTO.getHallId())
+                .orElseThrow(() -> new ResourceNotFoundException("Hall",
+                        seanceDTO.getHallId()));
+        Movie movie = movieRepository.findById(seanceDTO.getMovieId())
+                .orElseThrow(() -> new ResourceNotFoundException("Movie",
+                        seanceDTO.getMovieId()));
+        seance.setHall(hall);
+        seance.setMovie(movie);
+        return seanceMapper.toDTO(seanceRepository.save(seance));
     }
 
     @Override

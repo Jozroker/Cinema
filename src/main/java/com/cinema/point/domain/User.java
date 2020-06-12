@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(nullable = false)
     private Long id;
 
@@ -45,11 +46,10 @@ public class User {
 
     @OneToMany(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "user_id")
-    private List<Ticket> tickets;
+    private List<Ticket> tickets = new ArrayList<>();
 
     public void addTicket(Ticket ticket) {
         this.tickets.add(ticket);
-
     }
 
     public void removeTicket(Ticket ticket) {

@@ -15,6 +15,8 @@ public interface SeanceService {
 
     SeanceCreationDTO create(SeanceCreationDTO seanceDTO);
 
+    SeanceDTO update(SeanceCreationDTO seanceDTO);
+
     void deleteById(Long id);
 
     List<SeanceCreationDTO> findCreationAll();
