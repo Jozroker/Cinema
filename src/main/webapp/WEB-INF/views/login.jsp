@@ -8,14 +8,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="springForm" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
     <title>Login page</title>
-    <link rel="stylesheet" href="${pageContext}/resources/css/login.css">
+    <link rel="stylesheet" href="${contextPath}/resources/css/login.css">
 </head>
+<jsp:include page="header.jsp"/>
 <body>
 <div id="header">
-    <jsp:include page="header.jsp"/>
+
 </div>
 <%--    <div class="container">--%>
 <%--        <form method="POST" action="${contextPath}/login" class="form-signin">--%>
@@ -34,57 +37,103 @@
 <%--            </div>--%>
 <%--        </form>--%>
 <%--    </div>--%>
+
 <div class="login-wrap">
+
+
     <div class="login-html">
-        <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-        <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-        <div class="login-form">
-            <div class="sign-in-htm">
-                <div class="group">
-                    <label for="user" class="label">Username</label>
-                    <input id="user" type="text" class="input">
+        <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab"><spring:message code="login.default"/></label>
+        <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"><spring:message code="registration"/></label>
+        <div class="login-form ${error != null ? 'has-error' : ''}">
+            <springForm:form method="POST" modelAttribute="loginUser">
+                <div class="sign-in-htm">
+                    <div class="group">
+                            <%--                    <label class="label"></label>--%>
+                            <%--                    <input name="username" id="user-login" type="text" class="input">--%>
+                        <spring:message code="login.email_or_name" var="loginEmailOrUsername"/>
+                        <springForm:input path="usernameOrEmail" class="input" placeholder="${loginEmailOrUsername}" cssErrorClass="form-control is-invalid"/>
+                        <springForm:errors path="usernameOrEmail" cssClass="has-error"/>
+                    </div>
+                    <div class="group">
+                            <%--                    <label for="pass-login" class="label">Password</label>--%>
+                            <%--                    <input id="pass-login" type="password" class="input" data-type="password">--%>
+                        <spring:message code="login.password" var="loginPassword"/>
+                        <springForm:input path="pass" class="input" placeholder="${loginPassword}" cssErrorClass="form-control is-invalid"/>
+                        <springForm:errors path="pass" cssClass="has-error"/>
+                    </div>
+                        <%--                <div class="group">--%>
+                        <%--                    <input id="check" type="checkbox" class="check" checked>--%>
+                        <%--                    <label for="check"><span class="icon"></span> Keep me Signed in</label>--%>
+                        <%--                </div>--%>
+                    <div class="group">
+                        <spring:message code="login.default" var="login"/>
+                        <input type="submit" class="button" value="${login}">
+                    </div>
+                    <div class="hr"></div>
                 </div>
-                <div class="group">
-                    <label for="pass" class="label">Password</label>
-                    <input id="pass" type="password" class="input" data-type="password">
+            </springForm:form>
+
+
+            <springForm:form method="POST" modelAttribute="registerUser">
+                <div class="sign-up-htm">
+                    <div class="group">
+                            <%--                    <label for="user-reg" class="label">Username</label>--%>
+                            <%--                    <input id="user-reg" type="text" class="input">--%>
+                        <spring:message code="registration.username" var="registerUsername"/>
+                        <springForm:input path="username" class="input" placeholder="${registerUsername}" cssErrorClass="form-control is-invalid"/>
+                        <springForm:errors path="username" cssClass="has-error"/>
+                    </div>
+                    <div class="group">
+                            <%--                    <label for="pass-reg" class="label">Password</label>--%>
+                            <%--                    <input id="pass-reg" type="password" class="input" data-type="password">--%>
+                        <spring:message code="registration.first.name" var="registerFirstname"/>
+                        <springForm:input path="firstName" class="input" placeholder="${registerFirstname}" cssErrorClass="form-control is-invalid"/>
+                        <springForm:errors path="firstName" cssClass="has-error"/>
+                    </div>
+                    <div class="group">
+                            <%--                    <label for="pass-reg" class="label">Password</label>--%>
+                            <%--                    <input id="pass-reg" type="password" class="input" data-type="password">--%>
+                        <spring:message code="registration.last.name" var="registerLastname"/>
+                        <springForm:input path="lastName" class="input" placeholder="${registerLastname}" cssErrorClass="form-control is-invalid"/>
+                        <springForm:errors path="lastName" cssClass="has-error"/>
+                    </div>
+                    <div class="group">
+                            <%--                    <label for="pass-reg" class="label">Password</label>--%>
+                            <%--                    <input id="pass-reg" type="password" class="input" data-type="password">--%>
+                        <spring:message code="registration.email" var="registerEmail"/>
+                        <springForm:input path="email" class="input" placeholder="${registerEmail}" cssErrorClass="form-control is-invalid"/>
+                        <springForm:errors path="email" cssClass="has-error"/>
+                    </div>
+                    <div class="group">
+                            <%--                    <label for="pass-reg" class="label">Password</label>--%>
+                            <%--                    <input id="pass-reg" type="password" class="input" data-type="password">--%>
+                        <spring:message code="registration.phone" var="registerPhone"/>
+                        <springForm:input path="phone" class="input" placeholder="${registerPhone}" cssErrorClass="form-control is-invalid"/>
+                        <springForm:errors path="phone" cssClass="has-error"/>
+                    </div>
+                    <div class="group">
+                            <%--                    <label for="pass-reg" class="label">Password</label>--%>
+                            <%--                    <input id="pass-reg" type="password" class="input" data-type="password">--%>
+                        <spring:message code="registration.password" var="registerPassword"/>
+                        <springForm:input path="password" class="input" placeholder="${registerPassword}" cssErrorClass="form-control is-invalid"/>
+                        <springForm:errors path="password" cssClass="has-error"/>
+                    </div>
+                    <div class="group">
+                            <%--                    <label for="pass-reg" class="label">Password</label>--%>
+                            <%--                    <input id="pass-reg" type="password" class="input" data-type="password">--%>
+                        <spring:message code="registration.confirm" var="registerConfirmPassword"/>
+                        <springForm:input path="confirmPassword" class="input" placeholder="${registerConfirmPassword}" cssErrorClass="form-control is-invalid"/>
+                        <springForm:errors path="confirmPassword" cssClass="has-error"/>
+                    </div>
+                    <div class="group">
+                        <spring:message code="registration" var="register"/>
+                        <input type="submit" class="button" value="${register}">
+                    </div>
+                    <div class="hr"></div>
                 </div>
-                <div class="group">
-                    <input id="check" type="checkbox" class="check" checked>
-                    <label for="check"><span class="icon"></span> Keep me Signed in</label>
-                </div>
-                <div class="group">
-                    <input type="submit" class="button" value="Sign In">
-                </div>
-                <div class="hr"></div>
-                <div class="foot-lnk">
-                    <a href="#forgot">Forgot Password?</a>
-                </div>
-            </div>
-            <div class="sign-up-htm">
-                <div class="group">
-                    <label for="user" class="label">Username</label>
-                    <input id="user" type="text" class="input">
-                </div>
-                <div class="group">
-                    <label for="pass" class="label">Password</label>
-                    <input id="pass" type="password" class="input" data-type="password">
-                </div>
-                <div class="group">
-                    <label for="pass" class="label">Repeat Password</label>
-                    <input id="pass" type="password" class="input" data-type="password">
-                </div>
-                <div class="group">
-                    <label for="pass" class="label">Email Address</label>
-                    <input id="pass" type="text" class="input">
-                </div>
-                <div class="group">
-                    <input type="submit" class="button" value="Sign Up">
-                </div>
-                <div class="hr"></div>
-                <div class="foot-lnk">
-                    <label for="tab-1">Already Member?</a>
-                </div>
-            </div>
+            </springForm:form>
+
+
         </div>
     </div>
 </div>

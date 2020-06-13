@@ -21,11 +21,11 @@
     <script src="${contextPath}/resources/js/header.js"></script>
 </head>
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4" role="navigation">
-        <a class="navbar-brand" href="${contextPath}/home">
-            <img id="logo" src="${contextPath}/resources/image/logo.png"
-                 alt="logo"/>
-        </a>
+    <a class="navbar-brand" href="${contextPath}/home">
+        <img id="logo" src="${contextPath}/resources/image/logo.png"
+             alt="logo"/>
+    </a>
+    <nav class="navbar navbar-expand-md navbar-dark mb-4" role="navigation">
         <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarCollapse" aria-controls="navbarCollapse"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -33,14 +33,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-1">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="${contextPath}/schedules">
-                        <spring:message code="navbar.schedule"/>
+                        <span class="selected"><spring:message code="navbar.schedule"/></span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="${contextPath}/movies">
-                        <spring:message code="navbar.movies"/>
+                        <span><spring:message code="navbar.movies"/></span>
                     </a>
                 </li>
             </ul>

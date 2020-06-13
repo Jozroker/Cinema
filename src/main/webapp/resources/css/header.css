@@ -10,8 +10,17 @@
     width: 5%;
 }
 
+.selected {
+    /*text-decoration: #28A745;*/
+    color: #28A745;
+}
+
 nav {
     font-size: 25px;
+    margin-left: 5%;
+    margin-right: 0.5%;
+    background-color: #16181B;
+    border-radius: 10px;
 }
 
 #vertical-line {
@@ -30,9 +39,10 @@ nav {
 }
 
 #logo {
-    /*position: absolute;*/
-    width: 100%;
-    /*z-index: 1;*/
+    position: absolute;
+    width: 5%;
+    left: 5px;
+    z-index: 1;
 }
 
 #search-bar {

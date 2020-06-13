@@ -26,6 +26,7 @@ public class RegisterUserDTO {
     private String email;
 
     @NotEmpty(message = "phone value is required")
+    @Pattern(regexp = "^\\d+$", message = "phone cannot contain letters")
     @Size(min = 10, max = 10, message = "invalid phone value")
     private String phone;
 
