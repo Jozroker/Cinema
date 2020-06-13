@@ -28,16 +28,9 @@ public class SecirutyConfig extends WebSecurityConfigurerAdapter {
 //                .and()
 //                .logout()
 //                .permitAll();
-                .antMatchers("/registration").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/")
-                .permitAll()
-                .and()
-                .logout()
+
+//                .antMat
+                .anyRequest()
                 .permitAll();
     }
 

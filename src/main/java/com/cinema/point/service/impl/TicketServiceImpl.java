@@ -43,6 +43,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    @Transactional
     public TicketDTO create(TicketDTO ticketDTO) {
         log.debug("creating new ticket {}", ticketDTO);
         Ticket ticket = ticketMapper.toEntity(ticketDTO);
@@ -71,6 +72,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    @Transactional
     public TicketDTO update(TicketDTO ticketDTO) {
         log.debug("updating ticket {}", ticketDTO);
         Ticket ticket = ticketMapper.toEntity(ticketDTO);
@@ -124,6 +126,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    @Transactional
     public Map<Integer, Integer> findPlacesByHallId(Long id) {
         log.debug("finding rows and columns count by hall id {}", id);
         Map<Integer, Integer> map = new HashMap<>();

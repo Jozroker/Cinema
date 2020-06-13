@@ -11,6 +11,7 @@ import com.cinema.point.service.MovieService;
 import com.cinema.point.service.mapper.MovieMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -31,6 +32,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    @Transactional
     public MovieDTO create(MovieDTO movieDTO) {
         log.debug("creating new movie {}", movieDTO);
         Movie movie = movieMapper.toEntity(movieDTO);

@@ -23,11 +23,11 @@ public abstract class MovieMapper {
 //        this.actorRepository = actorRepository;
 //    }
 
-    @Mapping(source = "actors", target = "actorsId", qualifiedByName =
+    @Mapping(source = "actors", target = "actorsIds", qualifiedByName =
             "mapToActorsIds")
     public abstract MovieDTO toDTO(Movie movie);
 
-    @Mapping(source = "actorsId", target = "actors", qualifiedByName =
+    @Mapping(source = "actorsIds", target = "actors", qualifiedByName =
             "mapToActors")
     public abstract Movie toEntity(MovieDTO movieDTO);
 

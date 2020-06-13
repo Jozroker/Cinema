@@ -11,6 +11,7 @@ import com.cinema.point.service.SeanceService;
 import com.cinema.point.service.mapper.SeanceMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -34,6 +35,7 @@ public class SeanceServiceImpl implements SeanceService {
     }
 
     @Override
+    @Transactional
     public SeanceCreationDTO create(SeanceCreationDTO seanceDTO) {
         log.debug("creating new seance {}", seanceDTO);
         Seance seance = seanceMapper.toEntity(seanceDTO);
@@ -55,6 +57,7 @@ public class SeanceServiceImpl implements SeanceService {
     }
 
     @Override
+    @Transactional
     public SeanceDTO update(SeanceCreationDTO seanceDTO) {
         log.debug("updating seance {}", seanceDTO);
         Seance seance = seanceMapper.toEntity(seanceDTO);

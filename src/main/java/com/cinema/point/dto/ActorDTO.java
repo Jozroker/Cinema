@@ -9,10 +9,10 @@ public class ActorDTO {
 
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "first name value is required")
     private String firstName;
 
-    @NotEmpty
+    @NotEmpty(message = "last name value is required")
     private String lastName;
 
     private byte[] profilePicture;

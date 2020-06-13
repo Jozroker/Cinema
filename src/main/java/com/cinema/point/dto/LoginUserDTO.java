@@ -2,7 +2,6 @@ package com.cinema.point.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Data
@@ -10,14 +9,14 @@ public class LoginUserDTO {
 
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "username value is required")
     private String username;
 
-    @NotEmpty
-    @Email(message = "invalid mail value")
+    @NotEmpty(message = "email value is required")
+//    @Email(message = "invalid mail value")
     private String email;
 
-    @NotEmpty
+    @NotEmpty(message = "password value is required")
     private String password;
 
 }
