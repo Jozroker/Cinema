@@ -142,4 +142,11 @@ public class SeanceServiceImpl implements SeanceService {
         return seanceMapper.toDTO(seanceRepository.findByTicketId(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Ticket", id)));
     }
+
+    @Override
+    public List<SeanceDTO> findByDateBetween(Date date) {
+        log.debug("finding seances by date between {}", date);
+        return seanceRepository.findByDateBetween(date).stream()
+                .map(seanceMapper::toDTO).collect(Collectors.toList());
+    }
 }

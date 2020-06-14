@@ -1,20 +1,41 @@
+#table {
+    background: #595C5F;
+}
+
 #triangle-right {
     width: 0;
     height: 0;
-    border-top: 50px solid transparent;
-    border-left: 100px solid red;
-    border-bottom: 50px solid transparent;
+    margin: 0;
+    border-top: 30px solid transparent;
+    border-left: 20px solid #c8c8c8;
+    border-bottom: 30px solid transparent;
+    position: absolute;
+    top: 30%;
+    left: 27%;
+}
+
+#triangle-right:hover {
+    border-top: 32px solid transparent;
+    border-bottom: 32px solid transparent;
+    border-left: 21px solid #28A745;
+}
+
+#triangle-left:hover {
+    border-top: 32px solid transparent;
+    border-bottom: 32px solid transparent;
+    border-right: 21px solid #28A745;
 }
 
 #triangle-left {
     width: 0;
     height: 0;
+    margin: 0;
     border-top: 30px solid transparent;
-    border-right: 20px solid red;
+    border-right: 20px solid #c8c8c8;
     border-bottom: 30px solid transparent;
     position: absolute;
     top: 30%;
-    right: 25%;
+    right: 27%;
 }
 
 section {
@@ -22,6 +43,7 @@ section {
     height: 25em;
     margin: 0 auto;
     position: relative;
+    right: 2.5%;
 }
 
 section li {
