@@ -65,7 +65,7 @@
                 <li id="sign-in">
                     <c:choose>
                     <c:when test="${user.id == null}">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="button">
+                    <button id="sign-in-button" class="btn btn-outline-success my-2 my-sm-0" type="button">
                         <spring:message code="navbar.signin"/>
                     </button>
                     </c:when>

@@ -16,18 +16,19 @@ public class SecirutyConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
-//              .antMatchers("/resources/**", "/registration").permitAll()
-//              .antMatchers("/admin/**").hasRole("ADMIN")
-//              .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/home")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+//        http.csrf().disable().authorizeRequests()
+////              .antMatchers("/resources/**", "/registration").permitAll()
+////              .antMatchers("/admin/**").hasRole("ADMIN")
+////              .anyRequest().authenticated()
+////                .and()
+////                .formLogin()
+////                .loginPage("/authorization")
+////                .defaultSuccessUrl("/home")
+////                .failureForwardUrl("/authorization")
+////                .permitAll()
+//                .and()
+//                .logout()
+//                .permitAll();
     }
 
 }

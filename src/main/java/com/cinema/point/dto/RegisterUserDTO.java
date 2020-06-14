@@ -1,5 +1,6 @@
 package com.cinema.point.dto;
 
+import com.cinema.point.domain.Role;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -35,6 +36,8 @@ public class RegisterUserDTO {
 
     @NotEmpty(message = "confirm password value is required")
     private String confirmPassword;
+
+    private Role role = Role.USER;
 
     private byte[] picture;
 

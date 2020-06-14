@@ -82,8 +82,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO findByEmail(String email) {
         log.debug("finding user by email {}", email);
         return userMapper.toDTO(userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User",
-                        "(email) " + email)));
+                .orElse(null));
     }
 
 //    @Override
@@ -98,16 +97,14 @@ public class UserServiceImpl implements UserService {
     public UserDTO findByPhone(String phone) {
         log.debug("finding user by phone {}", phone);
         return userMapper.toDTO(userRepository.findByPhone(phone)
-                .orElseThrow(() -> new ResourceNotFoundException("User",
-                        "(phone) " + phone)));
+                .orElse(null));
     }
 
     @Override
     public UserDTO findByUsername(String username) {
         log.debug("finding user by username {}", username);
         return userMapper.toDTO(userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User",
-                        "(username) " + username)));
+                .orElse(null));
     }
 
 //    @Override

@@ -18,7 +18,7 @@ public class UserValidator implements Validator {
     public void validate(Object o, Errors errors) {
         RegisterUserDTO userDTO = (RegisterUserDTO) o;
         if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
-            errors.rejectValue("passwordConfirm", "password.notmatch");
+            errors.rejectValue("confirmPassword", "state.not.match");
         }
     }
 }
