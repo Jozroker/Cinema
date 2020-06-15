@@ -120,9 +120,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findByEmailOrUsername(String email, String username) {
-        log.debug("finding user by username {} ot email {}", username, email);
-        return userMapper.toDTO(userRepository.findByEmailOrUsername(email, username)
+    public UserDTO findByEmailOrUsername(String emailOrUsername) {
+        log.debug("finding user by username or email {}", emailOrUsername);
+        return userMapper.toDTO(userRepository.findByEmailOrUsername(emailOrUsername)
                 .orElse(null));
     }
 }

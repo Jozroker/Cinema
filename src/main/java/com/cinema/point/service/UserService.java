@@ -31,5 +31,5 @@ public interface UserService {
 
     List<UserDTO> findAll();
 
-    UserDTO findByEmailOrUsername(String email, String username);
+    UserDTO findByEmailOrUsername(String emailOrUsername);
 }

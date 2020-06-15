@@ -86,7 +86,7 @@ public class InfoController {
         model.addAttribute("schedule", schedule);
         model.addAttribute("movies", currentMovies);
         model.addAttribute("allMovies", allMovies);
-        model.addAttribute("user", request.getSession().getAttribute("user"));
+//        model.addAttribute("user", request.getSession().getAttribute("user"));
         return "home";
     }
 }
