@@ -25,6 +25,8 @@ public interface SeanceService {
 
     SeanceDTO findById(Long id);
 
+    List<SeanceDTO> findByDateBetween(Date date);
+
     List<SeanceCreationDTO> findBySeanceDateTo(Date date);
 
     SeanceDTO findByTimeLineInSeance(Time time);

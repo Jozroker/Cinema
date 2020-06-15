@@ -9,9 +9,9 @@ public class SimpleMovieDTO {
 
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "name is required")
     private String name;
 
-    @NotEmpty
+    @NotEmpty(message = "picture is required")
     private byte[] picture;
 }

@@ -48,6 +48,10 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Ticket> tickets = new ArrayList<>();
 
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] picture;
+
     public void addTicket(Ticket ticket) {
         this.tickets.add(ticket);
     }

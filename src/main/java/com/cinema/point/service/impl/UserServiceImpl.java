@@ -11,6 +11,7 @@ import com.cinema.point.service.UserService;
 import com.cinema.point.service.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,6 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDTO update(UserDTO userDTO) {
         log.debug("updating user {}", userDTO);
         User user = userMapper.toEntity(userDTO);
@@ -80,8 +82,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO findByEmail(String email) {
         log.debug("finding user by email {}", email);
         return userMapper.toDTO(userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User",
-                        "(email) " + email)));
+                .orElse(null));
     }
 
 //    @Override
@@ -96,16 +97,14 @@ public class UserServiceImpl implements UserService {
     public UserDTO findByPhone(String phone) {
         log.debug("finding user by phone {}", phone);
         return userMapper.toDTO(userRepository.findByPhone(phone)
-                .orElseThrow(() -> new ResourceNotFoundException("User",
-                        "(phone) " + phone)));
+                .orElse(null));
     }
 
     @Override
     public UserDTO findByUsername(String username) {
         log.debug("finding user by username {}", username);
         return userMapper.toDTO(userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User",
-                        "(username) " + username)));
+                .orElse(null));
     }
 
 //    @Override

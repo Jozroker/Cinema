@@ -1,5 +1,6 @@
 package com.cinema.point.dto;
 
+import com.cinema.point.domain.Role;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -12,29 +13,32 @@ public class RegisterUserDTO {
 
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "username value is required")
     private String username;
 
-    @NotEmpty
-    @Pattern(regexp = "\\D*")
+    @Pattern(regexp = "\\D*", message = "first name cannot contain numbers")
     private String firstName;
 
-    @NotEmpty
-    @Pattern(regexp = "\\D*")
+    @Pattern(regexp = "\\D*", message = "first name cannot contain numbers")
     private String lastName;
 
-    @NotEmpty
+    @NotEmpty(message = "email value is required")
     @Email(message = "invalid mail value")
     private String email;
 
-    @NotEmpty
+    @NotEmpty(message = "phone value is required")
+    @Pattern(regexp = "^\\d+$", message = "phone cannot contain letters")
     @Size(min = 10, max = 10, message = "invalid phone value")
     private String phone;
 
-    @NotEmpty
+    @NotEmpty(message = "password value is required")
     private String password;
 
-    @NotEmpty
+    @NotEmpty(message = "confirm password value is required")
     private String confirmPassword;
+
+    private Role role = Role.USER;
+
+    private byte[] picture;
 
 }

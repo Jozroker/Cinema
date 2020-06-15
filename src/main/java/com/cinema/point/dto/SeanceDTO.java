@@ -12,14 +12,14 @@ public class SeanceDTO {
 
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "begin time value is required")
     private Time movieBeginTime;
 
-    @NotEmpty
+    @NotEmpty(message = "ticket price is required")
     @Digits(integer = 6, fraction = 2)
     private BigDecimal ticketPrice;
 
-    @NotEmpty
+    @NotEmpty(message = "hall isn't selected")
     private Long hallId;
 
 //    private MovieDTO movie;

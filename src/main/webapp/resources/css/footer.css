@@ -1,0 +1,58 @@
+footer {
+    background-color: #16181b;
+    color: #9A9DA0;
+}
+
+.icon {
+    width: 15%;
+    margin-right: 5px;
+}
+
+.img:hover {
+    filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(50deg) saturate(1000%) contrast(0.8);
+}
+
+.place::before {
+    /*list-style-type: circle;*/
+    /*list-style-position: inside;*/
+    content: "\00ba";
+    color: #28A745;
+    position: absolute;
+    margin-top: 2%;
+    left: 5%;
+}
+
+.place {
+    margin-left: 5%;
+}
+
+.social {
+    width: 30%;
+}
+
+.social-2 {
+    width: 90%;
+    margin-top: 10px;
+}
+
+#mail, #text {
+    text-decoration: none;
+    color: #9A9DA0;
+}
+
+#mail:hover {
+    color: #28A745;
+}
+
+#test:hover {
+    color: #28A745;
+}
+
+.colored-text {
+    color: #28A745;
+}
+
+#app {
+    /*width: 100%;*/
+    margin-top: 10%;
+}

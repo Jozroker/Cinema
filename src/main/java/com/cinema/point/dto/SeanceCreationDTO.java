@@ -23,11 +23,11 @@ public class SeanceCreationDTO {
     @NotNull(message = "required field")
     private Time movieBeginTime;
 
-    @NotEmpty
+    @NotEmpty(message = "ticket price value is required")
     @Digits(integer = 6, fraction = 2)
     private BigDecimal ticketPrice;
 
-    @NotNull
+    @NotNull(message = "hall isn't selected")
 //    private Hall hall;
     private Long hallId;
 

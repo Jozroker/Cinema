@@ -15,8 +15,10 @@ public interface SeanceRepository extends JpaRepository<Seance, Long> {
 
     List<Seance> findBySeanceDateTo(Date date);
 
-    @Query("select s from Seance s where s.movieBeginTime < ?1 and s" +
-            ".movieEndTime > ?1")
+    @Query("select s from Seance s where ?1 between s.seanceDateFrom and s.seanceDateTo")
+    List<Seance> findByDateBetween(Date date);
+
+    @Query("select s from Seance s where s.movieBeginTime < ?1 and s.movieEndTime > ?1")
     Optional<Seance> findByTimeLineInSeance(Time time);
 
     //filters

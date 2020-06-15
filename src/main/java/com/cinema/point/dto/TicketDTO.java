@@ -11,10 +11,10 @@ public class TicketDTO {
 
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "row isn't selected")
     private int row;
 
-    @NotEmpty
+    @NotEmpty(message = "column isn't selected")
     private int column;
 
     @NotNull(message = "required field")

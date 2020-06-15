@@ -13,17 +13,17 @@ public class MovieDTO {
 
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "name value is required")
     private String name;
 
-    @NotEmpty
+    @NotEmpty(message = "description value is required")
     @Max(value = 3000, message = "too long description")
     private String description;
 
-    @NotNull
+    @NotNull(message = "duration is required")
     private Long duration;
 
-    @NotNull
+    @NotNull(message = "picture is required")
     private byte[] picture;
 
     //    private Set<ActorDTO> actors = new HashSet<>();

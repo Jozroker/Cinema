@@ -11,6 +11,7 @@ import com.cinema.point.service.SeanceService;
 import com.cinema.point.service.mapper.SeanceMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -34,6 +35,7 @@ public class SeanceServiceImpl implements SeanceService {
     }
 
     @Override
+    @Transactional
     public SeanceCreationDTO create(SeanceCreationDTO seanceDTO) {
         log.debug("creating new seance {}", seanceDTO);
         Seance seance = seanceMapper.toEntity(seanceDTO);
@@ -55,6 +57,7 @@ public class SeanceServiceImpl implements SeanceService {
     }
 
     @Override
+    @Transactional
     public SeanceDTO update(SeanceCreationDTO seanceDTO) {
         log.debug("updating seance {}", seanceDTO);
         Seance seance = seanceMapper.toEntity(seanceDTO);
@@ -138,5 +141,12 @@ public class SeanceServiceImpl implements SeanceService {
         log.debug("finding seance by ticket id {}", id);
         return seanceMapper.toDTO(seanceRepository.findByTicketId(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Ticket", id)));
+    }
+
+    @Override
+    public List<SeanceDTO> findByDateBetween(Date date) {
+        log.debug("finding seances by date between {}", date);
+        return seanceRepository.findByDateBetween(date).stream()
+                .map(seanceMapper::toDTO).collect(Collectors.toList());
     }
 }
