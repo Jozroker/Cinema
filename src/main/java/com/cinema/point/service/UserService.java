@@ -30,4 +30,6 @@ public interface UserService {
 //    LoginUserDTO findByUsernameLogin(String username);
 
     List<UserDTO> findAll();
+
+    UserDTO findByEmailOrUsername(String email, String username);
 }

@@ -6,6 +6,34 @@
 /*    visibility: hidden;*/
 /*}*/
 
+#user {
+    font-size: 20px;
+}
+
+#user-dropdown {
+    width: 10%;
+    font-size: 15px;
+    position: fixed;
+    margin-left: auto;
+    background-color: #3b3b40;
+    right: 1%;
+    top: 7%;
+    /*margin: auto;*/
+}
+
+#user-dropdown li {
+    color: #fff;
+}
+
+#user-dropdown li:hover {
+    color: #3b3b40;
+}
+
+#right {
+    position: relative;
+    right: 1%;
+}
+
 .navbar-brand {
     width: 5%;
 }
@@ -51,7 +79,7 @@ nav {
 }
 
 #search-line {
-    width: 500px;
+    width: 800px;
 }
 
 /*#search-button {*/
@@ -72,6 +100,10 @@ nav {
     color: #16181b;
     text-decoration: none;
     background-color: #f8f9fa;
+}
+
+.link:hover {
+    text-decoration: none;
 }
 
 @media (min-width: 767px) {

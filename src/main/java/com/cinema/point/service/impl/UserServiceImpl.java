@@ -118,4 +118,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll().stream()
                 .map(userMapper::toDTO).collect(Collectors.toList());
     }
+
+    @Override
+    public UserDTO findByEmailOrUsername(String email, String username) {
+        log.debug("finding user by username {} ot email {}", username, email);
+        return userMapper.toDTO(userRepository.findByEmailOrUsername(email, username)
+                .orElse(null));
+    }
 }

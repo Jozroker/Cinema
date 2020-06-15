@@ -23,7 +23,7 @@
 <jsp:include page="header.jsp"/>
 <body id="table">
 <div>
-    <div class="row">
+    <div class="row section">
         <div class="col-sm">
             <%--                            <input type="button" value="Prev" id="prev">--%>
             <span id="prev"><span id="triangle-left"></span></span>
@@ -34,39 +34,19 @@
                     <c:forEach var="movie" items="${movies}" varStatus="loop">
                         <c:choose>
                             <c:when test="${loop.first}">
-                                <li class="items main-pos"><img src="data:image/jpeg;base64,${movie}" alt="movie image"/></li>
+                                <li class="items main-pos" id="1"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/></li>
                             </c:when>
                             <c:when test="${loop.last}">
-                                <li class="items left-pos"><img src="data:image/jpeg;base64,${movie}" alt="movie image"/></li>
+                                <li class="items left-pos" id="${loop.count}"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/></li>
                             </c:when>
                             <c:when test="${loop.index == 1}">
-                                <li class="items right-pos"><img src="data:image/jpeg;base64,${movie}" alt="movie image"/></li>
+                                <li class="items right-pos" id="2"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/></li>
                             </c:when>
                             <c:otherwise>
-                                <li class="items back-pos"><img src="data:image/jpeg;base64,${movie}" alt="movie image"/></li>
+                                <li class="items back-pos" id="${loop.index + 1}"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/></li>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
-                    <%--                    <li class="items main-pos" id="1"><p>1</p></li>--%>
-                    <%--                    <li class="items right-pos" id="2">--%>
-                    <%--                        <img src="http://farm9.staticflickr.com/8337/8234123289_2b23aeaf06.jpg"/>--%>
-                    <%--                    </li>--%>
-                    <%--                    <li class="items back-pos" id="3">--%>
-                    <%--                        <img src="http://farm9.staticflickr.com/8337/8234711202_831b23a2b7.jpg"/>--%>
-                    <%--                    </li>--%>
-                    <%--                    <li class="items back-pos" id="4">--%>
-                    <%--                        <iframe width="500" height="281" src="https://www.youtube.com/embed/szIEr2F61DU" frameborder="0" allowfullscreen></iframe>--%>
-                    <%--                    </li>--%>
-                    <%--                    <li class="items back-pos" id="5">--%>
-                    <%--                        <iframe src="https://player.vimeo.com/video/19464611" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen--%>
-                    <%--                                allowFullScreen></iframe>--%>
-                    <%--                    </li>--%>
-                    <%--                    <li class="items back-pos" id="6">--%>
-                    <%--                        <img src="http://woofie2.pixiq.com/files/cache/20030323_img_7465_3072_x_2048_619x413.jpg"/>--%>
-                    <%--                    </li>--%>
-                    <%--                    <li class="items back-pos" id="7"><p>3</p></li>--%>
-                    <%--                    <li class="items left-pos" id="8"><img src="http://www.mishes.com/wp-content/uploads/2011/12/FlickrMonday07.jpg"/>--%>
-                    <%--                    </li>--%>
                 </ul>
             </section>
         </div>
@@ -75,11 +55,59 @@
             <span id="next"><span id="triangle-right"></span></span>
         </div>
     </div>
-    <div class="row">
-        <a id="buy" href="${contextPath}/buy/ticket"><spring:message code="home.buy.ticket"/></a>
+    <div class="row buy-button">
+        <button id="buy"><spring:message code="home.buy.ticket"/></button>
+    </div>
+    <div class="row days">
+        <div class="col-sm"></div>
+        <c:forEach var="day" items="${days}" varStatus="loop">
+            <c:choose>
+                <c:when test="${loop.first}">
+                    <div class="col-sm">
+                        <span id="day${loop.index}" class="active day">${day.name()}</span>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="col-sm">
+                        <span id="day${loop.index}" class="day">${day.name()}</span>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+        <div class="col-sm"></div>
+        <div class="col-sm"></div>
+        <div class="col-sm"></div>
+        <div class="col-sm"></div>
+        <div class="col-sm"></div>
+        <div class="col-sm"></div>
     </div>
     <div id="schedule">
-
+        <ul class="list-group">
+            <c:forEach var="seance" items="${schedule}" varStatus="loop">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div></div>
+                    <div>
+                        <span class="seance${loop.index + 1}">${loop.index + 1}</span>
+                    </div>
+                    <div>
+                        <span class="seance${loop.index + 1}">${seance.movie.name}</span>
+                    </div>
+                    <div>
+                        <span class="seance${loop.index + 1}">${seance.movieBeginTime}</span>
+                    </div>
+                    <div>
+                        <span class="seance${loop.index + 1}">${seance.hall.id}</span>
+                    </div>
+                    <div>
+                        <span class="seance${loop.index + 1}">${seance.hall.type.name().substring(1)}</span>
+                    </div>
+                    <div>
+                        <span class="seance${loop.index + 1}">${seance.ticketPrice} UAH</span>
+                    </div>
+                    <span class="badge badge-primary badge-pill"><spring:message code="ticket.buy"/></span>
+                </li>
+            </c:forEach>
+        </ul>
     </div>
 </div>
 </body>

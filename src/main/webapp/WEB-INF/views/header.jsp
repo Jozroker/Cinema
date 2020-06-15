@@ -52,7 +52,7 @@
                     ${search}
                 </button>
             </form>
-            <ul class="navbar-nav ml-auto">
+            <ul id="right" class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link lang" href="?language=en">EN</a>
                 </li>
@@ -71,21 +71,26 @@
                     </c:when>
                     <c:otherwise>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="user-dropdown"
+                    <a class="nav-link dropdown-toggle" id="user"
                        data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">${user.username}</a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                        <li class="dropdown-item" href="${contextPath}/user/${user.id}">
-                            <a><spring:message code="cabinet.default"/></a>
-                        </li>
+                    <ul id="user-dropdown" class="dropdown-menu" aria-labelledby="dropdown1">
+                        <a class="link" href="${contextPath}/user/${user.id}">
+                            <li class="dropdown-item">
+                                <spring:message code="cabinet.default"/>
+                            </li>
+                        </a>
                         <!-- todo check this link -->
-                        <li class="dropdown-item" href="${contextPath}/user/${user.id}#tickets">
-                            <a><spring:message code="cabinet.tickets"/></a>
-                        </li>
-
-                        <li id="logout" class="dropdown-item" href="${contextPath}/logout">
-                            <a><spring:message code="navbar.signout"/></a>
-                        </li>
+                        <a class="link" href="${contextPath}/user/${user.id}#tickets">
+                            <li class="dropdown-item">
+                                <spring:message code="cabinet.tickets"/>
+                            </li>
+                        </a>
+                        <a class="link" href="${contextPath}/logout">
+                            <li id="logout" class="dropdown-item">
+                                <spring:message code="navbar.signout"/>
+                            </li>
+                        </a>
                     </ul>
                 </li>
                 </c:otherwise>

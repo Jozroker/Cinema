@@ -2,6 +2,43 @@
     background: #595C5F;
 }
 
+.section {
+    height: 300px;
+}
+
+.buy-button {
+    height: 50px;
+}
+
+.active {
+    color: #28A745;
+}
+
+.days span {
+    text-decoration: none;
+}
+
+.days span:hover {
+    color: #28A745;
+}
+
+#buy {
+    margin: auto;
+    width: 10%;
+    height: 80%;
+    border: 1px solid #28A745;
+    background-color: #595C5F;
+    color: #28A745;
+    border-radius: 20px;
+    font-size: 125%;
+    z-index: 1;
+}
+
+#buy:hover {
+    background-color: #28A745;
+    color: #595C5F;
+}
+
 #triangle-right {
     width: 0;
     height: 0;
@@ -55,6 +92,10 @@ section li {
     -moz-transition: all .3s ease-in-out;
     transition: all .3s ease-in-out;
     overflow: hidden;
+}
+
+section img {
+    width: 100%;
 }
 
 section li p {
