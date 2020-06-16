@@ -7,6 +7,8 @@ $(document).ready(function () {
     //         // autoSwap = setInterval( swap,3500);
     //     });
 
+    // $('.selected').removeClass("selected");
+
     $('.day').on('click', function () {
         // let id = $(this).attr('id');
         let number = $(this).attr('id').slice(-1);

@@ -32,10 +32,6 @@
 </head>
 <jsp:include page="header.jsp"/>
 <body>
-<div id="header">
-
-</div>
-
 <div class="login-wrap">
 
 

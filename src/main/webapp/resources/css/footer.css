@@ -1,9 +1,10 @@
 footer {
     background-color: #16181b;
     color: #9A9DA0;
-    /*position: absolute;*/
-    /*bottom: 0;*/
-    /*width: 100%;*/
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 50px;
 }
 
 .icon {

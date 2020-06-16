@@ -3,9 +3,13 @@ package com.cinema.point.dto;
 import com.cinema.point.domain.Role;
 import lombok.Data;
 
+import javax.imageio.ImageIO;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 
 @Data
 public class RegisterUserDTO {
@@ -15,10 +19,8 @@ public class RegisterUserDTO {
     @NotEmpty(message = "state.required.field")
     private String username;
 
-    @Pattern(regexp = ".*[0-9].*", message = "state.cannot.contain.number")
     private String firstName;
 
-    @Pattern(regexp = ".*[0-9].*", message = "state.cannot.contain.number")
     private String lastName;
 
     @NotEmpty(message = "state.required.field")
@@ -38,6 +40,18 @@ public class RegisterUserDTO {
 
     private Role role = Role.USER;
 
-    private byte[] picture;
+    private byte[] picture = getByteImage();
+
+    private byte[] getByteImage() {
+        BufferedImage bImage = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        try {
+            bImage = ImageIO.read(new File("F:\\PC_Educate\\Programming\\java\\cinema\\src\\main\\webapp\\resources\\image\\default-avatar.png"));
+            ImageIO.write(bImage, "png", bos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bos.toByteArray();
+    }
 
 }

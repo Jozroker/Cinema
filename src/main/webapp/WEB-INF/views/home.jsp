@@ -22,28 +22,29 @@
 </head>
 <jsp:include page="header.jsp"/>
 <body id="table">
-<div>
+<div id="content">
     <div class="row section">
         <div class="col-sm">
-            <%--                            <input type="button" value="Prev" id="prev">--%>
             <span id="prev"><span id="triangle-left"></span></span>
         </div>
         <div class="col-sm">
+            <!-- todo set blur selected image to background section -->
             <section>
                 <ul class="carousel">
                     <c:forEach var="movie" items="${movies}" varStatus="loop">
                         <c:choose>
                             <c:when test="${loop.first}">
-                                <li class="items main-pos" id="1"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/></li>
+                                <li class="items main-pos" id="1"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/>${movie.id}</li>
                             </c:when>
                             <c:when test="${loop.last}">
-                                <li class="items left-pos" id="${loop.count}"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/></li>
+                                <li class="items left-pos" id="${loop.count}"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/>${movie.id}</li>
                             </c:when>
                             <c:when test="${loop.index == 1}">
-                                <li class="items right-pos" id="2"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/></li>
+                                <li class="items right-pos" id="2"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/>${movie.id}</li>
                             </c:when>
                             <c:otherwise>
-                                <li class="items back-pos" id="${loop.index + 1}"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/></li>
+                                <li class="items back-pos" id="${loop.index + 1}"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/>${movie.id}
+                                </li>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
@@ -65,12 +66,12 @@
             <c:choose>
                 <c:when test="${loop.first}">
                     <div class="col-sm">
-                        <span id="day${loop.index}" class="active day"><spring:message code="${item}"/></span>
+                        <span id="day${day.ordinal()}" class="active day"><spring:message code="${item}"/></span>
                     </div>
                 </c:when>
                 <c:otherwise>
                     <div class="col-sm">
-                        <span id="day${loop.index}" class="day"><spring:message code="${item}"/></span>
+                        <span id="day${day.ordinal()}" class="day"><spring:message code="${item}"/></span>
                     </div>
                 </c:otherwise>
             </c:choose>
@@ -83,32 +84,31 @@
         <div class="col-sm"></div>
     </div>
     <div id="schedule">
-        <ul class="list-group">
+        <table class="table">
+            <thead>
+            <tr id="title">
+                <th scope="col" class="first"><spring:message code="number.default"/></th>
+                <th scope="col" class="movie"><spring:message code="movie.name"/></th>
+                <th scope="col"><spring:message code="schedules.start.time"/></th>
+                <th scope="col" colspan="2"><spring:message code="schedules.hall"/></th>
+                <th scope="col"><spring:message code="schedules.price"/></th>
+                <th scope="col" class="last"></th>
+            </tr>
+            </thead>
+            <tbody>
             <c:forEach var="seance" items="${schedule}" varStatus="loop">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div></div>
-                    <div>
-                        <span class="seance${loop.index + 1}">${loop.index + 1}</span>
-                    </div>
-                    <div>
-                        <span class="seance${loop.index + 1}">${seance.movie.name}</span>
-                    </div>
-                    <div>
-                        <span class="seance${loop.index + 1}">${seance.movieBeginTime}</span>
-                    </div>
-                    <div>
-                        <span class="seance${loop.index + 1}">${seance.hall.id}</span>
-                    </div>
-                    <div>
-                        <span class="seance${loop.index + 1}">${seance.hall.type.type}</span>
-                    </div>
-                    <div>
-                        <span class="seance${loop.index + 1}">${seance.ticketPrice} UAH</span>
-                    </div>
-                    <span class="badge badge-primary badge-pill"><spring:message code="ticket.buy"/></span>
-                </li>
+                <tr>
+                    <th scope="row" class="spacing first seance${seance.id}">${loop.index + 1}</th>
+                    <td class="movie spacing seance${seance.id}">${seance.movie.name}</td>
+                    <td class="spacing seance${seance.id}">${seance.movieBeginTime}</td>
+                    <td class="spacing seance${seance.id}">${seance.hall.id}</td>
+                    <td class="spacing seance${seance.id}">${seance.hall.type.type}</td>
+                    <td class="spacing seance${seance.id}">${seance.ticketPrice} UAH</td>
+                    <td class="spacing last seance${seance.id}"><a class="pill" href=""><spring:message code="ticket.buy"/></a></td>
+                </tr>
             </c:forEach>
-        </ul>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>

@@ -41,6 +41,8 @@ public class UserDTO {
 
     private byte[] picture;
 
+    private String pictureString;
+
     //    private List<TicketDTO> tickets;
     private List<Long> ticketsId;
 }

@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 
 
 @Controller
@@ -47,19 +47,23 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute("registerUser") RegisterUserDTO userDTO, BindingResult bindingResult, Model model,
-                           HttpServletRequest request) {
+    public String register(@Valid @ModelAttribute("registerUser") RegisterUserDTO userDTO, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("loginUser", new LoginUserDTO());
             return "authorization";
         }
-        UserDTO findByUsername =
-                userService.findByUsername(userDTO.getUsername());
-        UserDTO findByEmail = userService.findByEmail(userDTO.getEmail());
-        UserDTO findByPhone = userService.findByPhone(userDTO.getPhone());
         log.info("register new user {}", userDTO);
         userService.create(userDTO);
         return "redirect:/authorization";
+    }
+
+    @GetMapping("/cabinet")
+    public String cabinet(Model model, Principal principal) {
+        UserDTO user = userService.findByUsername(principal.getName());
+//        String picture = new String(user.getPicture(), StandardCharsets.UTF_8);
+//        model.addAttribute("picture", picture);
+        model.addAttribute("user", user);
+        return "cabinet";
     }
 
 }

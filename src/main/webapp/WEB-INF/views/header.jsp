@@ -34,8 +34,8 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-1">
                 <li class="nav-item">
-                    <a class="nav-link" href="${contextPath}/schedules">
-                        <span class="selected"><spring:message code="navbar.schedule"/></span>
+                    <a class="nav-link" href="${contextPath}/home">
+                        <span><spring:message code="navbar.schedule"/></span> <!-- selected -->
                     </a>
                 </li>
                 <li class="nav-item">
@@ -70,13 +70,13 @@
                        data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">${user.username}</a>
                     <ul id="user-dropdown" class="dropdown-menu" aria-labelledby="dropdown1">
-                        <a class="link" href="${contextPath}/user/${user.id}">
+                        <a class="link" href="${contextPath}/cabinet">
                             <li class="dropdown-item">
                                 <spring:message code="cabinet.default"/>
                             </li>
                         </a>
                         <!-- todo check this link -->
-                        <a class="link" href="${contextPath}/user/${user.id}#tickets">
+                        <a class="link" href="${contextPath}/cabinet#tickets">
                             <li class="dropdown-item">
                                 <spring:message code="cabinet.tickets"/>
                             </li>
