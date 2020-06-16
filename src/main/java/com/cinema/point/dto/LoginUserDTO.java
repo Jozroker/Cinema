@@ -9,14 +9,14 @@ public class LoginUserDTO {
 
     private Long id;
 
-    @NotEmpty(message = "value is required")
-    private String usernameOrEmail;
+    @NotEmpty(message = "state.required.field")
+    private String username;
 
 //    @NotEmpty(message = "email value is required")
 ////    @Email(message = "invalid mail value")
 //    private String email;
 
-    @NotEmpty(message = "password value is required")
-    private String pass;
+    @NotEmpty(message = "state.required.field")
+    private String password;
 
 }

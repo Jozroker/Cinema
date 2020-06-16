@@ -61,15 +61,16 @@
     <div class="row days">
         <div class="col-sm"></div>
         <c:forEach var="day" items="${days}" varStatus="loop">
+            <c:set var="item" value="day.${day.name().toLowerCase()}"/>
             <c:choose>
                 <c:when test="${loop.first}">
                     <div class="col-sm">
-                        <span id="day${loop.index}" class="active day">${day.name()}</span>
+                        <span id="day${loop.index}" class="active day"><spring:message code="${item}"/></span>
                     </div>
                 </c:when>
                 <c:otherwise>
                     <div class="col-sm">
-                        <span id="day${loop.index}" class="day">${day.name()}</span>
+                        <span id="day${loop.index}" class="day"><spring:message code="${item}"/></span>
                     </div>
                 </c:otherwise>
             </c:choose>
@@ -99,7 +100,7 @@
                         <span class="seance${loop.index + 1}">${seance.hall.id}</span>
                     </div>
                     <div>
-                        <span class="seance${loop.index + 1}">${seance.hall.type.name().substring(1)}</span>
+                        <span class="seance${loop.index + 1}">${seance.hall.type.type}</span>
                     </div>
                     <div>
                         <span class="seance${loop.index + 1}">${seance.ticketPrice} UAH</span>

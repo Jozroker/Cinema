@@ -6,35 +6,34 @@ import lombok.Data;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Data
 public class RegisterUserDTO {
 
     private Long id;
 
-    @NotEmpty(message = "username value is required")
+    @NotEmpty(message = "state.required.field")
     private String username;
 
-    @Pattern(regexp = "\\D*", message = "first name cannot contain numbers")
+    @Pattern(regexp = ".*[0-9].*", message = "state.cannot.contain.number")
     private String firstName;
 
-    @Pattern(regexp = "\\D*", message = "first name cannot contain numbers")
+    @Pattern(regexp = ".*[0-9].*", message = "state.cannot.contain.number")
     private String lastName;
 
-    @NotEmpty(message = "email value is required")
-    @Email(message = "invalid mail value")
+    @NotEmpty(message = "state.required.field")
+    @Email(message = "state.email.invalid")
     private String email;
 
-    @NotEmpty(message = "phone value is required")
-    @Pattern(regexp = "^\\d+$", message = "phone cannot contain letters")
-    @Size(min = 10, max = 10, message = "invalid phone value")
+    //    @NotEmpty(message = "phone value is required")
+//    @Pattern(regexp = "^\\d+$", message = "phone cannot contain letters")
+//    @Size(min = 10, max = 10, message = "invalid phone value")
     private String phone;
 
-    @NotEmpty(message = "password value is required")
+    @NotEmpty(message = "state.required.field")
     private String password;
 
-    @NotEmpty(message = "confirm password value is required")
+    @NotEmpty(message = "state.required.field")
     private String confirmPassword;
 
     private Role role = Role.USER;

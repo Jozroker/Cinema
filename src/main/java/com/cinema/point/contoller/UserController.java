@@ -3,6 +3,7 @@ package com.cinema.point.contoller;
 import com.cinema.point.contoller.validator.UserValidator;
 import com.cinema.point.dto.LoginUserDTO;
 import com.cinema.point.dto.RegisterUserDTO;
+import com.cinema.point.dto.UserDTO;
 import com.cinema.point.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -45,28 +46,6 @@ public class UserController {
         return "authorization";
     }
 
-    //todo check password is bcrypted
-
-//    @PostMapping("/login")
-//    public String login(@Valid @ModelAttribute("loginUser") LoginUserDTO userDTO, BindingResult bindingResult, Model model, HttpServletRequest request) {
-//        if (bindingResult.hasErrors()) {
-//            model.addAttribute("registerUser", new RegisterUserDTO());
-//            return "authorization";
-//        }
-//        log.info("sign in user {}", userDTO);
-//        UserDTO result1 = userService.findByEmail(userDTO.getUsernameOrEmail());
-//        UserDTO result2 = userService.findByUsername(userDTO.getUsernameOrEmail());
-//        UserDTO user = null;
-//        if (result1 == null && result2 == null) {
-//            model.addAttribute("registerUser", new RegisterUserDTO());
-//            return "authorization";
-//        } else {
-//            user = result1 == null ? result2 : result1;
-//        }
-//        request.getSession().setAttribute("user", user);
-//        return "redirect:/home";
-//    }
-
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("registerUser") RegisterUserDTO userDTO, BindingResult bindingResult, Model model,
                            HttpServletRequest request) {
@@ -74,17 +53,13 @@ public class UserController {
             model.addAttribute("loginUser", new LoginUserDTO());
             return "authorization";
         }
+        UserDTO findByUsername =
+                userService.findByUsername(userDTO.getUsername());
+        UserDTO findByEmail = userService.findByEmail(userDTO.getEmail());
+        UserDTO findByPhone = userService.findByPhone(userDTO.getPhone());
         log.info("register new user {}", userDTO);
         userService.create(userDTO);
-//        UserDTO user = userService.findByPhone(userDTO.getPhone());
-//        model.addAttribute("user", user);
         return "redirect:/authorization";
     }
 
-//    @GetMapping("/logout")
-//    public String logout(HttpServletRequest request) {
-//        log.info("logout user");
-//        request.getSession().removeAttribute("user");
-//        return "home";
-//    }
 }

@@ -47,13 +47,13 @@
                 <div class="sign-in-htm">
                     <div class="group">
                         <spring:message code="login.email_or_name" var="loginEmailOrUsername"/>
-                        <springForm:input path="usernameOrEmail" class="input" placeholder="${loginEmailOrUsername}" cssErrorClass="invalid"/>
-                        <springForm:errors path="usernameOrEmail" cssClass="invalid-text" element="div"/>
+                        <springForm:input path="username" class="input" placeholder="${loginEmailOrUsername}" cssErrorClass="invalid"/>
+                        <springForm:errors path="username" cssClass="invalid-text" element="div"/>
                     </div>
                     <div class="group">
                         <spring:message code="login.password" var="loginPassword"/>
-                        <springForm:password path="pass" class="input" placeholder="${loginPassword}" cssErrorClass="invalid"/>
-                        <springForm:errors path="pass" cssClass="invalid-text" element="div"/>
+                        <springForm:password path="password" class="input" placeholder="${loginPassword}" cssErrorClass="invalid"/>
+                        <springForm:errors path="password" cssClass="invalid-text" element="div"/>
                     </div>
                     <div class="group">
                     </div>

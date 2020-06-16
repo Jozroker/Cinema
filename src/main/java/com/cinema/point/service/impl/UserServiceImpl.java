@@ -10,6 +10,7 @@ import com.cinema.point.repository.UserRepository;
 import com.cinema.point.service.UserService;
 import com.cinema.point.service.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,20 +21,23 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-    UserRepository userRepository;
-    UserMapper userMapper;
-    TicketRepository ticketRepository;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final TicketRepository ticketRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, TicketRepository ticketRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, TicketRepository ticketRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.ticketRepository = ticketRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
     public UserDTO create(RegisterUserDTO userDTO) {
         log.debug("creating new user {}", userDTO);
         User user = userMapper.toEntity(userDTO);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userMapper.toDTO(userRepository.save(user));
     }
 

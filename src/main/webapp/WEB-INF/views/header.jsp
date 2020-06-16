@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%--<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>--%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -63,13 +63,8 @@
                     <a class="nav-link lang" href="?language=ua">UA</a>
                 </li>
                 <li id="sign-in">
-                    <c:choose>
-                    <c:when test="${user.id == null}">
-                    <button id="sign-in-button" class="btn btn-outline-success my-2 my-sm-0" type="button">
-                        <spring:message code="navbar.signin"/>
-                    </button>
-                    </c:when>
-                    <c:otherwise>
+                    <sec:authorize access="isAuthenticated()">
+                        <sec:authentication var="user" property="principal"/>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="user"
                        data-toggle="dropdown" aria-haspopup="true"
@@ -93,8 +88,12 @@
                         </a>
                     </ul>
                 </li>
-                </c:otherwise>
-                </c:choose>
+                </sec:authorize>
+                <sec:authorize access="!isAuthenticated()">
+                    <button id="sign-in-button" class="btn btn-outline-success my-2 my-sm-0" type="button">
+                        <spring:message code="navbar.signin"/>
+                    </button>
+                </sec:authorize>
                 </li>
             </ul>
         </div>

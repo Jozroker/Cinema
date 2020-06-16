@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 public interface SeanceRepository extends JpaRepository<Seance, Long> {
 
+    @Query("select s from Seance s where s.seanceDateTo <= ?1")
     List<Seance> findBySeanceDateTo(Date date);
 
     @Query("select s from Seance s where ?1 between s.seanceDateFrom and s.seanceDateTo")

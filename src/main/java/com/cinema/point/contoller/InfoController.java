@@ -2,6 +2,7 @@ package com.cinema.point.contoller;
 
 import com.cinema.point.domain.Day;
 import com.cinema.point.domain.Seance;
+import com.cinema.point.dto.SeanceCreationDTO;
 import com.cinema.point.dto.SimpleMovieDTO;
 import com.cinema.point.dto.UserDTO;
 import com.cinema.point.repository.SeanceRepository;
@@ -16,11 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,26 +46,16 @@ public class InfoController {
                        @RequestParam(defaultValue = "") String date,
                        HttpServletRequest request) {
         Date dateNow = Date.valueOf(LocalDate.now());
-        Instant dateTimeNow = Instant.now();
+        cleanData(dateNow);
         List<SimpleMovieDTO> currentMovies =
-                seanceService.findByDateBetween(Date.valueOf(dateTimeNow.atOffset(ZoneOffset.UTC).toLocalDate())).stream()
+                seanceService.findByDateBetween(dateNow).stream()
                         .map(seanceDTO -> movieService.findSimpleById(seanceDTO.getMovieId())).distinct()
                         .collect(Collectors.toList());
         List<SimpleMovieDTO> allMovies = movieService.findSimpleAll();
-//        List<String> movies = seanceService.findByDateBetween(Date.valueOf(dateTimeNow.atOffset(ZoneOffset.UTC).toLocalDate())).stream()
-//                .map(seanceDTO -> {
-//                    MovieDTO movieDTO =
-//                            movieService.findById(seanceDTO.getMovieId());
-////                    byte[] encodeBase64 = Base64.encodeBase64(movieDTO.getPicture());
-////                    return new String(encodeBase64, StandardCharsets.UTF_8);
-//                    return new String(movieDTO.getPicture(), StandardCharsets.UTF_8);
-//
-//                })
-//                .collect(Collectors.toList());
         List<Seance> schedule;
         if (date.equals("")) {
             schedule =
-                    seanceRepository.findByDateBetween(Date.valueOf(dateTimeNow.atOffset(ZoneOffset.UTC).toLocalDate()));
+                    seanceRepository.findByDateBetween(dateNow);
         } else {
             Date param;
             try {
@@ -78,9 +68,10 @@ public class InfoController {
         }
         List<Day> days = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
-            days.add(Day.valueOf(String.valueOf(dateTimeNow.atOffset(ZoneOffset.UTC).getDayOfWeek())));
+            days.add(Day.valueOf(String.valueOf(dateNow.toLocalDate().getDayOfWeek())));
 //            schedule.add(seanceService.findByDateBetween(Date.valueOf(dateTimeNow.atOffset(ZoneOffset.UTC).toLocalDate())));
-            dateTimeNow = dateTimeNow.plus(1, ChronoUnit.DAYS);
+//            dateTimeNow = dateTimeNow.plus(1, ChronoUnit.DAYS);
+            dateNow = Date.valueOf(dateNow.toLocalDate().plus(1, ChronoUnit.DAYS));
         }
         model.addAttribute("days", days);
         model.addAttribute("schedule", schedule);
@@ -88,5 +79,14 @@ public class InfoController {
         model.addAttribute("allMovies", allMovies);
 //        model.addAttribute("user", request.getSession().getAttribute("user"));
         return "home";
+    }
+
+    private void cleanData(Date date) {
+        Date tomorrow = Date.valueOf(date.toLocalDate().minus(1, ChronoUnit.DAYS));
+        List<SeanceCreationDTO> deleting = seanceService.findBySeanceDateTo(tomorrow);
+        Iterator<SeanceCreationDTO> iter = deleting.iterator();
+        while (iter.hasNext()) {
+            seanceService.deleteById(iter.next().getId());
+        }
     }
 }
