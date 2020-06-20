@@ -28,4 +28,6 @@ public class MovieDTO {
 
     //    private Set<ActorDTO> actors = new HashSet<>();
     private Set<Long> actorsIds = new HashSet<>();
+
+    private String pictureString;
 }

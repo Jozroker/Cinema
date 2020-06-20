@@ -27,10 +27,14 @@ public abstract class MovieMapper {
 
     @Mapping(source = "actors", target = "actorsIds", qualifiedByName =
             "mapToActorsIds")
+    @Mapping(source = "picture", target = "pictureString",
+            qualifiedByName = "mapToStringPicture")
     public abstract MovieDTO toDTO(Movie movie);
 
     @Mapping(source = "actorsIds", target = "actors", qualifiedByName =
             "mapToActors")
+    @Mapping(source = "picture", target = "picture",
+            qualifiedByName = "mapToBytePicture")
     public abstract Movie toEntity(MovieDTO movieDTO);
 
     @Mapping(source = "picture", target = "pictureString",

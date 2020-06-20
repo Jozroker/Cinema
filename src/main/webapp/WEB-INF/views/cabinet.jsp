@@ -14,6 +14,7 @@
 <!-- todo add custom font to all pages -->
 <head>
     <title>Personal Cabinet</title>
+    <link rel="stylesheet" href="${contextPath}/resources/css/cabinet.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -23,28 +24,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <style type="text/css">
-        #body {
-            background-color: #595C5F;
-            color: #212529;
-        }
-
-        #container {
-            /*margin-top: 20px;*/
-            padding-top: 5%;
-            /*width: 100%;*/
-            margin-left: 5%;
-        }
-
-        .container img {
-            float: left;
-            border-radius: 50%;
-            -webkit-shape-outside: circle();
-            shape-outside: circle();
-            margin-right: 20px;
-            width: 200px;
-        }
-    </style>
+    <script>
+        // $('#tickets .table').hover(function () {
+        //     $(this).change(function () {
+        //         this.style.width='60%'
+        //     }).trigger('change')
+        // })
+        $(document).ready(function () {
+            $('.table').on('click', function () {
+                let id = $(this).find('#first').attr('class').split(/\s+/)[0];
+                let url = window.location.origin + '/ticket?id=' + id;
+                window.location.href = url
+            })
+        })
+    </script>
 </head>
 <jsp:include page="header.jsp"/>
 <body id="body">
@@ -73,11 +66,38 @@
                     </c:if>
                 </p>
                 <p>Email: ${user.email}</p>
-                <p><spring:message code="registration.phone"/>: ${user.phone}</p>
+                <p id="tickets-point"><spring:message code="registration.phone"/>: ${user.phone}</p>
             </div>
         </div>
+    </div>
+    <div id="tickets">
+        <h4><spring:message code="cabinet.tickets"/></h4>
+        <c:forEach var="ticket" items="${tickets}" varStatus="loop">
+            <table class="table">
+                <tr class="title">
+                    <th id="first" class="${ticket.id} first">#</th>
+                    <th class="movie"><spring:message code="movie.name"/></th>
+                    <th><spring:message code="ticket.row"/></th>
+                    <th><spring:message code="ticket.column"/></th>
+                    <th><spring:message code="schedules.date"/></th>
+                    <th><spring:message code="schedules.start.time"/></th>
+                    <th class=" last"><spring:message code="schedules.hall"/></th>
+                </tr>
+                <tr class="content">
+                    <td class="first-td ticket${ticket.id}">${loop.index + 1}</td>
+                    <td class="spacing ticket${ticket.id}">${movies[loop.index].name}</td>
+                    <td class="spacing ticket${ticket.id}">${ticket.row}</td>
+                    <td class="spacing ticket${ticket.id}">${ticket.column}</td>
+                    <td class="spacing ticket${ticket.id}">${ticket.seanceDate}</td>
+                    <td class="spacing ticket${ticket.id}">${seances[loop.index].timeToString()}</td>
+                    <td class="last-td ticket${ticket.id}">${seances[loop.index].hallId}</td>
+                </tr>
+            </table>
+            <%--            <div class="empty"><div class="empty"></div></div>--%>
+        </c:forEach>
     </div>
 </sec:authorize>
 </body>
 <jsp:include page="footer.jsp"/>
+
 </html>

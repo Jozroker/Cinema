@@ -72,11 +72,42 @@ nav {
     font-size: 15px;
 }
 
+#movies {
+    list-style: none;
+    position: absolute;
+    top: 50px;
+    width: 800px;
+    display: none;
+}
+
+#movies a {
+    text-decoration: none;
+    color: #28A745;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#movies li {
+    padding: 0;
+    padding-left: 10px;
+}
+
+#movies a:hover {
+    color: #4cd56b;
+}
+
 #logo {
     position: absolute;
     width: 5%;
     left: 5px;
     z-index: 1;
+    transform: scale(1);
+    transition: all 1s;
+}
+
+#logo:hover {
+    transform: scale(1.1);
+    transition: all 1s;
 }
 
 #search-bar {

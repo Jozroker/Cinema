@@ -1,22 +1,20 @@
 package com.cinema.point.contoller;
 
 import com.cinema.point.contoller.validator.UserValidator;
-import com.cinema.point.dto.LoginUserDTO;
-import com.cinema.point.dto.RegisterUserDTO;
-import com.cinema.point.dto.UserDTO;
-import com.cinema.point.service.UserService;
+import com.cinema.point.domain.Hall;
+import com.cinema.point.dto.*;
+import com.cinema.point.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -27,9 +25,21 @@ public class UserController {
 
     UserValidator userValidator;
 
-    public UserController(UserService userService, UserValidator userValidator) {
+    TicketService ticketService;
+
+    MovieService movieService;
+
+    SeanceService seanceService;
+
+    HallService hallService;
+
+    public UserController(UserService userService, UserValidator userValidator, TicketService ticketService, MovieService movieService, SeanceService seanceService, HallService hallService) {
         this.userService = userService;
         this.userValidator = userValidator;
+        this.ticketService = ticketService;
+        this.movieService = movieService;
+        this.seanceService = seanceService;
+        this.hallService = hallService;
     }
 
     @InitBinder("registerUser")
@@ -60,10 +70,34 @@ public class UserController {
     @GetMapping("/cabinet")
     public String cabinet(Model model, Principal principal) {
         UserDTO user = userService.findByUsername(principal.getName());
+        List<TicketDTO> tickets = ticketService.findByUserId(user.getId());
+        List<SeanceDTO> seances =
+                tickets.stream().map(t -> seanceService.findByTicketId(t.getId()))
+                        .collect(Collectors.toList());
+        List<SimpleMovieDTO> movies =
+                seances.stream().map(s -> movieService.findSimpleById(s.getMovieId()))
+                        .collect(Collectors.toList());
 //        String picture = new String(user.getPicture(), StandardCharsets.UTF_8);
 //        model.addAttribute("picture", picture);
         model.addAttribute("user", user);
+        model.addAttribute("tickets", tickets);
+        model.addAttribute("seances", seances);
+        model.addAttribute("movies", movies);
         return "cabinet";
+    }
+
+    @GetMapping("/ticket")
+    public String ticket(Model model, @RequestParam Long id) {
+        TicketDTO ticket = ticketService.findById(id);
+        SeanceDTO seance =
+                seanceService.findByTicketId(id);
+        SimpleMovieDTO movie = movieService.findSimpleById(seance.getMovieId());
+        Hall hall = hallService.findById(seance.getHallId());
+        model.addAttribute("ticket", ticket);
+        model.addAttribute("seance", seance);
+        model.addAttribute("movie", movie);
+        model.addAttribute("hall", hall);
+        return "ticket";
     }
 
 }

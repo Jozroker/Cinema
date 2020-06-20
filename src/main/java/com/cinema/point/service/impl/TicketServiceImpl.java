@@ -51,7 +51,8 @@ public class TicketServiceImpl implements TicketService {
                 .orElseThrow(() -> new ResourceNotFoundException("Seance",
                         ticketDTO.getSeanceId()));
         ticket.setSeance(seance);
-        return ticketMapper.toDTO(ticketRepository.save(ticket));
+        ticket = ticketRepository.save(ticket);
+        return ticketMapper.toDTO(ticket);
     }
 
     @Override

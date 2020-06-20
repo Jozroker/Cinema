@@ -3,11 +3,13 @@ package com.cinema.point.service.impl;
 import com.cinema.point.domain.*;
 import com.cinema.point.dto.SeanceCreationDTO;
 import com.cinema.point.dto.SeanceDTO;
+import com.cinema.point.dto.TicketDTO;
 import com.cinema.point.errors.ResourceNotFoundException;
 import com.cinema.point.repository.HallRepository;
 import com.cinema.point.repository.MovieRepository;
 import com.cinema.point.repository.SeanceRepository;
 import com.cinema.point.service.SeanceService;
+import com.cinema.point.service.TicketService;
 import com.cinema.point.service.mapper.SeanceMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,12 +29,14 @@ public class SeanceServiceImpl implements SeanceService {
     HallRepository hallRepository;
     MovieRepository movieRepository;
     SeanceMapper seanceMapper;
+    TicketService ticketService;
 
-    public SeanceServiceImpl(SeanceRepository seanceRepository, HallRepository hallRepository, MovieRepository movieRepository, SeanceMapper seanceMapper) {
+    public SeanceServiceImpl(SeanceRepository seanceRepository, HallRepository hallRepository, MovieRepository movieRepository, SeanceMapper seanceMapper, TicketService ticketService) {
         this.seanceRepository = seanceRepository;
         this.hallRepository = hallRepository;
         this.movieRepository = movieRepository;
         this.seanceMapper = seanceMapper;
+        this.ticketService = ticketService;
     }
 
     @Override
@@ -53,6 +58,11 @@ public class SeanceServiceImpl implements SeanceService {
     @Override
     public void deleteById(Long id) {
         log.debug("deleting seance by id {}", id);
+        List<TicketDTO> tickets = ticketService.findBySeanceId(id);
+        Iterator<TicketDTO> iter = tickets.iterator();
+        while (iter.hasNext()) {
+            ticketService.deleteById(iter.next().getId());
+        }
         seanceRepository.deleteById(id);
     }
 
@@ -101,17 +111,16 @@ public class SeanceServiceImpl implements SeanceService {
     }
 
     @Override
-    public SeanceDTO findByTimeLineInSeance(Time time) {
+    public List<SeanceCreationDTO> findByTimeLineInSeance(Time time) {
         log.debug("finding seance by time {}", time);
-        return seanceMapper.toDTO(seanceRepository.findByTimeLineInSeance(time)
-                .orElseThrow(() -> new ResourceNotFoundException("Seance",
-                        "(time) " + time)));
+        return seanceRepository.findByTimeLineInSeance(time).stream()
+                .map(seanceMapper::toCreationDTO).collect(Collectors.toList());
     }
 
     @Override
-    public List<SeanceDTO> findByHall(Hall hall) {
-        log.debug("finding seances by hall {}", hall);
-        return seanceRepository.findByHall(hall).stream()
+    public List<SeanceDTO> findByHallId(Long id) {
+        log.debug("finding seances by hall id {}", id);
+        return seanceRepository.findByHallId(id).stream()
                 .map(seanceMapper::toDTO).collect(Collectors.toList());
     }
 
@@ -130,10 +139,17 @@ public class SeanceServiceImpl implements SeanceService {
     }
 
     @Override
-    public List<SeanceDTO> findByMovie(Movie movie) {
-        log.debug("finding seances by movie {}", movie);
-        return seanceRepository.findByMovie(movie).stream()
+    public List<SeanceDTO> findByMovieId(Long id) {
+        log.debug("finding seances by movie id {}", id);
+        return seanceRepository.findByMovieId(id).stream()
                 .map(seanceMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SeanceCreationDTO> findCreationByMovieId(Long id) {
+        log.debug("finding seances by movie id {}", id);
+        return seanceRepository.findByMovieId(id).stream()
+                .map(seanceMapper::toCreationDTO).collect(Collectors.toList());
     }
 
     @Override

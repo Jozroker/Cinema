@@ -11,6 +11,7 @@ $(document).ready(function () {
 
     $('.day').on('click', function () {
         // let id = $(this).attr('id');
+        console.log('hi')
         let number = $(this).attr('id').slice(-1);
         $('.day').removeClass('active');
         $(this).addClass('active');
@@ -38,6 +39,12 @@ $(document).ready(function () {
             let elem = $(data).find('#schedule').html()
             $('#schedule').html(elem)
         })
+    })
+
+    $('#buy').on('click', function () {
+        let movieId = $('.main-pos').attr('class').split(/\s+/)[0];
+        let url = window.location.origin + '/movie/order?movieId=' + movieId;
+        window.location.href = url
     })
 
 //global variables

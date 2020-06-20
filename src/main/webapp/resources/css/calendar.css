@@ -1,0 +1,142 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: unset !important;
+    font-family: Georgia, Times, serif;
+}
+
+/*th {*/
+/*    border: 1px solid #A8A8A8;*/
+/*    vertical-align: top;*/
+/*}*/
+
+/*td {*/
+/*    height: 150px;*/
+/*    width: 150px;*/
+/*    padding: 10px;*/
+/*    border: 1px solid #A8A8A8;*/
+/*    vertical-align: top;*/
+/*}*/
+
+.divcalendar {
+    padding: 15px;
+    float: left;
+    width: 320px;
+    background-color: #E3E6EB;
+    border-radius: 30px;
+    color: #242529;
+}
+
+.divcalendar table, .divcalendar tbody, .divcalendar tr {
+    width: 100%;
+}
+
+* {
+    box-sizing: unset !important;
+}
+
+/*!* Wrapper div. That makes the inner div into an inline element that can be centered with text-align.*!*/
+#calendaroverallcontrols {
+    text-align: center;
+}
+
+/* This is a fluid div as width will be changing */
+#calendarmonthcontrols {
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+
+    /*background-color: #FF0000;*/
+}
+
+#calendarmonthcontrols > div, #calendarmonthcontrols > a {
+    display: inline-block;
+}
+
+#btnPrev {
+    float: left;
+    margin-left: 30px;
+}
+
+#btnPrev span {
+    text-decoration: none;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    /*background-color: #28A745;*/
+    border-radius: 100%;
+    vertical-align: middle;
+    color: #242529;
+}
+
+#btnNext {
+    float: right;
+    margin-right: 30px;
+}
+
+#btnNext span {
+    color: #242529;
+    text-decoration: none;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    /*background-color: #28A745;*/
+    border-radius: 100%;
+    vertical-align: middle;
+}
+
+#monthandyear {
+    width: 60%;
+    height: 100%;
+}
+
+.divcalendar th {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    /*background-color: #9A9DA0;*/
+    text-align: center;
+    margin: 3px;
+    padding: 0;
+}
+
+.divcalendar td {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    /*background-color: #28A745;*/
+    text-align: center;
+    margin: 3px;
+    padding: 0;
+}
+
+#nextmonthdates, #prevmonthdates {
+    /*background-color: white;*/
+    color: #B0B4BD;
+}
+
+.not-used {
+    background-color: #d1d3d7;
+    color: #B0B4BD;
+}
+
+#currentmonthdates:hover {
+    background-color: #717580;
+    color: white;
+}
+
+#btnNext span:hover {
+    text-decoration: none;
+    background-color: #717580;
+    color: white;
+}
+
+#btnPrev span:hover {
+    text-decoration: none;
+    background-color: #717580;
+    color: white;
+}
+

@@ -34,16 +34,17 @@
                     <c:forEach var="movie" items="${movies}" varStatus="loop">
                         <c:choose>
                             <c:when test="${loop.first}">
-                                <li class="items main-pos" id="1"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/>${movie.id}</li>
+                                <li class="${movie.id} items main-pos" id="1"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/></li>
                             </c:when>
                             <c:when test="${loop.last}">
-                                <li class="items left-pos" id="${loop.count}"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/>${movie.id}</li>
+                                <li class="${movie.id} items left-pos"
+                                    id="${loop.count}"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/></li>
                             </c:when>
                             <c:when test="${loop.index == 1}">
-                                <li class="items right-pos" id="2"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/>${movie.id}</li>
+                                <li class="${movie.id} items right-pos" id="2"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/></li>
                             </c:when>
                             <c:otherwise>
-                                <li class="items back-pos" id="${loop.index + 1}"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/>${movie.id}
+                                <li class="${movie.id} items back-pos" id="${loop.index + 1}"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/>
                                 </li>
                             </c:otherwise>
                         </c:choose>
@@ -65,17 +66,32 @@
             <c:set var="item" value="day.${day.name().toLowerCase()}"/>
             <c:choose>
                 <c:when test="${loop.first}">
-                    <div class="col-sm">
-                        <span id="day${day.ordinal()}" class="active day"><spring:message code="${item}"/></span>
+                    <div class="column">
+                        <span id="day${loop.index}" class="active day"><spring:message code="${item}"/></span>
                     </div>
                 </c:when>
                 <c:otherwise>
-                    <div class="col-sm">
-                        <span id="day${day.ordinal()}" class="day"><spring:message code="${item}"/></span>
+                    <div class="column">
+                        <span id="day${loop.index}" class="day"><spring:message code="${item}"/></span>
                     </div>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
+        <%--        <c:forEach var="day" items="${days}" varStatus="loop">--%>
+        <%--            <c:set var="item" value="day.${day.name().toLowerCase()}"/>--%>
+        <%--            <c:choose>--%>
+        <%--                <c:when test="${loop.first}">--%>
+        <%--                    <div class="column">--%>
+        <%--                        <span id="day${loop.index}" class="active day"><spring:message code="${item}"/></span>--%>
+        <%--                    </div>--%>
+        <%--                </c:when>--%>
+        <%--                <c:otherwise>--%>
+        <%--                    <div class="column">--%>
+        <%--                        <span id="day${loop.index}" class="day"><spring:message code="${item}"/></span>--%>
+        <%--                    </div>--%>
+        <%--                </c:otherwise>--%>
+        <%--            </c:choose>--%>
+        <%--        </c:forEach>--%>
         <div class="col-sm"></div>
         <div class="col-sm"></div>
         <div class="col-sm"></div>
@@ -88,7 +104,7 @@
             <thead>
             <tr id="title">
                 <th scope="col" class="first"><spring:message code="number.default"/></th>
-                <th scope="col" class="movie"><spring:message code="movie.name"/></th>
+                <th scope="col" id="movie"><spring:message code="movie.name"/></th>
                 <th scope="col"><spring:message code="schedules.start.time"/></th>
                 <th scope="col" colspan="2"><spring:message code="schedules.hall"/></th>
                 <th scope="col"><spring:message code="schedules.price"/></th>
@@ -104,7 +120,10 @@
                     <td class="spacing seance${seance.id}">${seance.hall.id}</td>
                     <td class="spacing seance${seance.id}">${seance.hall.type.type}</td>
                     <td class="spacing seance${seance.id}">${seance.ticketPrice} UAH</td>
-                    <td class="spacing last seance${seance.id}"><a class="pill" href=""><spring:message code="ticket.buy"/></a></td>
+                    <td
+                            class="spacing last seance${seance.id}"><a class="pill"
+                                                                       href="${contextPath}/seance/order?seanceId=${seance.id}"><spring:message code="ticket.buy"/></a>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>

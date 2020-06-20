@@ -19,6 +19,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resources/js/header.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '${contextPath}/movies/list'
+            }).done(function (data) {
+                let list = []
+                for (let elem in data) {
+                    let element = '<li class="list-group-item"><a href="${contextPath}/movie/' + elem + '">' + data[elem] + '</a></li>';
+                    list.push(element);
+                }
+                $('#movies').html(list)
+            })
+
+            $("#search-line").on("keyup", function () {
+                let value = $(this).val().toLowerCase();
+                if (value.length > 0) {
+                    $('#movies').show()
+                } else {
+                    $('#movies').hide()
+                }
+                $("#movies a").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        })
+
+    </script>
 </head>
 <header>
     <a class="navbar-brand" href="${contextPath}/home">
@@ -48,6 +76,9 @@
                 <spring:message code="navbar.search.button" var="search"/>
                 <input id="search-line" class="form-control mr-sm-2" type="text" placeholder="${search}"
                        aria-label="Search">
+                <ul class="list-group" id="movies">
+
+                </ul>
                 <button id="search-button" class="btn btn-outline-success my-2 my-sm-0" type="submit">
                     ${search}
                 </button>
@@ -75,8 +106,7 @@
                                 <spring:message code="cabinet.default"/>
                             </li>
                         </a>
-                        <!-- todo check this link -->
-                        <a class="link" href="${contextPath}/cabinet#tickets">
+                        <a class="link" href="${contextPath}/cabinet#tickets-point">
                             <li class="dropdown-item">
                                 <spring:message code="cabinet.tickets"/>
                             </li>

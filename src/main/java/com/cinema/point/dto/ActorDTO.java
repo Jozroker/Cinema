@@ -16,4 +16,6 @@ public class ActorDTO {
     private String lastName;
 
     private byte[] profilePicture;
+
+    private String pictureString;
 }

@@ -4,7 +4,6 @@ import com.cinema.point.domain.Day;
 import com.cinema.point.domain.Seance;
 import com.cinema.point.dto.SeanceCreationDTO;
 import com.cinema.point.dto.SimpleMovieDTO;
-import com.cinema.point.dto.UserDTO;
 import com.cinema.point.repository.SeanceRepository;
 import com.cinema.point.service.MovieService;
 import com.cinema.point.service.SeanceService;
@@ -12,10 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -41,17 +38,14 @@ public class InfoController {
     }
 
     @GetMapping({"/home", "/"})
-    public String home(Model model, @ModelAttribute("user") UserDTO user,
-                       @ModelAttribute("loginedUser") UserDTO logUser,
-                       @RequestParam(defaultValue = "") String date,
-                       HttpServletRequest request) {
+    public String home(Model model,
+                       @RequestParam(defaultValue = "") String date) {
         Date dateNow = Date.valueOf(LocalDate.now());
-        cleanData(dateNow);
+//        cleanData(dateNow);
         List<SimpleMovieDTO> currentMovies =
                 seanceService.findByDateBetween(dateNow).stream()
                         .map(seanceDTO -> movieService.findSimpleById(seanceDTO.getMovieId())).distinct()
                         .collect(Collectors.toList());
-        List<SimpleMovieDTO> allMovies = movieService.findSimpleAll();
         List<Seance> schedule;
         if (date.equals("")) {
             schedule =
@@ -76,7 +70,7 @@ public class InfoController {
         model.addAttribute("days", days);
         model.addAttribute("schedule", schedule);
         model.addAttribute("movies", currentMovies);
-        model.addAttribute("allMovies", allMovies);
+//        model.addAttribute("allMovies", allMovies);
 //        model.addAttribute("user", request.getSession().getAttribute("user"));
         return "home";
     }

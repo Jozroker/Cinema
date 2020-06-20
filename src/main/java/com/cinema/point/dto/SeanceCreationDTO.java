@@ -6,6 +6,9 @@ import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 @Data
 public class SeanceCreationDTO {
@@ -34,5 +37,9 @@ public class SeanceCreationDTO {
     //    private MovieDTO movie;
     private Long movieId;
 
-
+    public String timeToString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm", Locale.US);
+        LocalTime time = movieBeginTime.toLocalTime();
+        return formatter.format(time);
+    }
 }

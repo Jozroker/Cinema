@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface HallService {
 
-    Integer findFreePlaces(Long id);
-
-    Integer findReversedPlaces(Long id);
+//    Integer findFreePlaces(Long id);
+//
+//    Integer findReversedPlaces(Long id);
 
     List<Hall> findByType(HallType type);
+
+    Hall findById(Long id);
 }

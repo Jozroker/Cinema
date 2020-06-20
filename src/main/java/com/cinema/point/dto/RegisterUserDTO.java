@@ -46,6 +46,7 @@ public class RegisterUserDTO {
         BufferedImage bImage = null;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
+            //todo content path
             bImage = ImageIO.read(new File("F:\\PC_Educate\\Programming\\java\\cinema\\src\\main\\webapp\\resources\\image\\default-avatar.png"));
             ImageIO.write(bImage, "png", bos);
         } catch (IOException e) {
