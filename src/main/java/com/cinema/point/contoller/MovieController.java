@@ -11,13 +11,19 @@ import com.cinema.point.service.ActorService;
 import com.cinema.point.service.MovieService;
 import com.cinema.point.service.SeanceService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import javax.validation.Valid;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -92,6 +98,54 @@ public class MovieController {
         Map<Long, String> values = new HashMap<>();
         movieService.findSimpleAll().forEach(movie -> values.put(movie.getId(), movie.getName()));
         return values;
+    }
+
+    @GetMapping("/admin/create/movie")
+    public String createMovie() {
+        return "create_movie";
+    }
+
+    @GetMapping("/admin/create/actor")
+    public String createActor(Model model) {
+        ActorDTO actor = new ActorDTO();
+        model.addAttribute("actor", actor);
+        return "create_actor";
+    }
+
+    @GetMapping("/admin/get/actors")
+    @ResponseBody
+    public List<ActorDTO> getActors() {
+        return actorService.findAll();
+    }
+
+    @PostMapping("/admin/create/actor")
+    public String createActor(@Valid @ModelAttribute("actor") ActorDTO actor,
+                              BindingResult bindingResult, @RequestParam("file") MultipartFile file) throws IOException {
+        if (bindingResult.hasErrors()) {
+            return "create_actor";
+        }
+        log.info("register new actor {}", actor);
+        if (file.isEmpty()) {
+            File imagePath = new File("F:\\PC_Educate\\Programming\\java" +
+                    "\\cinema" +
+                    "\\src\\main\\webapp\\resources\\image\\default-avatar.png");
+            BufferedImage image = ImageIO.read(imagePath);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", bos);
+            byte[] data = bos.toByteArray();
+            actor.setProfilePicture(data);
+        } else {
+            actor.setProfilePicture(file.getBytes());
+        }
+        actorService.create(actor);
+        return "create_actor";
+    }
+
+    @PostMapping(value = "/admin/create/movie", consumes =
+            {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public String createMovie(@RequestBody MovieDTO movie) {
+        System.out.println("hi");
+        return "home";
     }
 
     private void cleanData(Date date) {

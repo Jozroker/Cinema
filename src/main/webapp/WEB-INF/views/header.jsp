@@ -76,9 +76,7 @@
                 <spring:message code="navbar.search.button" var="search"/>
                 <input id="search-line" class="form-control mr-sm-2" type="text" placeholder="${search}"
                        aria-label="Search">
-                <ul class="list-group" id="movies">
-
-                </ul>
+                <ul class="list-group" id="movies"></ul>
                 <button id="search-button" class="btn btn-outline-success my-2 my-sm-0" type="submit">
                     ${search}
                 </button>

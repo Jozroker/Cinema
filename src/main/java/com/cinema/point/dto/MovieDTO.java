@@ -1,6 +1,9 @@
 package com.cinema.point.dto;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
@@ -9,9 +12,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class MovieDTO {
 
     private Long id;
+
+    public MovieDTO(String name, String description, Long duration,
+                    byte[] picture, Set<Long> actorsIds) {
+        this.name = name;
+        this.description = description;
+        this.duration = duration;
+        this.picture = picture;
+        this.actorsIds = actorsIds;
+    }
 
     @NotEmpty(message = "name value is required")
     private String name;

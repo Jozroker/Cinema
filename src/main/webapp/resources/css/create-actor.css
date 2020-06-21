@@ -1,0 +1,54 @@
+#actor .avatar {
+    vertical-align: middle;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+}
+
+#file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+#actor .group {
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+#actor .group input {
+    width: 150px;
+}
+
+#actor form {
+    width: 300px;
+}
+
+#actor .create {
+    display: block;
+    position: relative;
+    width: 50%;
+    margin: auto;
+}
+
+#createBtn {
+    width: 100%;
+    margin-top: 20px;
+}
+
+#avatar-image {
+    float: left;
+}
+
+#avatar-image label {
+    display: block;
+    text-align: center;
+}
+
+#actor .invalid {
+    border: 1px solid red;
+}
