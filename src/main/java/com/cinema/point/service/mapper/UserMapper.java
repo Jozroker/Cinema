@@ -5,44 +5,62 @@ import com.cinema.point.domain.User;
 import com.cinema.point.dto.LoginUserDTO;
 import com.cinema.point.dto.RegisterUserDTO;
 import com.cinema.point.dto.UserDTO;
-import org.apache.tomcat.util.codec.binary.Base64;
+import com.cinema.point.errors.ResourceNotFoundException;
+import com.cinema.point.repository.TicketRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface UserMapper {
+public abstract class UserMapper {
+
+    @Autowired
+    TicketRepository ticketRepository;
 
     @Mapping(source = "tickets", target = "ticketsId", qualifiedByName =
             "mapToTicketsIds")
     @Mapping(source = "picture", target = "pictureString",
             qualifiedByName = "mapToStringPicture")
-    UserDTO toDTO(User user);
+    public abstract UserDTO toDTO(User user);
 
     //unused
 //    @Mapping(source = "ticketsId", target = "tickets.id")
 //    User toEntity(UserDTO userDTO);
 
-    User toEntity(LoginUserDTO userDTO);
+    public abstract User toEntity(LoginUserDTO userDTO);
 
-    @Mapping(source = "picture", target = "picture",
+    @Mapping(source = "pictureString", target = "picture",
             qualifiedByName = "mapToBytePicture")
-    User toEntity(RegisterUserDTO userDTO);
+    public abstract User toEntity(RegisterUserDTO userDTO);
 
-    User toEntity(UserDTO userDTO);
+    @Mapping(source = "pictureString", target = "picture",
+            qualifiedByName = "mapToBytePicture")
+    @Mapping(source = "ticketsId", target = "tickets", qualifiedByName =
+            "mapToTickets")
+    public abstract User toEntity(UserDTO userDTO);
 
-    default List<Long> mapToTicketsIds(List<Ticket> tickets) {
+    List<Long> mapToTicketsIds(List<Ticket> tickets) {
         return tickets.stream().map(Ticket::getId).collect(Collectors.toList());
     }
 
-    default String mapToStringPicture(byte[] picture) {
+    List<Ticket> mapToTickets(List<Long> tickets) {
+        return tickets.stream().map(id -> ticketRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Actor", id))).collect(Collectors.toList());
+    }
+
+    String mapToStringPicture(byte[] picture) {
         return new String(picture, StandardCharsets.UTF_8);
     }
 
-    default byte[] mapToBytePicture(byte[] picture) {
-        return Base64.encodeBase64(picture);
+    byte[] mapToBytePicture(String string) {
+        return string.getBytes(StandardCharsets.UTF_8);
     }
+
+//    default byte[] mapToBase64Picture(byte[] picture) {
+//        return Base64.decodeBase64(picture);
+//    }
 }

@@ -1,0 +1,74 @@
+#calendar {
+    position: absolute;
+    top: 226px;
+    left: 42.5%;
+    display: none;
+}
+
+#movie-input {
+    width: 200px;
+}
+
+#hall-input, #price-input {
+    width: 50px;
+}
+
+.input {
+    pointer-events: none;
+}
+
+#table {
+    background: #595C5F;
+}
+
+#schedule table {
+    border-collapse: unset;
+    border-spacing: 0 5px;
+}
+
+#schedule {
+    margin-left: 5%;
+    margin-right: 40%;
+}
+
+.movie {
+    width: 40%;
+}
+
+#title th {
+    /*border-radius: 5px;*/
+    background-color: #16181B;
+    color: #28a745;
+    border: 0;
+}
+
+/*#schedule tr {*/
+/*    z-index: 100;*/
+/*}*/
+
+.first {
+    border-radius: 10px 0 0 10px;
+    text-align: center;
+    width: 10%;
+}
+
+.last {
+    border-radius: 0 10px 10px 0;
+    width: 15%;
+}
+
+.spacing {
+    margin-top: 5px;
+}
+
+#schedule tbody th, #schedule tbody td {
+    background-color: #343A40;
+    color: #9A9DA0;
+    border: 0;
+    /*padding-top: 5px;*/
+    /*margin-top: 5px;*/
+}
+
+.column {
+    margin-right: 20px;
+}

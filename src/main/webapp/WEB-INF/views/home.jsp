@@ -116,7 +116,7 @@
                 <tr>
                     <th scope="row" class="spacing first seance${seance.id}">${loop.index + 1}</th>
                     <td class="movie spacing seance${seance.id}">${seance.movie.name}</td>
-                    <td class="spacing seance${seance.id}">${seance.movieBeginTime}</td>
+                    <td class="spacing seance${seance.id}">${seance.beginTimeToString()}</td>
                     <td class="spacing seance${seance.id}">${seance.hall.id}</td>
                     <td class="spacing seance${seance.id}">${seance.hall.type.type}</td>
                     <td class="spacing seance${seance.id}">${seance.ticketPrice} UAH</td>

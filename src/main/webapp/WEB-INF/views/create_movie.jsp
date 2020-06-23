@@ -91,12 +91,17 @@
             });
 
             $(document).on('click', '#createMovieBtn', function () {
-                let reader = new FileReader();
-                let picture = reader.readAsDataURL($('#fileToUpload')[0].files[0]);
+
+                function miliseconds(hrs, min) {
+                    return ((hrs * 360 + min * 60) * 1000);
+                }
+
+                let picture = Array.from(new Uint8Array(imageBytes));
                 console.log(picture)
                 let name = $('#name').val();
                 let description = $('#description').val();
-                let duration = miliseconds($('#durationi-hours').val(), $('#duration-minutes').val());
+                let duration = miliseconds($('#duration-hours').val(), $('#duration-minutes').val());
+                console.log(duration)
                 let actors = [];
                 for (let i = 0; i < $('.avatar-selected img').length; i++) {
                     actors.push($($('.avatar-selected img')[i]).attr('class').split(/\s+/)[0]);
@@ -109,29 +114,40 @@
                     $.ajax({
                         url: '${contextPath}/admin/create/movie',
                         type: 'POST',
-                        // enctype: 'multipart/form-data',
-                        // processData: false,
-                        // data: 'post-form='+postcontent,
                         dataType: 'json',
                         contentType: "application/json; charset=utf-8",
+                        cache: false,
                         data: JSON.stringify({
-                            picture: imageBytes,
+                            picture: picture,
                             name: name,
                             description: description,
                             duration: duration,
                             actorsIds: actors
-                        }),
+                        })
+                        // success: function (data) {
+                        //     console.log(data)
+                        // }
 
-                    }).done(function () {
-                        console.log('es')
+                    }).done(function (data) {
+                        let state = data.responseText;
+                        if (state === 'exists') {
+                            alert('Movie from such name is already exists')
+                        } else {
+                            window.location.href = '${contextPath}/home'
+                        }
+                    }).fail(function (data) {
+                        let state = data.responseText;
+                        if (state === 'exists') {
+                            alert('Movie from such name is already exists')
+                        } else {
+                            window.location.href = '${contextPath}/home'
+                        }
                     })
                 }
 
             })
 
-            function miliseconds(hrs, min) {
-                return ((hrs * 360 + min * 60) * 1000);
-            }
+
         })
     </script>
     <script>

@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @Data
 public class RegisterUserDTO {
@@ -40,9 +41,9 @@ public class RegisterUserDTO {
 
     private Role role = Role.USER;
 
-    private byte[] picture = getByteImage();
+    private String pictureString = getByteImage();
 
-    private byte[] getByteImage() {
+    private String getByteImage() {
         BufferedImage bImage = null;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
@@ -52,7 +53,7 @@ public class RegisterUserDTO {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return bos.toByteArray();
+        return new String(bos.toByteArray(), StandardCharsets.UTF_8);
     }
 
 }

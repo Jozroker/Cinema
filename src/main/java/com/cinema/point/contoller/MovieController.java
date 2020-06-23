@@ -6,10 +6,13 @@ import com.cinema.point.dto.ActorDTO;
 import com.cinema.point.dto.MovieDTO;
 import com.cinema.point.dto.SeanceCreationDTO;
 import com.cinema.point.dto.SimpleMovieDTO;
+import com.cinema.point.errors.ResourceNotFoundException;
 import com.cinema.point.repository.SeanceRepository;
 import com.cinema.point.service.ActorService;
 import com.cinema.point.service.MovieService;
 import com.cinema.point.service.SeanceService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -143,9 +146,16 @@ public class MovieController {
 
     @PostMapping(value = "/admin/create/movie", consumes =
             {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public String createMovie(@RequestBody MovieDTO movie) {
-        System.out.println("hi");
-        return "home";
+    @ResponseBody
+    public String createMovie(@RequestBody String movie) throws JsonProcessingException {
+        MovieDTO movieDTO = new ObjectMapper().readValue(movie, MovieDTO.class);
+        try {
+            movieService.findByName(movieDTO.getName());
+        } catch (ResourceNotFoundException e) {
+            movieService.create(movieDTO);
+            return "not exists";
+        }
+        return "exists";
     }
 
     private void cleanData(Date date) {

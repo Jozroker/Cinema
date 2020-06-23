@@ -16,6 +16,6 @@ public interface ActorRepository extends JpaRepository<Actor, Long> {
     Optional<Actor> findActor(String firstName, String lastName);
 
     //unusable
-    @Query("select m.actors from Movie m")
+    @Query("select m.actors from Movie m where m.id = ?1")
     List<Actor> findByMovieId(Long id);
 }

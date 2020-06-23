@@ -181,10 +181,14 @@
 
                         // Current month dates
                     } else {
-                        if (validDays.includes(d)) {
+                        if (window.location.pathname === '/schedule') {
                             html += '<td class="currentmonthdates" id="currentmonthdates">' + (d) + '</td>';
                         } else {
-                            html += '<td class="not-used" id="">' + (d) + '</td>';
+                            if (validDays.includes(d)) {
+                                html += '<td class="currentmonthdates" id="currentmonthdates">' + (d) + '</td>';
+                            } else {
+                                html += '<td class="not-used" id="">' + (d) + '</td>';
+                            }
                         }
 
                         p = 1;

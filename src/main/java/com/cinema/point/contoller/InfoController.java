@@ -2,6 +2,7 @@ package com.cinema.point.contoller;
 
 import com.cinema.point.domain.Day;
 import com.cinema.point.domain.Seance;
+import com.cinema.point.domain.comparator.SeanceTimeComparator;
 import com.cinema.point.dto.SeanceCreationDTO;
 import com.cinema.point.dto.SimpleMovieDTO;
 import com.cinema.point.repository.SeanceRepository;
@@ -41,7 +42,6 @@ public class InfoController {
     public String home(Model model,
                        @RequestParam(defaultValue = "") String date) {
         Date dateNow = Date.valueOf(LocalDate.now());
-//        cleanData(dateNow);
         List<SimpleMovieDTO> currentMovies =
                 seanceService.findByDateBetween(dateNow).stream()
                         .map(seanceDTO -> movieService.findSimpleById(seanceDTO.getMovieId())).distinct()
@@ -60,18 +60,16 @@ public class InfoController {
             schedule =
                     seanceRepository.findByDateBetween(param);
         }
+        SeanceTimeComparator stc = new SeanceTimeComparator();
+        schedule.sort(stc);
         List<Day> days = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             days.add(Day.valueOf(String.valueOf(dateNow.toLocalDate().getDayOfWeek())));
-//            schedule.add(seanceService.findByDateBetween(Date.valueOf(dateTimeNow.atOffset(ZoneOffset.UTC).toLocalDate())));
-//            dateTimeNow = dateTimeNow.plus(1, ChronoUnit.DAYS);
             dateNow = Date.valueOf(dateNow.toLocalDate().plus(1, ChronoUnit.DAYS));
         }
         model.addAttribute("days", days);
         model.addAttribute("schedule", schedule);
         model.addAttribute("movies", currentMovies);
-//        model.addAttribute("allMovies", allMovies);
-//        model.addAttribute("user", request.getSession().getAttribute("user"));
         return "home";
     }
 

@@ -1,5 +1,6 @@
 package com.cinema.point.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.constraints.*;
@@ -17,10 +18,12 @@ public class SeanceCreationDTO {
 
     @NotNull(message = "required field")
     @FutureOrPresent
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date seanceDateFrom;
 
     @NotNull(message = "required field")
     @Future
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date seanceDateTo;
 
     @NotNull(message = "required field")
@@ -28,6 +31,7 @@ public class SeanceCreationDTO {
 
     @NotEmpty(message = "ticket price value is required")
     @Digits(integer = 6, fraction = 2)
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private BigDecimal ticketPrice;
 
     @NotNull(message = "hall isn't selected")

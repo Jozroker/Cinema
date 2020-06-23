@@ -1,19 +1,20 @@
 package com.cinema.point.contoller;
 
 import com.cinema.point.domain.Hall;
+import com.cinema.point.domain.Seance;
+import com.cinema.point.domain.comparator.SeanceTimeComparator;
 import com.cinema.point.dto.MovieDTO;
 import com.cinema.point.dto.SeanceCreationDTO;
 import com.cinema.point.dto.SeanceDTO;
 import com.cinema.point.dto.TicketDTO;
 import com.cinema.point.errors.ResourceNotFoundException;
+import com.cinema.point.repository.SeanceRepository;
 import com.cinema.point.service.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.sql.Date;
@@ -36,14 +37,17 @@ public class SeanceController {
 
     SeanceService seanceService;
 
+    SeanceRepository seanceRepository;
+
     HallService hallService;
 
     UserService userService;
 
-    public SeanceController(TicketService ticketService, MovieService movieService, SeanceService seanceService, HallService hallService, UserService userService) {
+    public SeanceController(TicketService ticketService, MovieService movieService, SeanceService seanceService, SeanceRepository seanceRepository, HallService hallService, UserService userService) {
         this.ticketService = ticketService;
         this.movieService = movieService;
         this.seanceService = seanceService;
+        this.seanceRepository = seanceRepository;
         this.hallService = hallService;
         this.userService = userService;
     }
@@ -166,6 +170,32 @@ public class SeanceController {
 //        return "redirect:/cabinet#tickets";
     }
 
+    @GetMapping("/schedule")
+    public String schedule() {
+        return "schedule";
+    }
+
+    @GetMapping("/schedule/seances")
+    @ResponseBody
+    public List<Seance> getSeancesByDate(@RequestParam String date) {
+        List<Seance> seances =
+                seanceRepository.findByDateBetween(Date.valueOf(date));
+        seances.sort(new SeanceTimeComparator());
+        return seances;
+    }
+
+    @PostMapping(value = "/admin/change/seance", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void changeSeance(@RequestBody SeanceCreationDTO seance,
+                             @RequestParam String movieName) {
+        try {
+            Long movieId = movieService.findByName(movieName).getId();
+            seance.setMovieId(movieId);
+        } catch (ResourceNotFoundException ignored) {
+        }
+        //todo change this logic from filters
+        seanceService.update(seance);
+    }
+
     private Map<String, List<Integer>> findValidDates(Long movieId) {
         List<SeanceCreationDTO> validSeances = seanceService.findCreationByMovieId(movieId);
         Map<String, List<Integer>> validDates = new HashMap<>();
@@ -197,6 +227,5 @@ public class SeanceController {
         });
         return validDates;
     }
-
 
 }

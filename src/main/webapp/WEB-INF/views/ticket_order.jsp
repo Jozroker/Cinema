@@ -96,6 +96,7 @@
                 '&date=' + dateStr;
             $('#seanceDate').val(dateStr);
             $('#seanceTime').val('');
+            $('#places').hide();
 
             // console.log(url)
             // window.location.href = url;
@@ -156,10 +157,9 @@
             }).done(function (data) {
 
                 let reserved = new Map();
-
                 for (let row in data) {
                     for (let column in data[row]) {
-                        if (!reserved.has(row)) {
+                        if (!reserved.has(parseInt(row))) {
                             reserved.set(parseInt(row), [])
                         }
                         reserved.get(parseInt(row)).push(parseInt(data[row][column]));
