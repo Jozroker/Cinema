@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,6 +56,13 @@ public class SeanceServiceImpl implements SeanceService {
     }
 
     @Override
+    public SeanceCreationDTO findCreationById(Long id) {
+        log.debug("finding seance creation by id {}", id);
+        return seanceMapper.toCreationDTO(seanceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Seance", id)));
+    }
+
+    @Override
     public void deleteById(Long id) {
         log.debug("deleting seance by id {}", id);
         List<TicketDTO> tickets = ticketService.findBySeanceId(id);
@@ -82,7 +88,6 @@ public class SeanceServiceImpl implements SeanceService {
                         seanceDTO.getMovieId()));
         seance.setHall(hall);
         seance.setMovie(movie);
-        seance.setMovieEndTime(Time.valueOf(seance.getMovieBeginTime().toLocalTime().plus(movie.getDuration(), ChronoUnit.MILLIS)));
         //todo datepicker in jsp
 //        seance.setSeanceDateFrom(fullSeance.getSeanceDateFrom());
 //        seance.setSeanceDateTo(fullSeance.getSeanceDateTo());
@@ -114,6 +119,14 @@ public class SeanceServiceImpl implements SeanceService {
     public List<SeanceCreationDTO> findBySeanceDateTo(Date date) {
         log.debug("finding seances by date to {}", date);
         return seanceRepository.findBySeanceDateTo(date).stream()
+                .map(seanceMapper::toCreationDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SeanceCreationDTO> findBySeanceDates(Date dateFrom, Date dateTo) {
+        log.debug("finding seances by date from {} and date to {}", dateFrom,
+                dateTo);
+        return seanceRepository.findBySeanceDates(dateFrom, dateTo).stream()
                 .map(seanceMapper::toCreationDTO).collect(Collectors.toList());
     }
 
@@ -171,5 +184,12 @@ public class SeanceServiceImpl implements SeanceService {
         log.debug("finding seances by date between {}", date);
         return seanceRepository.findByDateBetween(date).stream()
                 .map(seanceMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SeanceCreationDTO> findCreationByDateBetween(Date date) {
+        log.debug("finding seances creation by date between {}", date);
+        return seanceRepository.findByDateBetween(date).stream()
+                .map(seanceMapper::toCreationDTO).collect(Collectors.toList());
     }
 }

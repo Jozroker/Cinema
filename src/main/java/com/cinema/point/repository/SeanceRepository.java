@@ -18,6 +18,12 @@ public interface SeanceRepository extends JpaRepository<Seance, Long> {
     @Query("select s from Seance s where s.seanceDateTo <= ?1")
     List<Seance> findBySeanceDateTo(Date date);
 
+    @Query("select s from Seance s where (s.seanceDateFrom >= ?1 and s" +
+            ".seanceDateTo <= ?2) or (?1 between s.seanceDateFrom and s" +
+            ".seanceDateTo) or (?2 between s.seanceDateFrom and s" +
+            ".seanceDateTo)")
+    List<Seance> findBySeanceDates(Date dateFrom, Date dateTo);
+
     @Query("select s from Seance s where ?1 between s.seanceDateFrom and s.seanceDateTo")
     List<Seance> findByDateBetween(Date date);
 

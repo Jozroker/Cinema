@@ -21,28 +21,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resources/js/schedule.js"></script>
     <script>
-        $(document).ready(function () {
-            $(document).on('click', '.table-row', function () {
-                $(this).removeClass('table-row').addClass('change-row');
-                let form =
-                    '<th scope="row" class="' + $(this).find('th').attr('class').split(/\s+/)[0] + ' spacing first seance">' +
-                    '<input id="seance-id" name="id" type="hidden" value="' + $(this).find('th').attr('class').split(/\s+/)[0] + '">' + $(this).find('th').text() +
-                    '</th>' +
-                    '<td class="movie spacing"><input class="' + $($(this).find('td')[0]).attr('class').split(/\s+/)[0] + '" name="movieName" id="movie-input" type="text" value="' +
-                    $(this).find('td')[0].innerText + '"></td>' +
-                    '<td class="spacing"><input name="time" type="time" id="timepicker" value="' + $(this).find('td')[1].innerText + '"></td>' +
-                    '<td class="spacing" colspan="2"><input name="hallId" id="hall-input" type="number" min="1" max="7" value="' + $(this).find('td')[2].innerText +
-                    '"></td>' +
-                    '<td class="spacing"><input name="dateFrom" type="date" id="date-from" value="' + $(this).find('td')[4].innerText + '"></td>' +
-                    '<td class="spacing"><input name="dateTo" type="date" id="date-to" value="' + $(this).find('td')[5].innerText + '"></td>' +
-                    '<td class="spacing"><input name="price" id="price-input" type="number" step="0.01" value="' + $(this).find('td')[6].innerText.slice(0, -4) +
-                    '"> UAH</td>' +
-                    '<td class="spacing last change"><button id="change"><spring:message code="create.change"/></button></td>';
-                $(this).html(form);
-                $('#schedule').css({'margin-right': '35%'})
-                $('.change').css({'width': '0'})
-            })
-        })
+
+        let create = '<spring:message code="create.default"/>';
+        let button = '<spring:message code="create.change"/>';
+        let monday = '<spring:message code="day.monday"/>'
+        let tuesday = '<spring:message code="day.tuesday"/>'
+        let wednesday = '<spring:message code="day.wednesday"/>'
+        let thursday = '<spring:message code="day.thursday"/>'
+        let friday = '<spring:message code="day.friday"/>'
+        let saturday = '<spring:message code="day.saturday"/>'
+        let sunday = '<spring:message code="day.sunday"/>'
 
     </script>
 </head>
@@ -58,13 +46,14 @@
     <div id="schedule">
         <table class="table">
             <thead>
-            <tr id="title">
+            <tr class="title">
                 <th scope="col" class="first"><spring:message code="number.default"/></th>
                 <th scope="col" id="movie"><spring:message code="movie.name"/></th>
                 <th scope="col"><spring:message code="schedules.start.time"/></th>
                 <th scope="col" colspan="2"><spring:message code="schedules.hall"/></th>
                 <th scope="col"><spring:message code="schedules.date.from"/></th>
                 <th scope="col"><spring:message code="schedules.date.to"/></th>
+                <th scope="col"><spring:message code="schedules.day"/></th>
                 <th scope="col" class="last"><spring:message code="schedules.price"/></th>
             </tr>
             </thead>
@@ -85,6 +74,25 @@
             <%--                </c:forEach>--%>
             </tbody>
         </table>
+    </div>
+    <div id="create-seance">
+        <table id="create-container">
+            <thead>
+            <tr class="title">
+                <th scope="col" class="first"><spring:message code="movie.name"/></th>
+                <th scope="col"><spring:message code="schedules.start.time"/></th>
+                <th scope="col" colspan="2"><spring:message code="schedules.hall"/></th>
+                <th scope="col"><spring:message code="schedules.date.from"/></th>
+                <th scope="col"><spring:message code="schedules.date.to"/></th>
+                <th scope="col"><spring:message code="schedules.day"/></th>
+                <th scope="col" class="last"><spring:message code="schedules.price"/></th>
+            </tr>
+            </thead>
+            <tbody id="creating-table-body">
+
+            </tbody>
+        </table>
+        <button id="create"><spring:message code="create.default"/></button>
     </div>
 </div>
 </body>

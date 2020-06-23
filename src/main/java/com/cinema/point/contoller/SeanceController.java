@@ -1,5 +1,6 @@
 package com.cinema.point.contoller;
 
+import com.cinema.point.domain.Day;
 import com.cinema.point.domain.Hall;
 import com.cinema.point.domain.Seance;
 import com.cinema.point.domain.comparator.SeanceTimeComparator;
@@ -19,12 +20,11 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.sql.Date;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -170,30 +170,64 @@ public class SeanceController {
 //        return "redirect:/cabinet#tickets";
     }
 
-    @GetMapping("/schedule")
+    @GetMapping("/admin/schedule")
     public String schedule() {
         return "schedule";
     }
 
-    @GetMapping("/schedule/seances")
+    @GetMapping("/admin/schedule/seances")
     @ResponseBody
     public List<Seance> getSeancesByDate(@RequestParam String date) {
-        List<Seance> seances =
-                seanceRepository.findByDateBetween(Date.valueOf(date));
-        seances.sort(new SeanceTimeComparator());
-        return seances;
+        Day currentDay =
+                Day.valueOf(Date.valueOf(date).toLocalDate().getDayOfWeek().toString());
+        return seanceRepository.findByDateBetween(Date.valueOf(date)).stream()
+                .filter(seance -> seance.getDay().contains(currentDay))
+                .sorted(new SeanceTimeComparator()).collect(Collectors.toList());
     }
 
     @PostMapping(value = "/admin/change/seance", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void changeSeance(@RequestBody SeanceCreationDTO seance,
-                             @RequestParam String movieName) {
+    @ResponseBody
+    public String changeSeance(@RequestBody SeanceCreationDTO seance,
+                               @RequestParam String movieName) {
+        try {
+            Long movieId = movieService.findByName(movieName).getId();
+            seance.setMovieId(movieId);
+        } catch (ResourceNotFoundException e) {
+            return "fail movie";
+        }
+
+        MovieDTO movie = movieService.findById(seance.getMovieId());
+        seance.setMovieEndTime(Time.valueOf(seance.getMovieBeginTime().toLocalTime()
+                .plus(movie.getDuration(), ChronoUnit.MILLIS)));
+
+        List<SeanceCreationDTO> sameSeances = findSameSeances(seance);
+        if (sameSeances.isEmpty()) {
+            seanceService.update(seance);
+            return "not exists";
+        }
+        return "exists";
+    }
+
+    @PostMapping(value = "/admin/create/seance", consumes =
+            MediaType.APPLICATION_JSON_VALUE)
+    public String createSeance(@RequestBody SeanceCreationDTO seance,
+                               @RequestParam String movieName) {
         try {
             Long movieId = movieService.findByName(movieName).getId();
             seance.setMovieId(movieId);
         } catch (ResourceNotFoundException ignored) {
         }
-        //todo change this logic from filters
-        seanceService.update(seance);
+
+        MovieDTO movie = movieService.findById(seance.getMovieId());
+        seance.setMovieEndTime(Time.valueOf(seance.getMovieBeginTime().toLocalTime()
+                .plus(movie.getDuration(), ChronoUnit.MILLIS)));
+
+        List<SeanceCreationDTO> sameSeances = findSameSeances(seance);
+        if (sameSeances.isEmpty()) {
+            seanceService.update(seance);
+            return "not exists";
+        }
+        return "exists";
     }
 
     private Map<String, List<Integer>> findValidDates(Long movieId) {
@@ -228,4 +262,39 @@ public class SeanceController {
         return validDates;
     }
 
+    private boolean compareTime(Time currentMovieBeginTime,
+                                Time currentMovieEndTime,
+                                Time newMovieBeginTime,
+                                Time newMovieEndTime) {
+        SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
+        java.util.Date currentMovieBegin = null;
+        java.util.Date currentMovieEnd = null;
+        java.util.Date newMovieBegin = null;
+        java.util.Date newMovieEnd = null;
+        try {
+            currentMovieBegin = parser.parse(currentMovieBeginTime.toString());
+            currentMovieEnd = parser.parse(currentMovieEndTime.toString());
+            newMovieBegin = parser.parse(newMovieBeginTime.toString());
+            newMovieEnd = parser.parse(newMovieEndTime.toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return (((newMovieBegin.after(currentMovieBegin) || newMovieBegin.equals(currentMovieBegin)) &&
+                (newMovieBegin.before(currentMovieEnd) || newMovieBegin.equals(currentMovieEnd))) ||
+                ((newMovieEnd.after(currentMovieBegin) || newMovieEnd.equals(currentMovieBegin)) &&
+                        (newMovieEnd.before(currentMovieEnd) || newMovieEnd.equals(currentMovieEnd))));
+    }
+
+    private List<SeanceCreationDTO> findSameSeances(SeanceCreationDTO seance) {
+        return seanceService.findBySeanceDates(seance.getSeanceDateFrom(),
+                seance.getSeanceDateTo())
+                .stream().filter(s -> !Collections.disjoint(s.getDay(),
+                        seance.getDay()))
+                .filter(s -> !s.getId().equals(seance.getId()))
+                .filter(s -> s.getHallId().equals(seance.getHallId()))
+                .filter(s -> compareTime(s.getMovieBeginTime(),
+                        s.getMovieEndTime(),
+                        seance.getMovieBeginTime(),
+                        seance.getMovieEndTime())).collect(Collectors.toList());
+    }
 }

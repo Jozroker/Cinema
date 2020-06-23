@@ -21,11 +21,17 @@ public interface SeanceService {
 
     List<SeanceDTO> findAll();
 
+    SeanceCreationDTO findCreationById(Long id);
+
     SeanceDTO findById(Long id);
 
     List<SeanceDTO> findByDateBetween(Date date);
 
+    List<SeanceCreationDTO> findCreationByDateBetween(Date date);
+
     List<SeanceCreationDTO> findBySeanceDateTo(Date date);
+
+    List<SeanceCreationDTO> findBySeanceDates(Date dateFrom, Date dateTo);
 
     List<SeanceCreationDTO> findByTimeLineInSeance(Time time);
 

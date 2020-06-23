@@ -1,4 +1,17 @@
 $(document).ready(function () {
+
+    let currentDate = new Date(Date.now());
+    let currentYear = '' + currentDate.getFullYear();
+    let currentMonth = '' + (currentDate.getMonth() + 1);
+    let currentDay = '' + currentDate.getDate();
+    if (currentMonth.length < 2)
+        currentMonth = '0' + currentMonth;
+    if (currentDay.length < 2)
+        currentDay = '0' + currentDay;
+    let currentDateStr = currentYear + "-" + currentMonth + "-" + currentDay;
+    let startingUrl = window.location.origin + '/schedule/seances?date=' + currentDateStr;
+    getSchedule(startingUrl);
+
     // $('ul, span').hover(
     //     function () {
     //         clearInterval(autoSwap);
@@ -11,7 +24,7 @@ $(document).ready(function () {
 
     $('.day').on('click', function () {
         // let id = $(this).attr('id');
-        console.log('hi')
+        // console.log('hi')
         let number = $(this).attr('id').slice(-1);
         $('.day').removeClass('active');
         $(this).addClass('active');
@@ -26,19 +39,21 @@ $(document).ready(function () {
             day = '0' + day;
         let dateStr = year + "-" + month + "-" + day;
 
-        let url = new URL('http://localhost:8080/home')
+        let url = new URL('http://localhost:8080/schedule/seances')
 
         let params = {date: dateStr}
 
         url.search = new URLSearchParams(params).toString();
 
-        $.ajax({
-            url: url,
-            data: $('#schedule')
-        }).done(function (data) {
-            let elem = $(data).find('#schedule').html()
-            $('#schedule').html(elem)
-        })
+        getSchedule(url);
+
+        // $.ajax({
+        //     url: url,
+        //     data: $('#schedule')
+        // }).done(function (data) {
+        //     let elem = $(data).find('#schedule').html()
+        //     $('#schedule').html(elem)
+        // })
     })
 
     $('#buy').on('click', function () {
@@ -141,3 +156,5 @@ $(document).ready(function () {
         }
     });
 })
+
+

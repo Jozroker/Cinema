@@ -1,5 +1,6 @@
 package com.cinema.point.dto;
 
+import com.cinema.point.domain.Day;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -9,7 +10,9 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 @Data
 public class SeanceCreationDTO {
@@ -29,6 +32,8 @@ public class SeanceCreationDTO {
     @NotNull(message = "required field")
     private Time movieBeginTime;
 
+    private Time movieEndTime;
+
     @NotEmpty(message = "ticket price value is required")
     @Digits(integer = 6, fraction = 2)
     @JsonFormat(shape = JsonFormat.Shape.STRING)
@@ -40,6 +45,8 @@ public class SeanceCreationDTO {
 
     //    private MovieDTO movie;
     private Long movieId;
+
+    private Set<Day> day = new HashSet<>();
 
     public String timeToString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm", Locale.US);

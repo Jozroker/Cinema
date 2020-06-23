@@ -6,11 +6,19 @@
 }
 
 #movie-input {
-    width: 200px;
+    width: 180px;
 }
 
 #hall-input, #price-input {
     width: 50px;
+}
+
+.day {
+    margin: 0;
+}
+
+.active-day {
+    color: #28A745;
 }
 
 .input {
@@ -28,14 +36,18 @@
 
 #schedule {
     margin-left: 5%;
-    margin-right: 40%;
+    margin-right: 35%;
+}
+
+.checkbox {
+    width: 50px;
 }
 
 .movie {
     width: 40%;
 }
 
-#title th {
+.title th {
     /*border-radius: 5px;*/
     background-color: #16181B;
     color: #28a745;
@@ -71,4 +83,12 @@
 
 .column {
     margin-right: 20px;
+}
+
+.invalid {
+    border: 1px solid red;
+}
+
+#create-container {
+    display: none;
 }

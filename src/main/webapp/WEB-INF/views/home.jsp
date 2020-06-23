@@ -19,6 +19,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resources/js/home.js"></script>
+    <script>
+        function getSchedule(url) {
+
+            $.ajax({
+                url: url,
+                method: 'GET'
+            }).done(function (data) {
+                let seances = [];
+                let counter = 1;
+                // console.log(data.length)
+                for (let elem in data) {
+                    seances.push('<tr>' +
+                        '<th scope="row" class="spacing first">' + counter++ + '</th>' +
+                        '<td class="movie spacing">' + data[elem]['movie']['name'] + '</td>' +
+                        '<td class="spacing">' + data[elem]['movieBeginTime'].slice(0, -3) + '</td>' +
+                        '<td class="spacing">' + data[elem]['hall']['id'] + '</td>' +
+                        '<td class="spacing">' + data[elem]['hall']['type'].slice(1) + '</td>' +
+                        '<td class="spacing">' + data[elem]['ticketPrice'] + ' UAH</td>' +
+                        '<td class="spacing last"><a class="pill"' +
+                        'href="' + window.location.origin + '/seance/order?seanceId=' + data[elem]['id'] + '"><spring:message code="ticket.buy"/></a>' +
+                        '</td>' +
+                        '</tr>');
+                }
+                $('#schedule-body').html(seances);
+                // $('#calendar').hide()
+            })
+        }
+    </script>
 </head>
 <jsp:include page="header.jsp"/>
 <body id="table">
@@ -67,12 +95,12 @@
             <c:choose>
                 <c:when test="${loop.first}">
                     <div class="column">
-                        <span id="day${loop.index}" class="active day"><spring:message code="${item}"/></span>
+                        <span id="day${loop.index}" class="${day.name().toLowerCase()} active day"><spring:message code="${item}"/></span>
                     </div>
                 </c:when>
                 <c:otherwise>
                     <div class="column">
-                        <span id="day${loop.index}" class="day"><spring:message code="${item}"/></span>
+                        <span id="day${loop.index}" class="${day.name().toLowerCase()} day"><spring:message code="${item}"/></span>
                     </div>
                 </c:otherwise>
             </c:choose>
@@ -111,21 +139,21 @@
                 <th scope="col" class="last"></th>
             </tr>
             </thead>
-            <tbody>
-            <c:forEach var="seance" items="${schedule}" varStatus="loop">
-                <tr>
-                    <th scope="row" class="spacing first seance${seance.id}">${loop.index + 1}</th>
-                    <td class="movie spacing seance${seance.id}">${seance.movie.name}</td>
-                    <td class="spacing seance${seance.id}">${seance.beginTimeToString()}</td>
-                    <td class="spacing seance${seance.id}">${seance.hall.id}</td>
-                    <td class="spacing seance${seance.id}">${seance.hall.type.type}</td>
-                    <td class="spacing seance${seance.id}">${seance.ticketPrice} UAH</td>
-                    <td
-                            class="spacing last seance${seance.id}"><a class="pill"
-                                                                       href="${contextPath}/seance/order?seanceId=${seance.id}"><spring:message code="ticket.buy"/></a>
-                    </td>
-                </tr>
-            </c:forEach>
+            <tbody id="schedule-body">
+            <%--            <c:forEach var="seance" items="${schedule}" varStatus="loop">--%>
+            <%--                <tr>--%>
+            <%--                    <th scope="row" class="spacing first seance${seance.id}">${loop.index + 1}</th>--%>
+            <%--                    <td class="movie spacing seance${seance.id}">${seance.movie.name}</td>--%>
+            <%--                    <td class="spacing seance${seance.id}">${seance.beginTimeToString()}</td>--%>
+            <%--                    <td class="spacing seance${seance.id}">${seance.hall.id}</td>--%>
+            <%--                    <td class="spacing seance${seance.id}">${seance.hall.type.type}</td>--%>
+            <%--                    <td class="spacing seance${seance.id}">${seance.ticketPrice} UAH</td>--%>
+            <%--                    <td--%>
+            <%--                            class="spacing last seance${seance.id}"><a class="pill"--%>
+            <%--                                                                       href="${contextPath}/seance/order?seanceId=${seance.id}"><spring:message code="ticket.buy"/></a>--%>
+            <%--                    </td>--%>
+            <%--                </tr>--%>
+            <%--            </c:forEach>--%>
             </tbody>
         </table>
     </div>

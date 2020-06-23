@@ -181,7 +181,7 @@
 
                         // Current month dates
                     } else {
-                        if (window.location.pathname === '/schedule') {
+                        if (window.location.pathname === '/admin/schedule') {
                             html += '<td class="currentmonthdates" id="currentmonthdates">' + (d) + '</td>';
                         } else {
                             if (validDays.includes(d)) {
@@ -276,7 +276,6 @@
             $('#btnPrevYr').hide();
         })
     </script>
-
 </head>
 <body>
 

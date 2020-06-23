@@ -62,7 +62,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-1">
                 <li class="nav-item">
-                    <a class="nav-link" href="${contextPath}/home">
+                    <a class="nav-link" href="${contextPath}/admin/schedule">
                         <span><spring:message code="navbar.schedule"/></span> <!-- selected -->
                     </a>
                 </li>
