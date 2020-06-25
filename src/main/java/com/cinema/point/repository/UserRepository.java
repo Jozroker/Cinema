@@ -21,8 +21,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u where u.username = ?1 or u.email = ?1")
     Optional<User> findByEmailOrUsername(String emailOrUsername);
 
-//    @Query("update u")
-//    void update(User user);
-
-//    Optional<User> findByTicketsContains(Ticket ticket);
 }

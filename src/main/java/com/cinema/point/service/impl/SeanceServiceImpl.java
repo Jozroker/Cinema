@@ -31,7 +31,11 @@ public class SeanceServiceImpl implements SeanceService {
     SeanceMapper seanceMapper;
     TicketService ticketService;
 
-    public SeanceServiceImpl(SeanceRepository seanceRepository, HallRepository hallRepository, MovieRepository movieRepository, SeanceMapper seanceMapper, TicketService ticketService) {
+    public SeanceServiceImpl(SeanceRepository seanceRepository,
+                             HallRepository hallRepository,
+                             MovieRepository movieRepository,
+                             SeanceMapper seanceMapper,
+                             TicketService ticketService) {
         this.seanceRepository = seanceRepository;
         this.hallRepository = hallRepository;
         this.movieRepository = movieRepository;
@@ -78,8 +82,6 @@ public class SeanceServiceImpl implements SeanceService {
     public SeanceDTO update(SeanceCreationDTO seanceDTO) {
         log.debug("updating seance {}", seanceDTO);
         Seance seance = seanceMapper.toEntity(seanceDTO);
-//        Seance fullSeance =
-//                seanceRepository.findById(seance.getId()).orElseThrow(() -> new ResourceNotFoundException("Seance", seance.getId()));
         Hall hall = hallRepository.findById(seanceDTO.getHallId())
                 .orElseThrow(() -> new ResourceNotFoundException("Hall",
                         seanceDTO.getHallId()));
@@ -88,9 +90,6 @@ public class SeanceServiceImpl implements SeanceService {
                         seanceDTO.getMovieId()));
         seance.setHall(hall);
         seance.setMovie(movie);
-        //todo datepicker in jsp
-//        seance.setSeanceDateFrom(fullSeance.getSeanceDateFrom());
-//        seance.setSeanceDateTo(fullSeance.getSeanceDateTo());
         return seanceMapper.toDTO(seanceRepository.save(seance));
     }
 

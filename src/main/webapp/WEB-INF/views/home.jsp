@@ -20,32 +20,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resources/js/home.js"></script>
     <script>
-        function getSchedule(url) {
 
-            $.ajax({
-                url: url,
-                method: 'GET'
-            }).done(function (data) {
-                let seances = [];
-                let counter = 1;
-                // console.log(data.length)
-                for (let elem in data) {
-                    seances.push('<tr>' +
-                        '<th scope="row" class="spacing first">' + counter++ + '</th>' +
-                        '<td class="movie spacing">' + data[elem]['movie']['name'] + '</td>' +
-                        '<td class="spacing">' + data[elem]['movieBeginTime'].slice(0, -3) + '</td>' +
-                        '<td class="spacing">' + data[elem]['hall']['id'] + '</td>' +
-                        '<td class="spacing">' + data[elem]['hall']['type'].slice(1) + '</td>' +
-                        '<td class="spacing">' + data[elem]['ticketPrice'] + ' UAH</td>' +
-                        '<td class="spacing last"><a class="pill"' +
-                        'href="' + window.location.origin + '/seance/order?seanceId=' + data[elem]['id'] + '"><spring:message code="ticket.buy"/></a>' +
-                        '</td>' +
-                        '</tr>');
-                }
-                $('#schedule-body').html(seances);
-                // $('#calendar').hide()
-            })
-        }
+        let buy = '<spring:message code="ticket.buy"/>';
+
     </script>
 </head>
 <jsp:include page="header.jsp"/>

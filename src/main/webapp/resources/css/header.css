@@ -8,10 +8,6 @@ header {
     z-index: 10000;
 }
 
-/*#space {*/
-/*    visibility: hidden;*/
-/*}*/
-
 #user {
     font-size: 20px;
 }
@@ -24,7 +20,6 @@ header {
     background-color: #3b3b40;
     right: 1%;
     top: 7%;
-    /*margin: auto;*/
 }
 
 #user-dropdown li {
@@ -45,7 +40,6 @@ header {
 }
 
 .selected {
-    /*text-decoration: #28A745;*/
     color: #28A745;
 }
 
@@ -118,10 +112,6 @@ nav {
 #search-line {
     width: 800px;
 }
-
-/*#search-button {*/
-/*    width: 20%;*/
-/*}*/
 
 #logout {
     border-top: 1px solid #28A745;

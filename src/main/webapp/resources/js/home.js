@@ -12,16 +12,6 @@ $(document).ready(function () {
     let startingUrl = window.location.origin + '/schedule/seances?date=' + currentDateStr;
     getSchedule(startingUrl);
 
-    // $('ul, span').hover(
-    //     function () {
-    //         clearInterval(autoSwap);
-    //     },
-    //     function () {
-    //         // autoSwap = setInterval( swap,3500);
-    //     });
-
-    // $('.selected').removeClass("selected");
-
     $('.day').on('click', function () {
         // let id = $(this).attr('id');
         // console.log('hi')
@@ -46,14 +36,6 @@ $(document).ready(function () {
         url.search = new URLSearchParams(params).toString();
 
         getSchedule(url);
-
-        // $.ajax({
-        //     url: url,
-        //     data: $('#schedule')
-        // }).done(function (data) {
-        //     let elem = $(data).find('#schedule').html()
-        //     $('#schedule').html(elem)
-        // })
     })
 
     $('#buy').on('click', function () {
@@ -62,27 +44,23 @@ $(document).ready(function () {
         window.location.href = url
     })
 
-//global variables
-    var items = [];
-    var startItem = 1;
-    var position = 0;
-    var itemCount = $('.carousel li.items').length;
-    var leftpos = itemCount;
-    var resetCount = itemCount;
+    let items = [];
+    let startItem = 1;
+    let position = 0;
+    let itemCount = $('.carousel li.items').length;
+    let leftpos = itemCount;
+    let resetCount = itemCount;
 
-//unused: gather text inside items class
     $('li.items').each(function (index) {
         items[index] = $(this).text();
     });
 
-//swap images function
     function swap(action) {
-        var direction = action;
+        let direction = action;
 
-        //moving carousel backwards
-        if (direction == 'counter-clockwise') {
-            var leftitem = $('.left-pos').attr('id') - 1;
-            if (leftitem == 0) {
+        if (direction === 'counter-clockwise') {
+            let leftitem = $('.left-pos').attr('id') - 1;
+            if (leftitem === 0) {
                 leftitem = itemCount;
             }
 
@@ -97,30 +75,23 @@ $(document).ready(function () {
             }
         }
 
-        //moving carousel forward
-        if (direction == 'clockwise' || direction == '' || direction == null) {
+        if (direction === 'clockwise' || direction === '' || direction == null) {
             function pos(positionvalue) {
-                if (positionvalue != 'leftposition') {
-                    //increment image list id
+                if (positionvalue !== 'leftposition') {
                     position++;
 
-                    //if final result is greater than image count, reset position.
                     if ((startItem + position) > resetCount) {
                         position = 1 - startItem;
                     }
                 }
 
-                //setting the left positioned item
-                if (positionvalue == 'leftposition') {
-                    //left positioned image should always be one left than main positioned image.
+                if (positionvalue === 'leftposition') {
                     position = startItem - 1;
 
-                    //reset last image in list to left position if first image is in main position
                     if (position < 1) {
                         position = itemCount;
                     }
                 }
-
                 return position;
             }
 
@@ -137,24 +108,46 @@ $(document).ready(function () {
         }
     }
 
-//next button click function
     $('#next').click(function () {
         swap('clockwise');
     });
 
-//prev button click function
     $('#prev').click(function () {
         swap('counter-clockwise');
     });
 
-//if any visible items are clicked
     $('section li').click(function () {
-        if ($(this).attr('class') == 'items left-pos') {
+        if ($(this).attr('class') === 'items left-pos') {
             swap('counter-clockwise');
         } else {
             swap('clockwise');
         }
     });
 })
+
+function getSchedule(url) {
+
+    $.ajax({
+        url: url,
+        method: 'GET'
+    }).done(function (data) {
+        let seances = [];
+        let counter = 1;
+        for (let elem in data) {
+            seances.push('<tr>' +
+                '<th scope="row" class="spacing first">' + counter++ + '</th>' +
+                '<td class="movie spacing">' + data[elem]['movie']['name'] + '</td>' +
+                '<td class="spacing">' + data[elem]['movieBeginTime'].slice(0, -3) + '</td>' +
+                '<td class="spacing">' + data[elem]['hall']['id'] + '</td>' +
+                '<td class="spacing">' + data[elem]['hall']['type'].slice(1) + '</td>' +
+                '<td class="spacing">' + data[elem]['ticketPrice'] + ' UAH</td>' +
+                '<td class="spacing last"><a class="pill"' +
+                'href="' + window.location.origin + '/seance/order?seanceId=' + data[elem]['id'] + '">' + buy + '</a>' +
+                '</td>' +
+                '</tr>');
+        }
+        $('#schedule-body').html(seances);
+    })
+}
 
 

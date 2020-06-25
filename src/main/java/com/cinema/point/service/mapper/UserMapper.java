@@ -27,10 +27,6 @@ public abstract class UserMapper {
             qualifiedByName = "mapToStringPicture")
     public abstract UserDTO toDTO(User user);
 
-    //unused
-//    @Mapping(source = "ticketsId", target = "tickets.id")
-//    User toEntity(UserDTO userDTO);
-
     public abstract User toEntity(LoginUserDTO userDTO);
 
     @Mapping(source = "pictureString", target = "picture",
@@ -59,8 +55,4 @@ public abstract class UserMapper {
     byte[] mapToBytePicture(String string) {
         return string.getBytes(StandardCharsets.UTF_8);
     }
-
-//    default byte[] mapToBase64Picture(byte[] picture) {
-//        return Base64.decodeBase64(picture);
-//    }
 }

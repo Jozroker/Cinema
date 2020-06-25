@@ -1,6 +1,5 @@
 package com.cinema.point.contoller.validator;
 
-
 import com.cinema.point.dto.RegisterUserDTO;
 import com.cinema.point.dto.UserDTO;
 import com.cinema.point.service.UserService;

@@ -16,7 +16,6 @@ import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Controller
 @Slf4j
 public class UserController {
@@ -33,7 +32,12 @@ public class UserController {
 
     HallService hallService;
 
-    public UserController(UserService userService, UserValidator userValidator, TicketService ticketService, MovieService movieService, SeanceService seanceService, HallService hallService) {
+    public UserController(UserService userService,
+                          UserValidator userValidator,
+                          TicketService ticketService,
+                          MovieService movieService,
+                          SeanceService seanceService,
+                          HallService hallService) {
         this.userService = userService;
         this.userValidator = userValidator;
         this.ticketService = ticketService;
@@ -57,7 +61,8 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute("registerUser") RegisterUserDTO userDTO, BindingResult bindingResult, Model model) {
+    public String register(@Valid @ModelAttribute("registerUser") RegisterUserDTO userDTO,
+                           BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("loginUser", new LoginUserDTO());
             return "authorization";
@@ -77,8 +82,6 @@ public class UserController {
         List<SimpleMovieDTO> movies =
                 seances.stream().map(s -> movieService.findSimpleById(s.getMovieId()))
                         .collect(Collectors.toList());
-//        String picture = new String(user.getPicture(), StandardCharsets.UTF_8);
-//        model.addAttribute("picture", picture);
         model.addAttribute("user", user);
         model.addAttribute("tickets", tickets);
         model.addAttribute("seances", seances);

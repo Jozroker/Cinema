@@ -12,10 +12,6 @@ public class LoginUserDTO {
     @NotEmpty(message = "state.required.field")
     private String username;
 
-//    @NotEmpty(message = "email value is required")
-////    @Email(message = "invalid mail value")
-//    private String email;
-
     @NotEmpty(message = "state.required.field")
     private String password;
 

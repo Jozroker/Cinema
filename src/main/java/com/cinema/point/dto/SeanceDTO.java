@@ -25,7 +25,6 @@ public class SeanceDTO {
     @NotEmpty(message = "hall isn't selected")
     private Long hallId;
 
-    //    private MovieDTO movie;
     private Long movieId;
 
     public String timeToString() {

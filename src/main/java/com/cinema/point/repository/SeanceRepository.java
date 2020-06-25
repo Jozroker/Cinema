@@ -31,18 +31,10 @@ public interface SeanceRepository extends JpaRepository<Seance, Long> {
             ".movieEndTime >= ?1")
     List<Seance> findByTimeLineInSeance(Time time);
 
-    //filters
     @Query("select s from Seance s where s.hall.id = ?1")
     List<Seance> findByHallId(Long id);
 
-    //filters
     List<Seance> findByHallType(HallType type);
-
-//    @Query("select s.movie from Seance s where s.hall = ?1")
-//    List<Movie> findMoviesByHall(Hall hall);
-//
-//    @Query("select s.movie from Seance s where s.hall.type = ?1")
-//    List<Movie> findMoviesByHallType(HallType type);
 
     @Query("select s from Seance s where ?1 member of s.day")
     List<Seance> findByDay(Day day);

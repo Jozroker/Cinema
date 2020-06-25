@@ -40,10 +40,8 @@ public class SeanceCreationDTO {
     private BigDecimal ticketPrice;
 
     @NotNull(message = "hall isn't selected")
-//    private Hall hall;
     private Long hallId;
 
-    //    private MovieDTO movie;
     private Long movieId;
 
     private Set<Day> day = new HashSet<>();

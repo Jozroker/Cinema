@@ -26,7 +26,10 @@ public class UserServiceImpl implements UserService {
     private final TicketRepository ticketRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, TicketRepository ticketRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository,
+                           UserMapper userMapper,
+                           TicketRepository ticketRepository,
+                           BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.ticketRepository = ticketRepository;
@@ -89,14 +92,6 @@ public class UserServiceImpl implements UserService {
                 .orElse(null));
     }
 
-//    @Override
-//    public LoginUserDTO findByEmailLogin(String email) {
-//        log.debug("finding user by email {}: to user login dto", email);
-//        return userMapper.toDTO(userRepository.findByEmail(email)
-//                .orElseThrow(() -> new ResourceNotFoundException("User",
-//                        "(email) " + email)));
-//    }
-
     @Override
     public UserDTO findByPhone(String phone) {
         log.debug("finding user by phone {}", phone);
@@ -110,11 +105,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.toDTO(userRepository.findByUsername(username)
                 .orElse(null));
     }
-
-//    @Override
-//    public LoginUserDTO findByUsernameLogin(String username) {
-//        return null;
-//    }
 
     @Override
     public List<UserDTO> findAll() {

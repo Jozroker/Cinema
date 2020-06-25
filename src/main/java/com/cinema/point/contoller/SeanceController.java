@@ -43,7 +43,12 @@ public class SeanceController {
 
     UserService userService;
 
-    public SeanceController(TicketService ticketService, MovieService movieService, SeanceService seanceService, SeanceRepository seanceRepository, HallService hallService, UserService userService) {
+    public SeanceController(TicketService ticketService,
+                            MovieService movieService,
+                            SeanceService seanceService,
+                            SeanceRepository seanceRepository,
+                            HallService hallService,
+                            UserService userService) {
         this.ticketService = ticketService;
         this.movieService = movieService;
         this.seanceService = seanceService;
@@ -139,7 +144,6 @@ public class SeanceController {
     }
 
     @PostMapping("/order/user/ticket")
-//    @Transactional
     public void orderByUser(@RequestParam String row,
                             @RequestParam String column,
                             @RequestParam String seanceId,
@@ -150,10 +154,8 @@ public class SeanceController {
         ticket.setColumn(Integer.parseInt(column));
         ticket.setSeanceId(Long.parseLong(seanceId));
         ticket.setSeanceDate(Date.valueOf(date));
-//        ticket.setSeanceTime(Time.valueOf(time + ":00"));
         Long userId = userService.findByUsername(principal.getName()).getId();
         ticketService.addTicketToUser(ticket, userId);
-//        return "redirect:/cabinet#tickets";
     }
 
     @PostMapping("/order/ticket")
@@ -167,7 +169,6 @@ public class SeanceController {
         ticket.setSeanceId(Long.parseLong(seanceId));
         ticket.setSeanceDate(Date.valueOf(date));
         ticketService.create(ticket);
-//        return "redirect:/cabinet#tickets";
     }
 
     @GetMapping("/admin/schedule")
@@ -185,46 +186,80 @@ public class SeanceController {
                 .sorted(new SeanceTimeComparator()).collect(Collectors.toList());
     }
 
-    @PostMapping(value = "/admin/change/seance", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/movie/{id}/seances")
+    @ResponseBody
+    public List<Seance> getSeancesByMovie(@PathVariable Long id,
+                                          @RequestParam String date) {
+        Date dateParam = Date.valueOf(date);
+        return seanceRepository.findByDateBetween(dateParam).stream()
+                .filter(seance -> seance.getMovie().getId().equals(id))
+                .collect(Collectors.toList());
+    }
+
+//    @PostMapping(value = "/admin/change/seance", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseBody
+//    public String changeSeance(@RequestBody SeanceCreationDTO seance,
+//                               @RequestParam String movieName) {
+//        try {
+//            Long movieId = movieService.findByName(movieName).getId();
+//            seance.setMovieId(movieId);
+//        } catch (ResourceNotFoundException e) {
+//            return "fail movie";
+//        }
+//        MovieDTO movie = movieService.findById(seance.getMovieId());
+//        seance.setMovieEndTime(Time.valueOf(seance.getMovieBeginTime().toLocalTime()
+//                .plus(movie.getDuration(), ChronoUnit.MILLIS)));
+//        if (findSameSeances(seance)) {
+//            seanceService.update(seance);
+//            return "not exists";
+//        }
+//        return "exists";
+//    }
+//
+//    @PostMapping(value = "/admin/create/seance", consumes =
+//            MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseBody
+//    public String createSeance(@RequestBody SeanceCreationDTO seance,
+//                               @RequestParam String movieName) {
+//        try {
+//            Long movieId = movieService.findByName(movieName).getId();
+//            seance.setMovieId(movieId);
+//        } catch (ResourceNotFoundException ignored) {
+//        }
+//        MovieDTO movie = movieService.findById(seance.getMovieId());
+//        seance.setMovieEndTime(Time.valueOf(seance.getMovieBeginTime().toLocalTime()
+//                .plus(movie.getDuration(), ChronoUnit.MILLIS)));
+//        if (findSameSeances(seance)) {
+//            seanceService.create(seance);
+//            return "not exists";
+//        }
+//        return "exists";
+//    }
+    //todo resolve this variants
+
+    @PostMapping(value = "/admin/{action}/seance", consumes =
+            MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String changeSeance(@RequestBody SeanceCreationDTO seance,
-                               @RequestParam String movieName) {
+                               @RequestParam String movieName,
+                               @PathVariable String action) {
         try {
             Long movieId = movieService.findByName(movieName).getId();
             seance.setMovieId(movieId);
         } catch (ResourceNotFoundException e) {
             return "fail movie";
         }
-
         MovieDTO movie = movieService.findById(seance.getMovieId());
         seance.setMovieEndTime(Time.valueOf(seance.getMovieBeginTime().toLocalTime()
                 .plus(movie.getDuration(), ChronoUnit.MILLIS)));
-
-        List<SeanceCreationDTO> sameSeances = findSameSeances(seance);
-        if (sameSeances.isEmpty()) {
-            seanceService.update(seance);
-            return "not exists";
-        }
-        return "exists";
-    }
-
-    @PostMapping(value = "/admin/create/seance", consumes =
-            MediaType.APPLICATION_JSON_VALUE)
-    public String createSeance(@RequestBody SeanceCreationDTO seance,
-                               @RequestParam String movieName) {
-        try {
-            Long movieId = movieService.findByName(movieName).getId();
-            seance.setMovieId(movieId);
-        } catch (ResourceNotFoundException ignored) {
-        }
-
-        MovieDTO movie = movieService.findById(seance.getMovieId());
-        seance.setMovieEndTime(Time.valueOf(seance.getMovieBeginTime().toLocalTime()
-                .plus(movie.getDuration(), ChronoUnit.MILLIS)));
-
-        List<SeanceCreationDTO> sameSeances = findSameSeances(seance);
-        if (sameSeances.isEmpty()) {
-            seanceService.update(seance);
+        if (findSameSeances(seance)) {
+            if (action.equals("change")) {
+                seanceService.update(seance);
+            } else if (action.equals("create")) {
+                seanceService.create(seance);
+            } else {
+                return "not_found";
+            }
             return "not exists";
         }
         return "exists";
@@ -285,9 +320,10 @@ public class SeanceController {
                         (newMovieEnd.before(currentMovieEnd) || newMovieEnd.equals(currentMovieEnd))));
     }
 
-    private List<SeanceCreationDTO> findSameSeances(SeanceCreationDTO seance) {
-        return seanceService.findBySeanceDates(seance.getSeanceDateFrom(),
-                seance.getSeanceDateTo())
+    private boolean findSameSeances(SeanceCreationDTO seance) {
+        List<SeanceCreationDTO> sameSeances = seanceService
+                .findBySeanceDates(seance.getSeanceDateFrom(),
+                        seance.getSeanceDateTo())
                 .stream().filter(s -> !Collections.disjoint(s.getDay(),
                         seance.getDay()))
                 .filter(s -> !s.getId().equals(seance.getId()))
@@ -296,5 +332,6 @@ public class SeanceController {
                         s.getMovieEndTime(),
                         seance.getMovieBeginTime(),
                         seance.getMovieEndTime())).collect(Collectors.toList());
+        return sameSeances.isEmpty();
     }
 }

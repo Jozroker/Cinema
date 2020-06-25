@@ -57,22 +57,7 @@
                 <th scope="col" class="last"><spring:message code="schedules.price"/></th>
             </tr>
             </thead>
-            <tbody id="table-body">
-            <%--                <c:forEach var="seance" items="${schedule}" varStatus="loop">--%>
-            <%--                    <tr>--%>
-            <%--                        <th scope="row" class="spacing first seance${seance.id}">${loop.index + 1}</th>--%>
-            <%--                        <td class="movie spacing seance${seance.id}">${seance.movie.name}</td>--%>
-            <%--                        <td class="spacing seance${seance.id}">${seance.movieBeginTime}</td>--%>
-            <%--                        <td class="spacing seance${seance.id}">${seance.hall.id}</td>--%>
-            <%--                        <td class="spacing seance${seance.id}">${seance.hall.type.type}</td>--%>
-            <%--                        <td class="spacing seance${seance.id}">${seance.ticketPrice} UAH</td>--%>
-            <%--                        <td--%>
-            <%--                                class="spacing last seance${seance.id}"><a class="pill"--%>
-            <%--                                                                           href="${contextPath}/seance/order?seanceId=${seance.id}"><spring:message code="ticket.buy"/></a>--%>
-            <%--                        </td>--%>
-            <%--                    </tr>--%>
-            <%--                </c:forEach>--%>
-            </tbody>
+            <tbody id="table-body"></tbody>
         </table>
     </div>
     <div id="create-seance">
@@ -88,9 +73,7 @@
                 <th scope="col" class="last"><spring:message code="schedules.price"/></th>
             </tr>
             </thead>
-            <tbody id="creating-table-body">
-
-            </tbody>
+            <tbody id="creating-table-body"></tbody>
         </table>
         <button id="create"><spring:message code="create.default"/></button>
     </div>

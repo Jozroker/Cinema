@@ -21,13 +21,9 @@ public interface UserService {
 
     UserDTO findByEmail(String email);
 
-//    LoginUserDTO findByEmailLogin(String email);
-
     UserDTO findByPhone(String phone);
 
     UserDTO findByUsername(String username);
-
-//    LoginUserDTO findByUsernameLogin(String username);
 
     List<UserDTO> findAll();
 

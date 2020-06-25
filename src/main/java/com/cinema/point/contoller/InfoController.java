@@ -1,7 +1,6 @@
 package com.cinema.point.contoller;
 
 import com.cinema.point.domain.Day;
-import com.cinema.point.dto.SeanceCreationDTO;
 import com.cinema.point.dto.SimpleMovieDTO;
 import com.cinema.point.repository.SeanceRepository;
 import com.cinema.point.service.MovieService;
@@ -15,7 +14,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +37,7 @@ public class InfoController {
     //todo add site icon
     public String home(Model model) {
         Date dateNow = Date.valueOf(LocalDate.now());
+        //cleanData(dateNow);
         List<SimpleMovieDTO> currentMovies =
                 seanceService.findByDateBetween(dateNow).stream()
                         .map(seanceDTO -> movieService.findSimpleById(seanceDTO.getMovieId())).distinct()
@@ -52,13 +51,19 @@ public class InfoController {
         model.addAttribute("movies", currentMovies);
         return "home";
     }
+    //todo realisation removing actors from movie
+    //todo realisation removing movies on movies page
+    //todo realisation removing seances on admin/schedule page
+    //todo realisation removing users in cabinet
+    //todo realisation removing tickets after movieEndTime in seance
 
-    private void cleanData(Date date) {
-        Date tomorrow = Date.valueOf(date.toLocalDate().minus(1, ChronoUnit.DAYS));
-        List<SeanceCreationDTO> deleting = seanceService.findBySeanceDateTo(tomorrow);
-        Iterator<SeanceCreationDTO> iter = deleting.iterator();
-        while (iter.hasNext()) {
-            seanceService.deleteById(iter.next().getId());
-        }
-    }
+    //todo spring scheduler
+//    private void cleanData(Date date) {
+//        Date tomorrow = Date.valueOf(date.toLocalDate().minus(1, ChronoUnit.DAYS));
+//        List<SeanceCreationDTO> deleting = seanceService.findBySeanceDateTo(tomorrow);
+//        Iterator<SeanceCreationDTO> iter = deleting.iterator();
+//        while (iter.hasNext()) {
+//            seanceService.deleteById(iter.next().getId());
+//        }
+//    }
 }

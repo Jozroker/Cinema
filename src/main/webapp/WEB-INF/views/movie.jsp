@@ -28,7 +28,6 @@
     </div>
     <div id="content" class="container">
 
-
         <a><img class="cover" src="data:image/jpeg;base64,${movie.pictureString}" alt="movie poster"/></a>
 
         <div class="hero">
@@ -51,7 +50,7 @@
                 <%--                    <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>--%>
                 <%--                </fieldset>--%>
 
-            </div> <!-- end details -->
+            </div>
 
             <div class="description">
 
@@ -73,13 +72,11 @@
                                 ${actor.lastName}"/>
                             </a>
                         </c:forEach>
+                    </div>
 
-                    </div> <!-- end avatars -->
-
-
-                </div> <!-- end column2 -->
-            </div> <!-- end description -->
-        </div> <!-- end hero -->
+                </div>
+            </div>
+        </div>
         <div class="schedule">
             <div class="row days">
                 <div class="col-sm"></div>
@@ -117,27 +114,13 @@
                         <th scope="col" class="last"></th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <c:forEach var="seance" items="${schedule}" varStatus="loop">
-                        <tr>
-                            <th scope="row" class="spacing first seance${seance.id}">${loop.index + 1}</th>
-                            <td class="movie spacing seance${seance.id}">${seance.movie.name}</td>
-                            <td class="spacing seance${seance.id}">${seance.movieBeginTime}</td>
-                            <td class="spacing seance${seance.id}">${seance.hall.id}</td>
-                            <td class="spacing seance${seance.id}">${seance.hall.type.type}</td>
-                            <td class="spacing seance${seance.id}">${seance.ticketPrice} UAH</td>
-                            <td class="spacing last seance${seance.id}"><a class="pill" href="${contextPath}/seance/order?seanceId=${seance.id}"><spring:message
-                                    code="ticket.buy"/></a></td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
+                    <tbody id="table-body"></tbody>
                 </table>
             </div>
         </div>
 
-
-    </div> <!-- end container -->
-</div> <!-- end movie-card -->
+    </div>
+</div>
 </body>
 <jsp:include page="footer.jsp"/>
 </html>

@@ -42,6 +42,9 @@ $(document).on('click', '#create', function () {
 
     $('#creating-table-body').html(creationForm);
     $('#create-container').show();
+
+    $('#create-seance').css({'margin-right': '30%'})
+    $('#confirm').css({'width': '0'})
 })
 
 $(document).ready(function () {
@@ -201,8 +204,6 @@ $(document).on('click', '.change', function () {
             getSchedule();
         }
     })
-
-    // getSchedule();
 })
 
 function getSchedule() {
@@ -214,13 +215,6 @@ function getSchedule() {
         let seances = [];
         let counter = 1;
         for (let elem in data) {
-            // let days = monday +
-            //     tuesday +
-            //     wednesday +
-            //     thursday +
-            //     friday +
-            //     saturday +
-            //     sunday;
             let days = '';
 
             data[elem]['day'].forEach(day => {
@@ -262,17 +256,8 @@ function getSchedule() {
                 '<td class="spacing last">' + data[elem]['ticketPrice'] + ' UAH</td>' +
                 '</tr>';
 
-            // data[elem]['day'].forEach(day => {
-            //     let index = seance.indexOf(day);
-            //     let firstSubstring = seance.slice(0, index + day.length);
-            //     let lastSubstring = seance.slice(index + day.length)
-            //     seance = firstSubstring + ' active-day' + lastSubstring;
-            // })
-
             seances.push(seance);
         }
         $('#table-body').html(seances);
-        // $('#table-body')
-        // $('#calendar').hide()
     })
 }

@@ -16,14 +16,6 @@ public class WebConfig implements WebMvcConfigurer {
         return new SessionLocaleResolver();
     }
 
-//    @Bean
-//    public ReloadableResourceBundleMessageSource messageSource(){
-//        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-//        messageSource.setBasename("classpath:messages");
-//        messageSource.setDefaultEncoding("UTF-8");
-//        return messageSource;
-//    }
-
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();

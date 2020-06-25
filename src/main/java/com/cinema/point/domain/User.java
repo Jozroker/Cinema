@@ -51,7 +51,6 @@ public class User implements UserDetails {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    //todo pictures to individual entity
     private byte[] picture;
 
     public void addTicket(Ticket ticket) {

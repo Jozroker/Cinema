@@ -33,7 +33,12 @@ public class TicketServiceImpl implements TicketService {
     SeanceRepository seanceRepository;
     HallRepository hallRepository;
 
-    public TicketServiceImpl(TicketRepository ticketRepository, TicketMapper ticketMapper, UserMapper userMapper, UserService userService, SeanceRepository seanceRepository, HallRepository hallRepository) {
+    public TicketServiceImpl(TicketRepository ticketRepository,
+                             TicketMapper ticketMapper,
+                             UserMapper userMapper,
+                             UserService userService,
+                             SeanceRepository seanceRepository,
+                             HallRepository hallRepository) {
         this.ticketRepository = ticketRepository;
         this.ticketMapper = ticketMapper;
         this.userMapper = userMapper;

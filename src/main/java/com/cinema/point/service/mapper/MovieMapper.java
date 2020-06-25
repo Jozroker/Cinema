@@ -21,10 +21,6 @@ public abstract class MovieMapper {
     @Autowired
     ActorRepository actorRepository;
 
-//    public MovieMapper(ActorRepository actorRepository) {
-//        this.actorRepository = actorRepository;
-//    }
-
     @Mapping(source = "actors", target = "actorsIds", qualifiedByName =
             "mapToActorsIds")
     @Mapping(source = "picture", target = "pictureString",

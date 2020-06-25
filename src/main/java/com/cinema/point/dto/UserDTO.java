@@ -43,6 +43,5 @@ public class UserDTO {
 
     private String pictureString;
 
-    //    private List<TicketDTO> tickets;
     private List<Long> ticketsId;
 }

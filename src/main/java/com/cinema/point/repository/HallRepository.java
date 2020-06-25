@@ -10,11 +10,5 @@ import java.util.List;
 @Repository
 public interface HallRepository extends JpaRepository<Hall, Long> {
 
-//    @Query("select h.freePlaces from Hall h where h.id = ?1")
-//    Optional<Integer> findFreePlaces(Long id);
-
-//    @Query("select h.reservedPlaces from Hall h where h.id = ?1")
-//    Optional<Integer> findReversedPlaces(Long id);
-
     List<Hall> findByType(HallType type);
 }

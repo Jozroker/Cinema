@@ -26,7 +26,6 @@ public class MovieDTO {
     @NotNull(message = "picture is required")
     private byte[] picture;
 
-    //    private Set<ActorDTO> actors = new HashSet<>();
     private Set<Long> actorsIds = new HashSet<>();
 
     private String pictureString;

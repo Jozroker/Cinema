@@ -49,7 +49,6 @@ public class Seance {
 
     @ElementCollection(targetClass = Day.class)
     @Enumerated(EnumType.STRING)
-    //todo seances on different days
     private Set<Day> day = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.REFRESH)

@@ -21,7 +21,6 @@ body {
 }
 
 #title th {
-    /*border-radius: 5px;*/
     background-color: #16181B;
     color: #28a745;
     border: 0;
@@ -45,13 +44,7 @@ body {
     background-color: #343A40;
     color: #9A9DA0;
     border: 0;
-    /*padding-top: 5px;*/
-    /*margin-top: 5px;*/
 }
-
-/*td {*/
-/*    background-color: #343A40;*/
-/*}*/
 
 .section {
     height: 300px;
@@ -164,7 +157,6 @@ section {
     height: 25em;
     margin: 0 auto;
     position: relative;
-    /*right: 2.5%;*/
 }
 
 section li {
@@ -197,7 +189,6 @@ section li p {
 .main-pos {
     margin-left: 2em !important;
     z-index: 3000;
-    /*background-image: url('https://dl.dropbox.com/u/32649907/imgs/shadow.png');*/
 }
 
 .left-pos {

@@ -9,7 +9,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<!-- Footer -->
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
@@ -18,31 +17,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <%--    <script src="${contextPath}/resources/js/header.js"></script>--%>
 </head>
 <footer class="page-footer font-small mdb-color lighten-3 pt-4">
 
-    <!-- Footer Links -->
     <div class="container text-center text-md-left">
 
-        <!-- Grid row -->
         <div class="row">
 
-            <!-- Grid column -->
             <div class="col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
 
-                <!-- Content -->
                 <h5 class="font-weight-bold text-uppercase mb-4 colored-text"><spring:message code="footer.about"/></h5>
                 <p><spring:message code="footer.info"/></p>
             </div>
-            <!-- Grid column -->
 
             <hr class="clearfix w-100 d-md-none">
 
-            <!-- Grid column -->
             <div class="col-md-2 col-lg-3 mx-auto my-md-4 my-0 mt-4 mb-1">
 
-                <!-- Links -->
                 <h5 class="font-weight-bold text-uppercase mb-4 colored-text"><spring:message code="footer.contacts"/></h5>
 
                 <ul class="list-unstyled">
@@ -62,14 +53,11 @@
                 </ul>
 
             </div>
-            <!-- Grid column -->
 
             <hr class="clearfix w-100 d-md-none">
 
-            <!-- Grid column -->
             <div class="col-md-4 col-lg-3 mx-auto my-md-4 my-0 mt-4 mb-1">
 
-                <!-- Contact details -->
                 <h5 class="font-weight-bold text-uppercase mb-4 colored-text"><spring:message code="footer.location"/></h5>
 
                 <ul class="list-unstyled">
@@ -90,38 +78,25 @@
                 </ul>
 
             </div>
-            <!-- Grid column -->
 
             <hr class="clearfix w-100 d-md-none">
 
-            <!-- Grid column -->
             <div class="col-md-2 col-lg-2 text-center mx-auto my-4">
 
-                <!-- Social buttons -->
                 <h5 class="font-weight-bold text-uppercase mb-4 colored-text"><spring:message code="footer.follow"/></h5>
 
-                <!-- Facebook -->
                 <a type="button" class="btn-floating">
-                    <%--                    <i class="fab fa-facebook-f"></i>--%>
                     <img id="test" class="social img" src="${contextPath}/resources/image/facebook.png" alt="facebook icon">
                 </a>
-                <!-- Instagram -->
                 <a type="button" class="btn-floating">
-                    <%--                    <i class="fab fa-twitter"></i>--%>
                     <img class="social img" src="${contextPath}/resources/image/instagram.png" alt="instagram icon">
                 </a>
-                <!-- Youtube -->
                 <a type="button" class="btn-floating">
-                    <%--                    <i class="fab fa-google-plus-g"></i>--%>
                     <img class="social img" src="${contextPath}/resources/image/youtube.png" alt="youtube icon">
                 </a>
-                <%--                <br/>--%>
-                <%--                <div id="app" class="col-md-2 col-lg-2 text-center mx-auto my-4">--%>
                 <div id="app">
                     <h5 class="font-weight-bold text-uppercase colored-text"><spring:message code="footer.app"/></h5>
-                    <!-- Play Market -->
                     <a type="button" class="btn-floating">
-                        <%--                    <i class="fab fa-dribbble"></i>--%>
                         <img class="social-2 img" src="${contextPath}/resources/image/playmarket.png" alt="play market icon">
                     </a>
                 </div>

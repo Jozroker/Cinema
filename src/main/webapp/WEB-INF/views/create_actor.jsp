@@ -19,25 +19,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            function readURL(input) {
-                if (input.files && input.files[0]) {
-                    let reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        $('#avatar-image-container').attr('src', e.target.result);
-                    }
-
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-
-            $("#file").change(function () {
-                readURL(this);
-            });
-        })
-    </script>
+    <script src="${contextPath}/resources/js/create-actor.js"></script>
 </head>
 <body>
 
@@ -50,12 +32,10 @@
     <div class="group">
         <spring:message code="create.actor.first.name" var="firstName"/>
         <springForm:input path="firstName" class="input" placeholder="${firstName}" cssErrorClass="invalid"/>
-            <%--            <springForm:errors path="firstName" cssClass="invalid-text" element="div"/>--%>
     </div>
     <div class="group">
         <spring:message code="create.actor.last.name" var="lastName"/>
         <springForm:input path="lastName" class="input" placeholder="${lastName}" cssErrorClass="invalid"/>
-            <%--            <springForm:errors path="lastName" cssClass="invalid-text" element="div"/>--%>
     </div>
     <div class="create">
         <spring:message code="create.actor" var="create"/>

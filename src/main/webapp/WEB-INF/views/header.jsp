@@ -20,32 +20,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resources/js/header.js"></script>
     <script>
-        $(document).ready(function () {
-
-            $.ajax({
-                url: '${contextPath}/movies/list'
-            }).done(function (data) {
-                let list = []
-                for (let elem in data) {
-                    let element = '<li class="list-group-item"><a href="${contextPath}/movie/' + elem + '">' + data[elem] + '</a></li>';
-                    list.push(element);
-                }
-                $('#movies').html(list)
-            })
-
-            $("#search-line").on("keyup", function () {
-                let value = $(this).val().toLowerCase();
-                if (value.length > 0) {
-                    $('#movies').show()
-                } else {
-                    $('#movies').hide()
-                }
-                $("#movies a").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        })
-
+        let contextPath = ${contextPath};
     </script>
 </head>
 <header>

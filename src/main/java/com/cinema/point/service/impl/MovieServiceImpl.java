@@ -25,7 +25,9 @@ public class MovieServiceImpl implements MovieService {
     MovieMapper movieMapper;
     ActorRepository actorRepository;
 
-    public MovieServiceImpl(MovieRepository movieRepository, MovieMapper movieMapper, ActorRepository actorRepository) {
+    public MovieServiceImpl(MovieRepository movieRepository,
+                            MovieMapper movieMapper,
+                            ActorRepository actorRepository) {
         this.movieRepository = movieRepository;
         this.movieMapper = movieMapper;
         this.actorRepository = actorRepository;

@@ -1,10 +1,8 @@
 package com.cinema.point.contoller;
 
 import com.cinema.point.domain.Day;
-import com.cinema.point.domain.Seance;
 import com.cinema.point.dto.ActorDTO;
 import com.cinema.point.dto.MovieDTO;
-import com.cinema.point.dto.SeanceCreationDTO;
 import com.cinema.point.dto.SimpleMovieDTO;
 import com.cinema.point.errors.ResourceNotFoundException;
 import com.cinema.point.repository.SeanceRepository;
@@ -30,8 +28,10 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -45,7 +45,10 @@ public class MovieController {
 
     ActorService actorService;
 
-    public MovieController(MovieService movieService, SeanceService seanceService, SeanceRepository seanceRepository, ActorService actorService) {
+    public MovieController(MovieService movieService,
+                           SeanceService seanceService,
+                           SeanceRepository seanceRepository,
+                           ActorService actorService) {
         this.movieService = movieService;
         this.seanceService = seanceService;
         this.seanceRepository = seanceRepository;
@@ -60,28 +63,10 @@ public class MovieController {
     }
 
     @GetMapping("/movie/{id}")
-    public String movie(Model model, @PathVariable Long id, @RequestParam(defaultValue = "") String date) {
+    public String movie(Model model, @PathVariable Long id) {
         MovieDTO movie = movieService.findById(id);
         Date dateNow = Date.valueOf(LocalDate.now());
 //        cleanData(dateNow);
-        List<Seance> schedule;
-        if (date.equals("")) {
-            schedule =
-                    seanceRepository.findByDateBetween(dateNow).stream()
-                            .filter(seance -> seance.getMovie().getId().equals(id))
-                            .collect(Collectors.toList());
-        } else {
-            Date param;
-            try {
-                param = Date.valueOf(date);
-            } catch (Exception e) {
-                return "redirect:/home";
-            }
-            schedule =
-                    seanceRepository.findByDateBetween(param).stream()
-                            .filter(seance -> seance.getMovie().getId().equals(id))
-                            .collect(Collectors.toList());
-        }
         List<Day> days = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             days.add(Day.valueOf(String.valueOf(dateNow.toLocalDate().getDayOfWeek())));
@@ -90,7 +75,6 @@ public class MovieController {
         List<ActorDTO> actors = actorService.findByMovieId(movie.getId());
         model.addAttribute("days", days);
         model.addAttribute("actors", actors);
-        model.addAttribute("schedule", schedule);
         model.addAttribute("movie", movie);
         return "movie";
     }
@@ -123,12 +107,14 @@ public class MovieController {
 
     @PostMapping("/admin/create/actor")
     public String createActor(@Valid @ModelAttribute("actor") ActorDTO actor,
-                              BindingResult bindingResult, @RequestParam("file") MultipartFile file) throws IOException {
+                              BindingResult bindingResult,
+                              @RequestParam("file") MultipartFile file) throws IOException {
+        log.info("register new actor {}", actor);
         if (bindingResult.hasErrors()) {
             return "create_actor";
         }
-        log.info("register new actor {}", actor);
         if (file.isEmpty()) {
+            //todo set relative path
             File imagePath = new File("F:\\PC_Educate\\Programming\\java" +
                     "\\cinema" +
                     "\\src\\main\\webapp\\resources\\image\\default-avatar.png");
@@ -156,14 +142,5 @@ public class MovieController {
             return "not exists";
         }
         return "exists";
-    }
-
-    private void cleanData(Date date) {
-        Date tomorrow = Date.valueOf(date.toLocalDate().minus(1, ChronoUnit.DAYS));
-        List<SeanceCreationDTO> deleting = seanceService.findBySeanceDateTo(tomorrow);
-        Iterator<SeanceCreationDTO> iter = deleting.iterator();
-        while (iter.hasNext()) {
-            seanceService.deleteById(iter.next().getId());
-        }
     }
 }

@@ -34,7 +34,7 @@
     border-spacing: 0 5px;
 }
 
-#schedule {
+#schedule, #create-seance {
     margin-left: 5%;
     margin-right: 35%;
 }
@@ -48,15 +48,10 @@
 }
 
 .title th {
-    /*border-radius: 5px;*/
     background-color: #16181B;
     color: #28a745;
     border: 0;
 }
-
-/*#schedule tr {*/
-/*    z-index: 100;*/
-/*}*/
 
 .first {
     border-radius: 10px 0 0 10px;
@@ -77,8 +72,6 @@
     background-color: #343A40;
     color: #9A9DA0;
     border: 0;
-    /*padding-top: 5px;*/
-    /*margin-top: 5px;*/
 }
 
 .column {

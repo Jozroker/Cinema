@@ -29,7 +29,6 @@ public class Movie {
     private String description;
 
     @Column(nullable = false)
-//    private Instant duration;
     private Long duration;
 
     @Lob

@@ -22,15 +22,6 @@
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
     <script>
         $(document).ready(function () {
-            <%--let count = 8 - "${ticket.id}".length;--%>
-            <%--let value = "0".repeat(count) + "${ticket.id}";--%>
-
-            <%--JsBarcode("#barcode", value.toString(), {--%>
-            <%--    width: 3,--%>
-            <%--    height: 80,--%>
-            <%--    background: "rgba(0,0,0,0)",--%>
-            <%--    displayValue: false--%>
-            <%--});--%>
 
             let value = "${ticket.row}" + "." + "${ticket.column}" +
                 "." + "${ticket.seanceDate}" + "." + "${seance.timeToString()}";
@@ -61,8 +52,6 @@
             <div class='info clearfix'>
                 <div class='wp-3'><spring:message code="schedules.date"/><h2>${ticket.seanceDate}</h2></div>
                 <div class='wp-2'><spring:message code="schedules.start.time"/><h2>${seance.timeToString()}</h2></div>
-                    <%--                <div class='wp'><spring:message code="ticket.column"/><h2>${ticket.column}</h2></div>--%>
-                    <%--                <div class='wp'><spring:message code="schedules.hall"/><h2>${hall.type.type}: ${hall.id}</h2></div>--%>
             </div>
             <div class='total clearfix'>
                 <h2><spring:message code="ticket.price"/> : <p>${seance.ticketPrice} UAH</p></h2>
