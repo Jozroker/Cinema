@@ -22,7 +22,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resources/js/create-actor.js"></script>
     <script>
-        let contextPath = ${contextPath};
+        let contextPath = '<c:out value="${contextPath}"/>';
     </script>
 </head>
 <body>

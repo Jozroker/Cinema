@@ -11,9 +11,7 @@ import java.util.List;
 
 public interface SeanceService {
 
-    SeanceCreationDTO create(SeanceCreationDTO seanceDTO);
-
-    SeanceDTO update(SeanceCreationDTO seanceDTO);
+    SeanceCreationDTO save(SeanceCreationDTO seanceDTO);
 
     void deleteById(Long id);
 

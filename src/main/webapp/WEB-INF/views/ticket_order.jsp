@@ -23,8 +23,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resources/js/ticket-order.js"></script>
     <script>
-        let movieId =
-        ${movie.id}
+        let movieId = '<c:out value="${movie.id}"/>';
     </script>
 </head>
 <body id="body">

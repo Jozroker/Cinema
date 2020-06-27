@@ -20,17 +20,17 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UserController {
 
-    UserService userService;
+    private final UserService userService;
 
-    UserValidator userValidator;
+    private final UserValidator userValidator;
 
-    TicketService ticketService;
+    private final TicketService ticketService;
 
-    MovieService movieService;
+    private final MovieService movieService;
 
-    SeanceService seanceService;
+    private final SeanceService seanceService;
 
-    HallService hallService;
+    private final HallService hallService;
 
     public UserController(UserService userService,
                           UserValidator userValidator,
@@ -68,7 +68,7 @@ public class UserController {
             return "authorization";
         }
         log.info("register new user {}", userDTO);
-        userService.create(userDTO);
+        userService.save(userDTO);
         return "redirect:/authorization";
     }
 

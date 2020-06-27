@@ -21,11 +21,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class InfoController {
 
-    SeanceService seanceService;
+    private final SeanceService seanceService;
 
-    SeanceRepository seanceRepository;
+    private final SeanceRepository seanceRepository;
 
-    MovieService movieService;
+    private final MovieService movieService;
 
     public InfoController(SeanceService seanceService, SeanceRepository seanceRepository, MovieService movieService) {
         this.seanceService = seanceService;

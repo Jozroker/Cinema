@@ -25,11 +25,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SeanceServiceImpl implements SeanceService {
 
-    SeanceRepository seanceRepository;
-    HallRepository hallRepository;
-    MovieRepository movieRepository;
-    SeanceMapper seanceMapper;
-    TicketService ticketService;
+    private final SeanceRepository seanceRepository;
+    private final HallRepository hallRepository;
+    private final MovieRepository movieRepository;
+    private final SeanceMapper seanceMapper;
+    private final TicketService ticketService;
 
     public SeanceServiceImpl(SeanceRepository seanceRepository,
                              HallRepository hallRepository,
@@ -45,7 +45,7 @@ public class SeanceServiceImpl implements SeanceService {
 
     @Override
     @Transactional
-    public SeanceCreationDTO create(SeanceCreationDTO seanceDTO) {
+    public SeanceCreationDTO save(SeanceCreationDTO seanceDTO) {
         log.debug("creating new seance {}", seanceDTO);
         Seance seance = seanceMapper.toEntity(seanceDTO);
         Hall hall = hallRepository.findById(seanceDTO.getHallId())
@@ -75,22 +75,6 @@ public class SeanceServiceImpl implements SeanceService {
             ticketService.deleteById(iter.next().getId());
         }
         seanceRepository.deleteById(id);
-    }
-
-    @Override
-    @Transactional
-    public SeanceDTO update(SeanceCreationDTO seanceDTO) {
-        log.debug("updating seance {}", seanceDTO);
-        Seance seance = seanceMapper.toEntity(seanceDTO);
-        Hall hall = hallRepository.findById(seanceDTO.getHallId())
-                .orElseThrow(() -> new ResourceNotFoundException("Hall",
-                        seanceDTO.getHallId()));
-        Movie movie = movieRepository.findById(seanceDTO.getMovieId())
-                .orElseThrow(() -> new ResourceNotFoundException("Movie",
-                        seanceDTO.getMovieId()));
-        seance.setHall(hall);
-        seance.setMovie(movie);
-        return seanceMapper.toDTO(seanceRepository.save(seance));
     }
 
     @Override

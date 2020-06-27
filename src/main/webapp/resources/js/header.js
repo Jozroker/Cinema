@@ -57,7 +57,7 @@ $(document).ready(function () {
     }).done(function (data) {
         let list = []
         for (let elem in data) {
-            let element = '<li class="list-group-item"><a href="${contextPath}/movie/' + elem + '">' + data[elem] + '</a></li>';
+            let element = '<li class="list-group-item"><a href="' + contextPath + '/movie/' + elem + '">' + data[elem] + '</a></li>';
             list.push(element);
         }
         $('#movies').html(list)
@@ -71,7 +71,7 @@ $(document).ready(function () {
             $('#movies').hide()
         }
         $("#movies a").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            $(this).parent().toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
 })

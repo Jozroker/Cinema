@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO create(RegisterUserDTO userDTO) {
+    public UserDTO save(RegisterUserDTO userDTO) {
         log.debug("creating new user {}", userDTO);
         User user = userMapper.toEntity(userDTO);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -51,15 +51,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO update(RegisterUserDTO userDTO) {
-        log.debug("updating user {}", userDTO);
-        User user = userMapper.toEntity(userDTO);
-        return userMapper.toDTO(userRepository.save(user));
-    }
-
-    @Override
     @Transactional
-    public UserDTO update(UserDTO userDTO) {
+    public UserDTO save(UserDTO userDTO) {
         log.debug("updating user {}", userDTO);
         User user = userMapper.toEntity(userDTO);
         List<Ticket> tickets =

@@ -26,12 +26,12 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TicketServiceImpl implements TicketService {
 
-    TicketRepository ticketRepository;
-    TicketMapper ticketMapper;
-    UserMapper userMapper;
-    UserService userService;
-    SeanceRepository seanceRepository;
-    HallRepository hallRepository;
+    private final TicketRepository ticketRepository;
+    private final TicketMapper ticketMapper;
+    private final UserMapper userMapper;
+    private final UserService userService;
+    private final SeanceRepository seanceRepository;
+    private final HallRepository hallRepository;
 
     public TicketServiceImpl(TicketRepository ticketRepository,
                              TicketMapper ticketMapper,
@@ -73,20 +73,8 @@ public class TicketServiceImpl implements TicketService {
                 .orElseThrow(() -> new ResourceNotFoundException("Seance", ticket.getSeance().getId()));
         ticket.setSeance(seance);
         user.addTicket(ticket);
-        userService.update(userMapper.toDTO(user));
+        userService.save(userMapper.toDTO(user));
         return ticketDTO;
-    }
-
-    @Override
-    @Transactional
-    public TicketDTO update(TicketDTO ticketDTO) {
-        log.debug("updating ticket {}", ticketDTO);
-        Ticket ticket = ticketMapper.toEntity(ticketDTO);
-        Seance seance = seanceRepository.findById(ticketDTO.getSeanceId())
-                .orElseThrow(() -> new ResourceNotFoundException("Seance",
-                        ticketDTO.getSeanceId()));
-        ticket.setSeance(seance);
-        return ticketMapper.toDTO(ticketRepository.save(ticket));
     }
 
     @Override

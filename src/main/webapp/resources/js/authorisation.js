@@ -2,7 +2,7 @@ $(document).ready(
     function () {
         $('.selected').removeClass('selected');
 
-        $('#tab-1').on('change', function () {
+        $(document).on('change', '#tab-1', function () {
             if (window.location.pathname === '/login') {
                 $('.login-html').animate({height: '50%'})
             } else {
@@ -10,13 +10,13 @@ $(document).ready(
             }
         });
 
-        $('#tab-1').on('change', function () {
+        $(document).on('change', '#tab-1', function () {
             if (window.location.pathname === '/authorization') {
                 $('.login-html').animate({height: '43%'})
             }
         });
 
-        $('#tab-2').on('change', function () {
+        $(document).on('change', '#tab-2', function () {
             if (window.location.pathname === '/register') {
                 $('.login-html').animate({height: '100%'})
             } else {

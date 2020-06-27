@@ -31,17 +31,17 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SeanceController {
 
-    TicketService ticketService;
+    private final TicketService ticketService;
 
-    MovieService movieService;
+    private final MovieService movieService;
 
-    SeanceService seanceService;
+    private final SeanceService seanceService;
 
-    SeanceRepository seanceRepository;
+    private final SeanceRepository seanceRepository;
 
-    HallService hallService;
+    private final HallService hallService;
 
-    UserService userService;
+    private final UserService userService;
 
     public SeanceController(TicketService ticketService,
                             MovieService movieService,
@@ -171,12 +171,12 @@ public class SeanceController {
         ticketService.create(ticket);
     }
 
-    @GetMapping("/admin/schedule")
+    @GetMapping("/schedule")
     public String schedule() {
         return "schedule";
     }
 
-    @GetMapping("/admin/schedule/seances")
+    @GetMapping("/schedule/seances")
     @ResponseBody
     public List<Seance> getSeancesByDate(@RequestParam String date) {
         Day currentDay =
@@ -190,59 +190,20 @@ public class SeanceController {
     @ResponseBody
     public List<Seance> getSeancesByMovie(@PathVariable Long id,
                                           @RequestParam String date) {
-        Date dateParam = Date.valueOf(date);
-        return seanceRepository.findByDateBetween(dateParam).stream()
+        Day currentDay =
+                Day.valueOf(Date.valueOf(date).toLocalDate().getDayOfWeek().toString());
+        return seanceRepository.findByDateBetween(Date.valueOf(date)).stream()
                 .filter(seance -> seance.getMovie().getId().equals(id))
+                .filter(seance -> seance.getDay().contains(currentDay))
+                .sorted(new SeanceTimeComparator())
                 .collect(Collectors.toList());
     }
 
-//    @PostMapping(value = "/admin/change/seance", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseBody
-//    public String changeSeance(@RequestBody SeanceCreationDTO seance,
-//                               @RequestParam String movieName) {
-//        try {
-//            Long movieId = movieService.findByName(movieName).getId();
-//            seance.setMovieId(movieId);
-//        } catch (ResourceNotFoundException e) {
-//            return "fail movie";
-//        }
-//        MovieDTO movie = movieService.findById(seance.getMovieId());
-//        seance.setMovieEndTime(Time.valueOf(seance.getMovieBeginTime().toLocalTime()
-//                .plus(movie.getDuration(), ChronoUnit.MILLIS)));
-//        if (findSameSeances(seance)) {
-//            seanceService.update(seance);
-//            return "not exists";
-//        }
-//        return "exists";
-//    }
-//
-//    @PostMapping(value = "/admin/create/seance", consumes =
-//            MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseBody
-//    public String createSeance(@RequestBody SeanceCreationDTO seance,
-//                               @RequestParam String movieName) {
-//        try {
-//            Long movieId = movieService.findByName(movieName).getId();
-//            seance.setMovieId(movieId);
-//        } catch (ResourceNotFoundException ignored) {
-//        }
-//        MovieDTO movie = movieService.findById(seance.getMovieId());
-//        seance.setMovieEndTime(Time.valueOf(seance.getMovieBeginTime().toLocalTime()
-//                .plus(movie.getDuration(), ChronoUnit.MILLIS)));
-//        if (findSameSeances(seance)) {
-//            seanceService.create(seance);
-//            return "not exists";
-//        }
-//        return "exists";
-//    }
-    //todo resolve this variants
-
-    @PostMapping(value = "/admin/{action}/seance", consumes =
+    @PostMapping(value = "/admin/creation/seance", consumes =
             MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String changeSeance(@RequestBody SeanceCreationDTO seance,
-                               @RequestParam String movieName,
-                               @PathVariable String action) {
+                               @RequestParam String movieName) {
         try {
             Long movieId = movieService.findByName(movieName).getId();
             seance.setMovieId(movieId);
@@ -253,13 +214,7 @@ public class SeanceController {
         seance.setMovieEndTime(Time.valueOf(seance.getMovieBeginTime().toLocalTime()
                 .plus(movie.getDuration(), ChronoUnit.MILLIS)));
         if (findSameSeances(seance)) {
-            if (action.equals("change")) {
-                seanceService.update(seance);
-            } else if (action.equals("create")) {
-                seanceService.create(seance);
-            } else {
-                return "not_found";
-            }
+            seanceService.save(seance);
             return "not exists";
         }
         return "exists";

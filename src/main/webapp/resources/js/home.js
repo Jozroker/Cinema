@@ -116,10 +116,12 @@ $(document).ready(function () {
         swap('counter-clockwise');
     });
 
-    $('section li').click(function () {
-        if ($(this).attr('class') === 'items left-pos') {
+    $(document).on('click', '.carousel li', function () {
+        if ($(this).attr('class').split(/\s+/)[2] === 'left-pos') {
+            console.log(1)
             swap('counter-clockwise');
         } else {
+            console.log(2)
             swap('clockwise');
         }
     });

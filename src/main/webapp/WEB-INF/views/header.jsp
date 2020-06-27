@@ -20,7 +20,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resources/js/header.js"></script>
     <script>
-        let contextPath = ${contextPath};
+        let contextPath = '<c:out value="${contextPath}"/>';
     </script>
 </head>
 <header>
@@ -37,20 +37,20 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-1">
                 <li class="nav-item">
-                    <a class="nav-link" href="${contextPath}/admin/schedule">
-                        <span><spring:message code="navbar.schedule"/></span> <!-- selected -->
+                    <a class="nav-link" href="${contextPath}/schedule">
+                        <span id="schedule-link"><spring:message code="navbar.schedule"/></span> <!-- selected -->
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="${contextPath}/movies">
-                        <span><spring:message code="navbar.movies"/></span>
+                        <span id="movies-link"><spring:message code="navbar.movies"/></span>
                     </a>
                 </li>
             </ul>
-            <form id="search-bar" class="form-inline mt-2 mt-md-0">
+            <form id="search-bar" class="form-inline mt-2 mt-md-0" autocomplete="off">
                 <spring:message code="navbar.search.button" var="search"/>
                 <input id="search-line" class="form-control mr-sm-2" type="text" placeholder="${search}"
-                       aria-label="Search">
+                       aria-label="Search" autocomplete="false">
                 <ul class="list-group" id="movies"></ul>
                 <button id="search-button" class="btn btn-outline-success my-2 my-sm-0" type="submit">
                     ${search}

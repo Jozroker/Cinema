@@ -11,6 +11,10 @@
     overflow: hidden;
 }
 
+.column {
+    margin-right: 20px;
+}
+
 .background img {
     width: 100%;
     position: absolute;
@@ -34,7 +38,7 @@
 }
 
 #content .cover {
-    width: 495px;
+    width: 452px;
     height: 630px;
     margin: 6% auto 0 auto;
     position: relative;

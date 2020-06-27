@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MovieServiceImpl implements MovieService {
 
-    MovieRepository movieRepository;
-    MovieMapper movieMapper;
-    ActorRepository actorRepository;
+    private final MovieRepository movieRepository;
+    private final MovieMapper movieMapper;
+    private final ActorRepository actorRepository;
 
     public MovieServiceImpl(MovieRepository movieRepository,
                             MovieMapper movieMapper,
@@ -35,7 +35,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     @Transactional
-    public MovieDTO create(MovieDTO movieDTO) {
+    public MovieDTO save(MovieDTO movieDTO) {
         log.debug("creating new movie {}", movieDTO);
         Movie movie = movieMapper.toEntity(movieDTO);
         Set<Actor> actors = movieDTO.getActorsIds().stream()
@@ -49,13 +49,6 @@ public class MovieServiceImpl implements MovieService {
     public void deleteById(Long id) {
         log.debug("deleting movie by id {}", id);
         movieRepository.deleteById(id);
-    }
-
-    @Override
-    public MovieDTO update(MovieDTO movieDTO) {
-        log.debug("updating movie {}", movieDTO);
-        Movie movie = movieMapper.toEntity(movieDTO);
-        return movieMapper.toDTO(movieRepository.save(movie));
     }
 
     @Override

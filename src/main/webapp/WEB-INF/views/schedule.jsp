@@ -31,6 +31,9 @@
         let friday = '<spring:message code="day.friday"/>'
         let saturday = '<spring:message code="day.saturday"/>'
         let sunday = '<spring:message code="day.sunday"/>'
+        <sec:authorize access="hasAuthority('ADMIN')">
+        let status = true;
+        </sec:authorize>
 
     </script>
 </head>
@@ -60,23 +63,25 @@
             <tbody id="table-body"></tbody>
         </table>
     </div>
-    <div id="create-seance">
-        <table id="create-container">
-            <thead>
-            <tr class="title">
-                <th scope="col" class="first"><spring:message code="movie.name"/></th>
-                <th scope="col"><spring:message code="schedules.start.time"/></th>
-                <th scope="col" colspan="2"><spring:message code="schedules.hall"/></th>
-                <th scope="col"><spring:message code="schedules.date.from"/></th>
-                <th scope="col"><spring:message code="schedules.date.to"/></th>
-                <th scope="col"><spring:message code="schedules.day"/></th>
-                <th scope="col" class="last"><spring:message code="schedules.price"/></th>
-            </tr>
-            </thead>
-            <tbody id="creating-table-body"></tbody>
-        </table>
-        <button id="create"><spring:message code="create.default"/></button>
-    </div>
+    <sec:authorize access="hasAuthority('ADMIN')">
+        <div id="create-seance">
+            <table id="create-container">
+                <thead>
+                <tr class="title">
+                    <th scope="col" class="first"><spring:message code="movie.name"/></th>
+                    <th scope="col"><spring:message code="schedules.start.time"/></th>
+                    <th scope="col" colspan="2"><spring:message code="schedules.hall"/></th>
+                    <th scope="col"><spring:message code="schedules.date.from"/></th>
+                    <th scope="col"><spring:message code="schedules.date.to"/></th>
+                    <th scope="col"><spring:message code="schedules.day"/></th>
+                    <th scope="col" class="last"><spring:message code="schedules.price"/></th>
+                </tr>
+                </thead>
+                <tbody id="creating-table-body"></tbody>
+            </table>
+            <button id="create"><spring:message code="create.default"/></button>
+        </div>
+    </sec:authorize>
 </div>
 </body>
 </html>

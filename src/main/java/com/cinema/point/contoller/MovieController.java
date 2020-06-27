@@ -37,13 +37,13 @@ import java.util.Map;
 @Slf4j
 public class MovieController {
 
-    MovieService movieService;
+    private final MovieService movieService;
 
-    SeanceService seanceService;
+    private final SeanceService seanceService;
 
-    SeanceRepository seanceRepository;
+    private final SeanceRepository seanceRepository;
 
-    ActorService actorService;
+    private final ActorService actorService;
 
     public MovieController(MovieService movieService,
                            SeanceService seanceService,
@@ -138,7 +138,7 @@ public class MovieController {
         try {
             movieService.findByName(movieDTO.getName());
         } catch (ResourceNotFoundException e) {
-            movieService.create(movieDTO);
+            movieService.save(movieDTO);
             return "not exists";
         }
         return "exists";

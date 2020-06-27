@@ -20,9 +20,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resources/js/home.js"></script>
     <script>
-
         let buy = '<spring:message code="ticket.buy"/>';
-
     </script>
 </head>
 <jsp:include page="header.jsp"/>

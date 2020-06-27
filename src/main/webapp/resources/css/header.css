@@ -76,7 +76,7 @@ nav {
 
 #movies a {
     text-decoration: none;
-    color: #28A745;
+    color: #343A40;
     cursor: pointer;
     font-size: 20px;
 }
@@ -87,7 +87,7 @@ nav {
 }
 
 #movies a:hover {
-    color: #4cd56b;
+    color: #9A9DA0;
 }
 
 #logo {

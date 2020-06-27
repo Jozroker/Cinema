@@ -19,6 +19,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resources/js/movie.js"></script>
+    <script>
+        let buy = '<spring:message code="ticket.buy"/>';
+    </script>
 </head>
 <jsp:include page="header.jsp"/>
 <body id="body">
@@ -84,12 +87,12 @@
                     <c:set var="item" value="day.${day.name().toLowerCase()}"/>
                     <c:choose>
                         <c:when test="${loop.first}">
-                            <div class="col-sm-1">
+                            <div class="column">
                                 <span id="day${loop.index}" class="active day"><spring:message code="${item}"/></span>
                             </div>
                         </c:when>
                         <c:otherwise>
-                            <div class="col-sm-1">
+                            <div class="column">
                                 <span id="day${loop.index}" class="day"><spring:message code="${item}"/></span>
                             </div>
                         </c:otherwise>

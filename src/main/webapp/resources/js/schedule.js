@@ -1,3 +1,6 @@
+let url;
+let adminRole;
+
 $(document).ready(function () {
 
     $('#date').on('click', function () {
@@ -10,15 +13,27 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on('click', function (e) {
-        if (!($(e.target).parents("#create-seance").length)) {
-            $('#create-container').hide()
-        }
-    });
+    $('#seanceDate').val('')
+
+    if (status) {
+        adminRole = true;
+    } else {
+        adminRole = false;
+    }
 })
 
 $(document).on('click', '#create', function () {
     $('#creating-table-body').html(null);
+
+    let currentDate = new Date();
+    let currentYear = currentDate.getFullYear();
+    let currentMonth = currentDate.getMonth() + 1;
+    let currentDay = currentDate.getDate();
+    if (currentMonth.toString().length < 2)
+        currentMonth = '0' + currentMonth;
+    if (currentDay.length < 2)
+        currentDay = '0' + currentDay;
+    let dateStr = currentYear + "-" + currentMonth + "-" + currentDay;
 
     let creationDays =
         '<div class="checkbox"><input type="checkbox" id="MONDAY" name="MONDAY"><label for="MONDAY">' + monday + '</label></div>' +
@@ -31,25 +46,25 @@ $(document).on('click', '#create', function () {
 
     let creationForm = '<tr>' +
         '<td class="movie spacing"><input name="movieName" id="movie-input" type="text"></td>' +
-        '<td class="spacing"><input name="time" type="time" id="timepicker"></td>' +
-        '<td class="spacing" colspan="2"><input name="hallId" id="hall-input" type="number" min="1" max="7"></td>' +
-        '<td class="spacing"><input name="dateFrom" type="date" id="date-from"></td>' +
-        '<td class="spacing"><input name="dateTo" type="date" id="date-to"></td>' +
+        '<td class="spacing"><input name="time" type="time" id="timepicker" value="00:00"></td>' +
+        '<td class="spacing" colspan="2"><input name="hallId" id="hall-input" type="number" min="1" max="7" value="1"></td>' +
+        '<td class="spacing"><input name="dateFrom" type="date" id="date-from" value="' + dateStr + '"></td>' +
+        '<td class="spacing"><input name="dateTo" type="date" id="date-to" value="' + dateStr + '"></td>' +
         '<td class="spacing">' + creationDays + '</td>' +
-        '<td class="spacing"><input name="price" id="price-input" type="number" step="0.01"> UAH</td>' +
-        '<td class="spacing last change"><button id="confirm">' + create + '</button></td>' +
+        '<td class="spacing"><input name="price" id="price-input" type="number" step="0.01" value="0.00"> UAH</td>' +
+        '<td class="spacing last"><button id="confirm">' + create + '</button></td>' +
         '</tr>';
 
     $('#creating-table-body').html(creationForm);
-    $('#create-container').show();
+    $('#create-container').toggle();
 
     $('#create-seance').css({'margin-right': '30%'})
-    $('#confirm').css({'width': '0'})
+    // $('#confirm').css({'width': '0'})
 })
 
 $(document).ready(function () {
-    $(document).on('click', '.table-row', function () {
-        $(this).removeClass('table-row').addClass('change-row');
+    $(document).on('click', '.changing', function () {
+        $(this).removeClass('changing').addClass('change-row');
         let days =
             '<div class="checkbox"><input type="checkbox" id="MONDAY" name="MONDAY"><label for="MONDAY">' + monday + '</label></div>' +
             '<div class="checkbox"><input type="checkbox" id="TUESDAY" name="TUESDAY"><label for="TUESDAY">' + tuesday + '</label></div>' +
@@ -94,9 +109,6 @@ $(document).ready(function () {
     })
 })
 
-
-let url;
-
 $(document).ready(function () {
 
     $(document).on('mouseenter', '.table-row', function () {
@@ -121,9 +133,8 @@ $(document).ready(function () {
         let dateStr = year + "-" + month + "-" + day;
         url = window.location.origin + '/admin/schedule/seances?date=' + dateStr;
         $('#seanceDate').val(dateStr);
-
-        getSchedule();
         $('#calendar').hide()
+        getSchedule(adminRole);
 
         function getMonthFromString(mon) {
             let Months_ENG = ['January', 'February', 'March',
@@ -151,10 +162,57 @@ $(document).ready(function () {
 
 $(document).on('click', function (e) {
     if (!($(e.target).parents(".table-row").length || $(e.target).parents(".change-row").length)) {
-        getSchedule();
+        getSchedule(adminRole);
         $('#schedule').css({'margin-right': '35%'})
     }
 });
+
+$(document).on('click', '#confirm', function () {
+
+    let movieName = $('#create-seance').find('#movie-input').val();
+    let movieBeginTime = $('#create-seance').find('#timepicker').val() + ':00';
+    let hallId = $('#create-seance').find('#hall-input').val();
+    let price = parseFloat($('#create-seance').find('#price-input').val()).toFixed(2);
+    let dateFrom = $('#create-seance').find('#date-from').val();
+    let dateTo = $('#create-seance').find('#date-to').val();
+    let path = window.location.origin + '/admin/creation/seance?movieName=' + movieName;
+    let days = [];
+    $(this).parent().parent().find('input:checked').each(function (index) {
+        days.push($(this).attr('id'));
+    })
+    let parent = $(this).parent().parent();
+
+    $.ajax({
+        url: path,
+        method: 'POST',
+        async: false,
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        cache: false,
+        data: JSON.stringify({
+            "hallId": hallId,
+            "ticketPrice": price,
+            "movieBeginTime": movieBeginTime,
+            "seanceDateFrom": dateFrom,
+            "seanceDateTo": dateTo,
+            "day": days
+        })
+    }).fail(function (data) {
+        if (data.responseText === 'exists') {
+            $(parent).find('#timepicker').addClass('invalid')
+            $(parent).find('#date-from').addClass('invalid')
+            $(parent).find('#date-to').addClass('invalid')
+        } else if (data.responseText === 'fail movie') {
+            console.log('hi')
+            $(parent).find('#movie-input').addClass('invalid')
+        } else {
+            $(parent).find('#timepicker').removeClass('invalid')
+            $(parent).find('#date-from').removeClass('invalid')
+            $(parent).find('#date-to').removeClass('invalid')
+            $('#create-container').hide();
+        }
+    })
+})
 
 $(document).on('click', '.change', function () {
 
@@ -166,7 +224,7 @@ $(document).on('click', '.change', function () {
     let price = parseFloat($('#price-input').val()).toFixed(2);
     let dateFrom = $('#date-from').val();
     let dateTo = $('#date-to').val();
-    let path = window.location.origin + '/admin/change/seance?movieName=' + movieName;
+    let path = window.location.origin + '/admin/creation/seance?movieName=' + movieName;
     let days = [];
     $(this).parent().parent().find('input:checked').each(function (index) {
         days.push($(this).attr('id'));
@@ -201,16 +259,17 @@ $(document).on('click', '.change', function () {
             $(parent).find('#timepicker').removeClass('invalid')
             $(parent).find('#date-from').removeClass('invalid')
             $(parent).find('#date-to').removeClass('invalid')
-            getSchedule();
+            getSchedule(adminRole);
         }
     })
 })
 
-function getSchedule() {
+function getSchedule(status) {
 
     $.ajax({
         url: url,
-        method: 'GET'
+        method: 'GET',
+        async: false
     }).done(function (data) {
         let seances = [];
         let counter = 1;
@@ -243,7 +302,12 @@ function getSchedule() {
                 }
             })
 
-            let seance = '<tr class="table-row">' +
+            let first = '<tr class="table-row">';
+            if (status) {
+                first = '<tr class="table-row changing">';
+            }
+
+            let seance = first +
                 '<th scope="row" class="' + data[elem]['id'] + ' spacing first seance">' + counter++ + '</th>' +
                 '<td class="' + data[elem]['movie']['id'] + ' movie' +
                 ' spacing">' + data[elem]['movie']['name'] + '</td>' +
