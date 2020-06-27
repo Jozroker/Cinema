@@ -2,6 +2,8 @@ package com.cinema.point.service;
 
 import com.cinema.point.dto.TicketDTO;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +14,8 @@ public interface TicketService {
     TicketDTO addTicketToUser(TicketDTO ticketDTO, Long userId);
 
     void deleteById(Long id);
+
+    void deleteByDate(Date date, Time time);
 
     List<TicketDTO> findAll();
 

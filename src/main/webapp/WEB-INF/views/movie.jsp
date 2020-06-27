@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -38,6 +39,9 @@
             <div class="details">
 
                 <div class="title1">${movie.name}</div>
+                <sec:authorize access="hasAuthority('ADMIN')">
+                    <a href="${contextPath}/admin/change/movie?movieId=${movie.id}"><spring:message code="create.change"/></a>
+                </sec:authorize>
 
                 <!-- todo rating -->
                 <%--                <fieldset class="rating">--%>

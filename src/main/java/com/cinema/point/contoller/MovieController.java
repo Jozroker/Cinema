@@ -92,6 +92,15 @@ public class MovieController {
         return "create_movie";
     }
 
+    @GetMapping("/admin/change/movie")
+    public String changeMovie(Model model, @RequestParam Long movieId) {
+        MovieDTO movie = movieService.findById(movieId);
+        List<ActorDTO> actors = actorService.findByMovieId(movieId);
+        model.addAttribute("movie", movie);
+        model.addAttribute("actors", actors);
+        return "change_movie";
+    }
+
     @GetMapping("/admin/create/actor")
     public String createActor(Model model) {
         ActorDTO actor = new ActorDTO();
@@ -139,8 +148,16 @@ public class MovieController {
             movieService.findByName(movieDTO.getName());
         } catch (ResourceNotFoundException e) {
             movieService.save(movieDTO);
-            return "not exists";
+            return "redirect:/movies";
         }
         return "exists";
+    }
+
+    @PostMapping(value = "/admin/change/movie", consumes =
+            {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public String changeMovie(@RequestBody String movie) throws JsonProcessingException {
+        MovieDTO movieDTO = new ObjectMapper().readValue(movie, MovieDTO.class);
+        movieService.save(movieDTO);
+        return "movies";
     }
 }

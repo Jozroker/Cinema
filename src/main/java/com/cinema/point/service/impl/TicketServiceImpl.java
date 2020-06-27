@@ -17,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,6 +83,13 @@ public class TicketServiceImpl implements TicketService {
     public void deleteById(Long id) {
         log.debug("deleting ticket by id {}", id);
         ticketRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteByDate(Date date, Time time) {
+        log.debug("deleting ticket where date less then {} and time less then" +
+                " {}", date, time);
+        ticketRepository.deleteTicketsByDate(date, time);
     }
 
     @Override

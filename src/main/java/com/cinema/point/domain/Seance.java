@@ -47,7 +47,7 @@ public class Seance {
     @JoinColumn(name = "hall_id", nullable = false)
     private Hall hall;
 
-    @ElementCollection(targetClass = Day.class)
+    @ElementCollection(targetClass = Day.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Day> day = new HashSet<>();
 

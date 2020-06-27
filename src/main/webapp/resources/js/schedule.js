@@ -131,7 +131,7 @@ $(document).ready(function () {
         if (day.length < 2)
             day = '0' + day;
         let dateStr = year + "-" + month + "-" + day;
-        url = window.location.origin + '/admin/schedule/seances?date=' + dateStr;
+        url = window.location.origin + '/schedule/seances?date=' + dateStr;
         $('#seanceDate').val(dateStr);
         $('#calendar').hide()
         getSchedule(adminRole);
@@ -162,8 +162,10 @@ $(document).ready(function () {
 
 $(document).on('click', function (e) {
     if (!($(e.target).parents(".table-row").length || $(e.target).parents(".change-row").length)) {
-        getSchedule(adminRole);
-        $('#schedule').css({'margin-right': '35%'})
+        if ($(document).find('.change-row').length) {
+            getSchedule(adminRole);
+            $('#schedule').css({'margin-right': '35%'})
+        }
     }
 });
 
@@ -265,7 +267,6 @@ $(document).on('click', '.change', function () {
 })
 
 function getSchedule(status) {
-
     $.ajax({
         url: url,
         method: 'GET',

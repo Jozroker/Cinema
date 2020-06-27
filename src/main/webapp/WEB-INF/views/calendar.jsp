@@ -123,7 +123,7 @@
                     } else if (d > lastDateOfCurrentMonth) {
                         html += '<td class="nextmonthdates" id="nextmonthdates">' + (p++) + '</td>';
                     } else {
-                        if (window.location.pathname === '/admin/schedule') {
+                        if (window.location.pathname === '/schedule') {
                             html += '<td class="currentmonthdates" id="currentmonthdates">' + (d) + '</td>';
                         } else {
                             if (validDays.includes(d)) {

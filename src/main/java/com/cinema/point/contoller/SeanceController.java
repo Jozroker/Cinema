@@ -22,6 +22,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -225,17 +226,20 @@ public class SeanceController {
         Map<String, List<Integer>> validDates = new HashMap<>();
         validSeances.forEach(s -> {
             Date date = s.getSeanceDateFrom();
+            Date previousDate = Date.valueOf(LocalDate.now().minus(1,
+                    ChronoUnit.DAYS));
             String month;
             int day;
             while (date.before(s.getSeanceDateTo())) {
-                month = date.toLocalDate().getMonth().toString().toLowerCase();
-                day = date.toLocalDate().getDayOfMonth();
-                if (!(validDates.containsKey(month) && validDates.get(month).contains(day))) {
-                    if (!validDates.containsKey(month)) {
-                        validDates.put(month, new ArrayList<>());
+                if (date.after(previousDate)) {
+                    month = date.toLocalDate().getMonth().toString().toLowerCase();
+                    day = date.toLocalDate().getDayOfMonth();
+                    if (!(validDates.containsKey(month) && validDates.get(month).contains(day))) {
+                        if (!validDates.containsKey(month)) {
+                            validDates.put(month, new ArrayList<>());
+                        }
+                        validDates.get(month).add(day);
                     }
-                    validDates.get(month).add(day);
-//                                    dates.put(month, day);
                 }
                 date = Date.valueOf(date.toLocalDate().plus(1,
                         ChronoUnit.DAYS));

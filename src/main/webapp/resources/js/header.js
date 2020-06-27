@@ -52,6 +52,12 @@ $(document).ready(
 
 $(document).ready(function () {
 
+    if (window.location.pathname === '/schedule') {
+        $('#schedule-link').addClass('selected')
+    } else if (window.location.pathname === '/movies') {
+        $('#movies-link').addClass('selected')
+    }
+
     $.ajax({
         url: contextPath + '/movies/list'
     }).done(function (data) {

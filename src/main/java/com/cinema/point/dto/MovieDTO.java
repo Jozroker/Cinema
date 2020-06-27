@@ -29,4 +29,10 @@ public class MovieDTO {
     private Set<Long> actorsIds = new HashSet<>();
 
     private String pictureString;
+
+    public String getGetDurationTime() {
+        long minute = (this.duration / (1000 * 60)) % 60;
+        long hour = (this.duration / (1000 * 60 * 60)) % 24;
+        return hour + ":" + minute;
+    }
 }

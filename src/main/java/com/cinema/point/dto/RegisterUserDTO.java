@@ -2,6 +2,7 @@ package com.cinema.point.dto;
 
 import com.cinema.point.domain.Role;
 import lombok.Data;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 import javax.imageio.ImageIO;
 import javax.validation.constraints.Email;
@@ -9,8 +10,6 @@ import javax.validation.constraints.NotEmpty;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 @Data
 public class RegisterUserDTO {
@@ -41,16 +40,22 @@ public class RegisterUserDTO {
     private String pictureString = getByteImage();
 
     private String getByteImage() {
-        BufferedImage bImage = null;
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        String base64Image = null;
         try {
-            //todo relative path
-            bImage = ImageIO.read(new File("F:\\PC_Educate\\Programming\\java\\cinema\\src\\main\\webapp\\resources\\image\\default-avatar.png"));
-            ImageIO.write(bImage, "png", bos);
-        } catch (IOException e) {
-            e.printStackTrace();
+            BufferedImage bufferedImage = ImageIO.read(new File("F" +
+                    ":\\PC_Educate\\Programming\\java\\cinema\\src\\main" +
+                    "\\webapp\\resources\\image\\default-avatar.jpg"));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "jpg", baos);
+            baos.flush();
+            byte[] imageInByte = baos.toByteArray();
+            baos.close();
+            base64Image = Base64.encodeBase64String(imageInByte);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        return new String(bos.toByteArray(), StandardCharsets.UTF_8);
+        return base64Image;
+
     }
 
 }
