@@ -15,6 +15,7 @@
     <title>Create Movie</title>
     <link rel="stylesheet" href="${contextPath}/resources/css/change-movie.css">
     <link rel="stylesheet" href="${contextPath}/resources/css/create-actor.css">
+    <link rel="stylesheet" href="${contextPath}/resources/css/duration-picker.css">
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -24,22 +25,31 @@
     <script src="${contextPath}/resources/js/create-actor.js"></script>
     <script>
         let contextPath = '<c:out value="${contextPath}"/>';
+        let durationTime = '<c:out value="${movie.duration}"/>';
     </script>
 </head>
-<body>
-
+<body id="body">
+<div>
+    <jsp:include page="header.jsp"/>
+</div>
+<div id="alert">
+    <div id="text"><p></p></div>
+    <div id="button"><a>OK</a></div>
+</div>
 <div class="main">
     <div class="image-holder">
         <div id="image">
-            <img id="image-container" alt="movie poster" src="${movie.pictureString}">
-            <label for="fileToUpload">IMG</label>
+            <img id="image-container" alt="movie poster" src="data:image/jpeg;base64,${movie.pictureString}">
+            <div id="uploadLabel">
+                <label for="fileToUpload">IMG</label>
+            </div>
             <input name="file" id="fileToUpload" type="file"/>
         </div>
         <!-- todo custom button -->
 
     </div>
     <div id="form">
-        <form method="POST" action="${contextPath}/admin/change/movie">
+        <form class="${movie.id}" method="POST" action="${contextPath}/admin/change/movie">
             <spring:message code="create.name"/>
             <div>
                 <input name="name" id="name" type="text" value="${movie.name}">
@@ -50,7 +60,7 @@
             </div>
             <spring:message code="create.duration"/>
             <div>
-                <input id="time" value="${movie.getDurationTime}">
+                <input id="time">
             </div>
             <div>
                 <spring:message code="create.actors"/>
@@ -77,6 +87,9 @@
         </form>
     </div>
 </div>
-
+<div>
+    <jsp:include page="footer.jsp"/>
+</div>
+<script src="${contextPath}/resources/js/duration-picker.js"></script>
 </body>
 </html>

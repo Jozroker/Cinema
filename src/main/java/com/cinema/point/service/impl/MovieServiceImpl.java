@@ -8,6 +8,7 @@ import com.cinema.point.errors.ResourceNotFoundException;
 import com.cinema.point.repository.ActorRepository;
 import com.cinema.point.repository.MovieRepository;
 import com.cinema.point.service.MovieService;
+import com.cinema.point.service.SeanceService;
 import com.cinema.point.service.mapper.MovieMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,13 +25,16 @@ public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
     private final MovieMapper movieMapper;
     private final ActorRepository actorRepository;
+    private final SeanceService seanceService;
 
     public MovieServiceImpl(MovieRepository movieRepository,
                             MovieMapper movieMapper,
-                            ActorRepository actorRepository) {
+                            ActorRepository actorRepository,
+                            SeanceService seanceService) {
         this.movieRepository = movieRepository;
         this.movieMapper = movieMapper;
         this.actorRepository = actorRepository;
+        this.seanceService = seanceService;
     }
 
     @Override
@@ -42,12 +46,19 @@ public class MovieServiceImpl implements MovieService {
                 .map(id -> actorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Actor", id)))
                 .collect(Collectors.toSet());
         movie.setActors(actors);
+        if (movieDTO.getPicture().length == 0 && movieDTO.getId() != null) {
+            Movie currentMovie =
+                    movieRepository.findById(movieDTO.getId())
+                            .orElseThrow(() -> new ResourceNotFoundException("Movie", movieDTO.getId()));
+            movie.setPicture(currentMovie.getPicture());
+        }
         return movieMapper.toDTO(movieRepository.save(movie));
     }
 
     @Override
     public void deleteById(Long id) {
         log.debug("deleting movie by id {}", id);
+        seanceService.deleteByMovieId(id);
         movieRepository.deleteById(id);
     }
 

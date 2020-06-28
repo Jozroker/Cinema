@@ -10,6 +10,18 @@
     background-color: #595C5F;
 }
 
+span {
+    user-select: none;
+}
+
+.bi {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 1000;
+    cursor: pointer;
+}
+
 #list {
     padding-top: 5%;
     padding-left: 20px;

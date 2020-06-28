@@ -15,6 +15,7 @@
     <title>Create Movie</title>
     <link rel="stylesheet" href="${contextPath}/resources/css/create-movie.css">
     <link rel="stylesheet" href="${contextPath}/resources/css/create-actor.css">
+    <link rel="stylesheet" href="${contextPath}/resources/css/duration-picker.css">
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -22,12 +23,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resources/js/create-actor.js"></script>
     <script src="${contextPath}/resources/js/create-movie.js"></script>
+    <script src="${contextPath}/resources/js/duration-picker.js"></script>
     <script>
         let contextPath = '<c:out value="${contextPath}"/>';
     </script>
 </head>
 <body>
-
+<div id="alert">
+    <p></p>
+    <a>OK</a>
+</div>
 <div class="main">
     <div class="image-holder">
         <div id="image">
@@ -39,7 +44,7 @@
 
     </div>
     <div id="form">
-        <form method="POST" action="${contextPath}/admin/create/movie">
+        <form method="POST" action="${contextPath}/admin/create/movie" autocomplete="off">
             <spring:message code="create.name"/>
             <div>
                 <input name="name" id="name" type="text">

@@ -12,6 +12,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <!-- todo add custom font to all pages -->
+<!-- todo add update user information form -->
 <head>
     <title>Personal Cabinet</title>
     <link rel="stylesheet" href="${contextPath}/resources/css/cabinet.css">

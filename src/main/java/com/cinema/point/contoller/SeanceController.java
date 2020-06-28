@@ -221,6 +221,12 @@ public class SeanceController {
         return "exists";
     }
 
+    @PostMapping("/admin/delete/seance")
+    public String deleteSeance(@RequestParam Long seanceId) {
+        seanceService.deleteById(seanceId);
+        return "schedule";
+    }
+
     private Map<String, List<Integer>> findValidDates(Long movieId) {
         List<SeanceCreationDTO> validSeances = seanceService.findCreationByMovieId(movieId);
         Map<String, List<Integer>> validDates = new HashMap<>();

@@ -46,9 +46,17 @@
                         <span id="movies-link"><spring:message code="navbar.movies"/></span>
                     </a>
                 </li>
+                <sec:authorize access="hasAuthority('ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${contextPath}/admin/create/movie">
+                            <span id="create-movie-link"><spring:message code="create.movie"/></span>
+                        </a>
+                    </li>
+                </sec:authorize>
             </ul>
             <form id="search-bar" class="form-inline mt-2 mt-md-0" autocomplete="off">
                 <spring:message code="navbar.search.button" var="search"/>
+                <!-- todo create page from search result -->
                 <input id="search-line" class="form-control mr-sm-2" type="text" placeholder="${search}"
                        aria-label="Search" autocomplete="false">
                 <ul class="list-group" id="movies"></ul>

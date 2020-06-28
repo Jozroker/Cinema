@@ -56,6 +56,8 @@ $(document).ready(function () {
         $('#schedule-link').addClass('selected')
     } else if (window.location.pathname === '/movies') {
         $('#movies-link').addClass('selected')
+    } else if (window.location.pathname === '/admin/create/movie') {
+        $('#create-movie-link').addClass('selected')
     }
 
     $.ajax({

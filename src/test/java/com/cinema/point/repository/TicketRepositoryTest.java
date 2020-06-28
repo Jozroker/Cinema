@@ -1,46 +1,42 @@
-//package com.cinema.point.repository;
-//
-//import com.cinema.point.domain.*;
-//import org.junit.jupiter.api.MethodOrderer;
-//import org.junit.jupiter.api.Order;
-//import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.api.TestMethodOrder;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//
-//import java.math.BigDecimal;
-//import java.sql.Date;
-//import java.sql.Time;
-//import java.util.ArrayList;
-//import java.util.HashSet;
-//import java.util.List;
-//import java.util.Set;
-//
-//@SpringBootTest
-//@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-//class TicketRepositoryTest {
-//
-//    static Seance seance = new Seance();
-//    static Hall hall = new Hall();
-//    static Movie movie = new Movie();
-//    static Ticket ticket = new Ticket();
-//    static User user = new User();
-//
-//    @Autowired
-//    SeanceRepository sr;
-//
-//    @Autowired
-//    MovieRepository mr;
-//
-//    @Autowired
-//    HallRepository hr;
-//
-//    @Autowired
-//    UserRepository ur;
-//
-//    @Autowired
-//    TicketRepository tr;
-//
+package com.cinema.point.repository;
+
+import com.cinema.point.domain.*;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+@SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+class TicketRepositoryTest {
+
+    static Seance seance = new Seance();
+    static Hall hall = new Hall();
+    static Movie movie = new Movie();
+    static Ticket ticket = new Ticket();
+    static User user = new User();
+
+    @Autowired
+    SeanceRepository sr;
+
+    @Autowired
+    MovieRepository mr;
+
+    @Autowired
+    HallRepository hr;
+
+    @Autowired
+    UserRepository ur;
+
+    @Autowired
+    TicketRepository tr;
+
 //    @Test
 //    @Order(1)
 //    void create() {
@@ -126,4 +122,11 @@
 //        hr.deleteAll();
 //        mr.deleteAll();
 //    }
-//}
+
+    @Test
+    void findTickets() {
+        Date date = Date.valueOf(LocalDate.now());
+        Time time = Time.valueOf(LocalTime.now());
+        tr.deleteTicketsByDate(date, time);
+    }
+}

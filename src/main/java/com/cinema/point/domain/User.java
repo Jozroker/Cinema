@@ -45,7 +45,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(cascade = CascadeType.REFRESH)
+    @OneToMany
     @JoinColumn(name = "user_id")
     private List<Ticket> tickets = new ArrayList<>();
 

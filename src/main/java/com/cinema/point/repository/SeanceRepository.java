@@ -4,8 +4,10 @@ import com.cinema.point.domain.Day;
 import com.cinema.point.domain.HallType;
 import com.cinema.point.domain.Seance;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -43,4 +45,15 @@ public interface SeanceRepository extends JpaRepository<Seance, Long> {
 
     @Query("select t.seance from Ticket t where t.id = ?1")
     Optional<Seance> findByTicketId(Long id);
+
+    @Transactional
+    @Modifying
+//    @Query("delete from Seance s where s.movie in (select m from Movie m " +
+//            "where m.id = ?1)")
+    void deleteByMovieId(Long id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from seance_day where seance_id = ?1", nativeQuery = true)
+    void deleteDays(Long id);
 }

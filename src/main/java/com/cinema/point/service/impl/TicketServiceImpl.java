@@ -93,6 +93,12 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    public void deleteBySeanceId(Long id) {
+        log.debug("deleting ticket by seance id {}", id);
+        ticketRepository.deleteBySeanceId(id);
+    }
+
+    @Override
     public List<TicketDTO> findAll() {
         log.debug("finding all tickets");
         return ticketRepository.findAll().stream()

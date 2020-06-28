@@ -17,6 +17,8 @@ public interface TicketService {
 
     void deleteByDate(Date date, Time time);
 
+    void deleteBySeanceId(Long id);
+
     List<TicketDTO> findAll();
 
     TicketDTO findById(Long id);

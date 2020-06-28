@@ -175,4 +175,20 @@ public class SeanceServiceImpl implements SeanceService {
         return seanceRepository.findByDateBetween(date).stream()
                 .map(seanceMapper::toCreationDTO).collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteByMovieId(Long id) {
+        log.debug("deleting seances by movie id {}", id);
+        seanceRepository.findByMovieId(id).forEach(seance -> {
+            deleteDays(seance.getId());
+            ticketService.deleteBySeanceId(seance.getId());
+        });
+        seanceRepository.deleteByMovieId(id);
+    }
+
+    @Override
+    public void deleteDays(Long id) {
+        log.debug("deleting values from seance_day table by seance id {}", id);
+        seanceRepository.deleteDays(id);
+    }
 }

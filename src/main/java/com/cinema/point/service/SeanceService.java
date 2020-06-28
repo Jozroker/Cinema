@@ -15,6 +15,8 @@ public interface SeanceService {
 
     void deleteById(Long id);
 
+    void deleteByMovieId(Long id);
+
     List<SeanceCreationDTO> findCreationAll();
 
     List<SeanceDTO> findAll();
@@ -44,4 +46,6 @@ public interface SeanceService {
     List<SeanceCreationDTO> findCreationByMovieId(Long id);
 
     SeanceDTO findByTicketId(Long id);
+
+    void deleteDays(Long id);
 }

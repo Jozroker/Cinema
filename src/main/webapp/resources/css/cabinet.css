@@ -9,6 +9,10 @@
     margin-left: 5%;
 }
 
+.col p {
+    font-size: 20px;
+}
+
 #container img {
     float: left;
     border-radius: 50%;

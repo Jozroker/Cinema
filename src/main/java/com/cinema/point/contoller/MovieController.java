@@ -160,4 +160,10 @@ public class MovieController {
         movieService.save(movieDTO);
         return "movies";
     }
+
+    @PostMapping("/admin/delete/movie")
+    public String deleteMovie(@RequestParam Long movieId) {
+        movieService.deleteById(movieId);
+        return "movies";
+    }
 }
