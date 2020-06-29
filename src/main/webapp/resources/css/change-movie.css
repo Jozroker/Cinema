@@ -75,6 +75,8 @@
     width: 100%;
     text-align: center;
     margin-top: 10px;
+    user-input: none;
+    user-select: none;
 }
 
 #uploadLabel label {
@@ -101,12 +103,95 @@
     width: 170px;
 }
 
+#current-actors {
+    padding: 0;
+    width: 50%;
+    border-radius: 10px;
+    border: 0;
+    background-color: rgba(32, 124, 52, .7);
+}
+
+#changeMovieBtn {
+    display: block;
+    margin: auto;
+    width: 20%;
+    padding: 10px;
+    border: 0;
+    border-radius: 20px;
+    background-color: #28A745;
+}
+
+#search-actor {
+    width: 50%;
+}
+
+.actors {
+    padding: 10px;
+}
+
+.current-actor {
+    padding: 5px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, .3);
+    position: relative;
+    list-style: none;
+    margin: 5px 0 5px 0;
+}
+
 #all-actors {
     display: none;
+    width: 50%;
+}
+
+a, span, div {
+    user-input: none;
+    user-select: none;
+}
+
+#name, #description {
+    padding: 10px;
+    border: 0;
+    border-radius: 30px;
+    background-color: rgba(32, 124, 52, .7);
+    color: #9A9DA0;
+}
+
+.text {
+    margin-top: 10px;
+    display: block;
+}
+
+#picker {
+    padding: 5px;
+    border: 0;
+    border-radius: 20px;
+    background-color: rgba(32, 124, 52, .7);
+    color: #9A9DA0;
+}
+
+#picker input {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background-color: rgba(0, 0, 0, 0);
+    color: #9A9DA0;
 }
 
 #create-actor {
     margin-top: 0;
+    padding: 10px;
+    background-color: rgb(32, 124, 52);
+    list-style: none;
+    border: 0;
+    border-radius: 35px;
+}
+
+.actor {
+    padding: 10px;
+    list-style: none;
+    background-color: rgba(32, 124, 52, .7);
+    border: 0;
+    border-radius: 35px;
 }
 
 #image {

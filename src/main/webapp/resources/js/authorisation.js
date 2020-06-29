@@ -26,12 +26,10 @@ $(document).ready(function () {
         let url = new URL(window.location)
 
         if (url.searchParams.get('type') === 'registration') {
-            console.log(1)
             $('#tab-2').click()
         }
 
         if (window.location.pathname === '/register') {
-            console.log(2)
             $('#tab-2').click()
         }
 

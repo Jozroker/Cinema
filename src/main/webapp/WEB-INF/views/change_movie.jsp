@@ -12,7 +12,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>Create Movie</title>
+    <title>Change Movie</title>
     <link rel="stylesheet" href="${contextPath}/resources/css/change-movie.css">
     <link rel="stylesheet" href="${contextPath}/resources/css/create-actor.css">
     <link rel="stylesheet" href="${contextPath}/resources/css/duration-picker.css">
@@ -50,31 +50,39 @@
     </div>
     <div id="form">
         <form class="${movie.id}" method="POST" action="${contextPath}/admin/change/movie">
-            <spring:message code="create.name"/>
+            <span class="text"><spring:message code="create.name"/></span>
             <div>
                 <input name="name" id="name" type="text" value="${movie.name}">
             </div>
-            <spring:message code="create.description"/>
+            <span class="text"><spring:message code="create.description"/></span>
             <div>
                 <textarea name="description" id="description" rows="4" cols="50">${movie.description}</textarea>
             </div>
-            <spring:message code="create.duration"/>
+            <span class="text"><spring:message code="create.duration"/></span>
             <div>
                 <input id="time">
             </div>
             <div>
-                <spring:message code="create.actors"/>
-                <ul class="actors">
-                    <c:forEach var="actor" items="${actors}">
-                        <li class="list-group-item avatar-selected">
-                            <img class="${actor.id} avatar" src="data:image/jpeg;base64,${actor.pictureString}" alt="actor${actor.id}"/>
-                                ${actor.firstName} ${actor.lastName}
-                        </li>
-                    </c:forEach>
+                <span class="text"><spring:message code="create.actors"/></span>
+                <ul id="current-actors">
+                    <div class="actors">
+                        <c:forEach var="actor" items="${actors}">
+                            <li class="current-actor avatar-selected">
+                                <img class="${actor.id} avatar" src="data:image/jpeg;base64,${actor.pictureString}" alt="actor${actor.id}"/>
+                                    ${actor.firstName} ${actor.lastName}
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                          d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                    <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
+                                    <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
+                                </svg>
+                            </li>
+                        </c:forEach>
+                    </div>
                 </ul>
                 <spring:message code="navbar.search.button" var="search"/>
                 <div>
-                    <input id="search-line" class="form-control mr-sm-2" type="text" placeholder="${search}"
+                    <input id="search-actor" class="form-control mr-sm-2" type="text" placeholder="${search}"
                            aria-label="Search">
                     <div id="actor-creating"></div>
                 </div>

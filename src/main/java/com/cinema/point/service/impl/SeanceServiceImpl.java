@@ -3,7 +3,6 @@ package com.cinema.point.service.impl;
 import com.cinema.point.domain.*;
 import com.cinema.point.dto.SeanceCreationDTO;
 import com.cinema.point.dto.SeanceDTO;
-import com.cinema.point.dto.TicketDTO;
 import com.cinema.point.errors.ResourceNotFoundException;
 import com.cinema.point.repository.HallRepository;
 import com.cinema.point.repository.MovieRepository;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,11 +67,10 @@ public class SeanceServiceImpl implements SeanceService {
     @Override
     public void deleteById(Long id) {
         log.debug("deleting seance by id {}", id);
-        List<TicketDTO> tickets = ticketService.findBySeanceId(id);
-        Iterator<TicketDTO> iter = tickets.iterator();
-        while (iter.hasNext()) {
-            ticketService.deleteById(iter.next().getId());
-        }
+        ticketService.findBySeanceId(id).forEach(ticket -> {
+            ticketService.deleteById(ticket.getId());
+        });
+        deleteDays(id);
         seanceRepository.deleteById(id);
     }
 

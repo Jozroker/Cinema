@@ -227,6 +227,8 @@ public class SeanceController {
         return "schedule";
     }
 
+    //todo move this to service level
+
     private Map<String, List<Integer>> findValidDates(Long movieId) {
         List<SeanceCreationDTO> validSeances = seanceService.findCreationByMovieId(movieId);
         Map<String, List<Integer>> validDates = new HashMap<>();

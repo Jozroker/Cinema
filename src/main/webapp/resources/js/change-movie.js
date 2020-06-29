@@ -23,6 +23,12 @@ $(document).ready(function () {
 
 $(document).ready(function () {
 
+    $(document).on('click', function (e) {
+        if (!($(e.target).parents("#search-actor").length || $(e.target).parents("#all-actors").length)) {
+            $('#all-actors').hide()
+        }
+    });
+
     $('#alert a').on('click', function () {
         $('#alert').hide();
         $('input, textarea').prop('disabled', false);
@@ -32,7 +38,7 @@ $(document).ready(function () {
         $(this).parent().remove();
     })
 
-    $("#search-line").on("keyup", function () {
+    $("#search-actor").on("keyup", function () {
         let value = $(this).val().toLowerCase();
         if (value.length > 0) {
             $('#all-actors').show()
@@ -45,17 +51,17 @@ $(document).ready(function () {
         $('#create-actor').show()
     });
 
-    let actors = new Set();
-
     $(document).on('click', '.actor', function () {
-        actors.add('<li class="list-group-item avatar-selected">' +
+        let actors = new Set();
+        actors.add('<li class="current-actor avatar-selected">' +
             '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">' +
             '  <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>' +
             '  <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>' +
             '  <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>' +
             '</svg>' +
             $(this).html() + '</li>');
-        $('.actors').html(Array.from(actors));
+        let content = $('.actors').html() + Array.from(actors);
+        $('.actors').html(content);
         $('#all-actors').hide()
     })
 
@@ -193,14 +199,14 @@ $(document).ready(function () {
         }).done(function (data) {
             let list = []
             for (let elem in data) {
-                let element = '<li class="actor list-group-item">' +
+                let element = '<li class="actor">' +
                     '<img class="' + data[elem]['id'] + ' avatar" src="data:image/jpeg;base64,' + data[elem]['pictureString'] + '" alt="actor' +
                     data[elem]['id'] + '"/> ' +
                     data[elem]['firstName'] + ' ' + data[elem]['lastName'] +
                     '</li>';
                 list.push(element);
             }
-            list.push('<li id="create-actor" class="list-group-item">Create new actor</li>');
+            list.push('<li id="create-actor">Create new actor</li>');
             $('#all-actors').html(list)
         })
     }

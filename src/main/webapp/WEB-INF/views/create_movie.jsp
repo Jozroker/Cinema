@@ -59,10 +59,13 @@
             </div>
             <div>
                 <spring:message code="create.actors"/>
-                <ul class="actors"></ul>
+                <ul id="current-actors">
+                    <div class="actors">
+                    </div>
+                </ul>
                 <spring:message code="navbar.search.button" var="search"/>
                 <div>
-                    <input id="search-line" class="form-control mr-sm-2" type="text" placeholder="${search}"
+                    <input id="search-actor" class="form-control mr-sm-2" type="text" placeholder="${search}"
                            aria-label="Search">
                     <div id="actor-creating"></div>
                 </div>

@@ -124,6 +124,7 @@ public class MovieController {
         }
         if (file.isEmpty()) {
             //todo set relative path
+            //todo move this to service level
             File imagePath = new File("F:\\PC_Educate\\Programming\\java" +
                     "\\cinema" +
                     "\\src\\main\\webapp\\resources\\image\\default-avatar.png");

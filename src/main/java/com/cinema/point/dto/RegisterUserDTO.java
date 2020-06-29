@@ -16,23 +16,23 @@ public class RegisterUserDTO {
 
     private Long id;
 
-    @NotEmpty(message = "state.required.field")
+    @NotEmpty(message = "{state.required.field}")
     private String username;
 
     private String firstName;
 
     private String lastName;
 
-    @NotEmpty(message = "state.required.field")
-    @Email(message = "state.email.invalid")
+    @NotEmpty(message = "{state.required.field}")
+    @Email(message = "{state.email.invalid}")
     private String email;
 
     private String phone;
 
-    @NotEmpty(message = "state.required.field")
+    @NotEmpty(message = "{state.required.field}")
     private String password;
 
-    @NotEmpty(message = "state.required.field")
+    @NotEmpty(message = "{state.required.field}")
     private String confirmPassword;
 
     private Role role = Role.USER;

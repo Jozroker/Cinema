@@ -9,10 +9,10 @@ public class ActorDTO {
 
     private Long id;
 
-    @NotEmpty(message = "first name value is required")
+    @NotEmpty(message = "{state.required.field}")
     private String firstName;
 
-    @NotEmpty(message = "last name value is required")
+    @NotEmpty(message = "{state.required.field}")
     private String lastName;
 
     private byte[] profilePicture;

@@ -4,6 +4,13 @@ function changeLanguage(language) {
 
 $(document).ready(
     function () {
+
+        $(document).on('click', function (e) {
+            if (!($(e.target).parents("#search-line").length || $(e.target).parents("#movies").length)) {
+                $('#movies').hide()
+            }
+        });
+
         $('.navbar .dropdown-item').on('click', function (e) {
             var $el = $(this).children('.dropdown-toggle');
             var $parent = $el.offsetParent(".dropdown-menu");

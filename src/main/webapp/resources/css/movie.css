@@ -11,6 +11,11 @@
     overflow: hidden;
 }
 
+a, span, div {
+    user-input: none;
+    user-select: none;
+}
+
 .column {
     margin-right: 20px;
 }
