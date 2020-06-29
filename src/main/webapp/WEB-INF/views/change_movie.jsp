@@ -49,7 +49,7 @@
 
     </div>
     <div id="form">
-        <form class="${movie.id}" method="POST" action="${contextPath}/admin/change/movie">
+        <form class="${movie.id}" method="POST" action="${contextPath}/admin/change/movie" autocomplete="off">
             <span class="text"><spring:message code="create.name"/></span>
             <div>
                 <input name="name" id="name" type="text" value="${movie.name}">
@@ -80,9 +80,9 @@
                         </c:forEach>
                     </div>
                 </ul>
-                <spring:message code="navbar.search.button" var="search"/>
+                <spring:message code="create.actor" var="createActor"/>
                 <div>
-                    <input id="search-actor" class="form-control mr-sm-2" type="text" placeholder="${search}"
+                    <input id="search-actor" class="form-control mr-sm-2" type="text" placeholder="${createActor}"
                            aria-label="Search">
                     <div id="actor-creating"></div>
                 </div>

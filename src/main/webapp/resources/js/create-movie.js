@@ -25,11 +25,14 @@ $(document).ready(function () {
 
     $(document).on('click', '.bi', function () {
         $(this).parent().remove();
+        if (!$('#current-actors').find('li').length) {
+            $('#current-actors').hide();
+        }
     })
 
     $('#alert a').on('click', function () {
-        $('#alert').css('animation', 'hide-alert 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both')
-        $('#alert').hide('slow');
+        $('#alert').hide();
+        $('input, textarea').prop('disabled', false);
     })
 
     $('#search-actor').on('keyup', function () {
@@ -56,6 +59,7 @@ $(document).ready(function () {
             '</svg>' +
             $(this).html() + '</li>');
         $('.actors').html(Array.from(actors));
+        $('#current-actors').show();
         $('#all-actors').hide()
     })
 
@@ -97,17 +101,24 @@ $(document).ready(function () {
         for (let i = 0; i < $('.avatar-selected img').length; i++) {
             actors.push($($('.avatar-selected img')[i]).attr('class').split(/\s+/)[0]);
         }
-        if ($('#fileToUpload').val().length === 0 || $('#name').val().length === 0 || $('#description').val().length === 0 ||
+        if ($('#name').val().length === 0 || $('#description').val().length === 0 ||
             $('#duration-hours').val().length === 0 || $('#duration-minutes').val().length === 0) {
             // alert('Some fields is empty')
             $('#alert').find('p').text('Some fields is empty');
             $('#alert').show();
             $('#alert').css('animation', 'show-alert 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both')
+            $('input, textarea').prop('disabled', true);
+        } else if ($('#fileToUpload').val().length === 0) {
+            $('#alert').find('p').text('Image not uploaded');
+            $('#alert').show();
+            $('#alert').css('animation', 'show-alert 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both')
+            $('input, textarea').prop('disabled', true);
         } else if ($('#duration-hours').val() < 0 || $('#duration-hours').val() > 23 ||
             $('#duration-minutes').val() < 0 || $('#duration-minutes').val() > 59) {
             $('#alert').find('p').text('Duration value is incorrect');
             $('#alert').show();
             $('#alert').css('animation', 'show-alert 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both')
+            $('input, textarea').prop('disabled', true);
         } else {
             $.ajax({
                 url: contextPath + '/admin/create/movie',

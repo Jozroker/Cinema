@@ -31,13 +31,17 @@
 #actor .create {
     display: block;
     position: relative;
-    width: 50%;
+    width: 40%;
     margin: auto;
 }
 
 #createBtn {
     width: 100%;
     margin-top: 20px;
+    padding: 5px 0 5px 0;
+    background-color: #28a745;
+    border: 0;
+    border-radius: 10px;
 }
 
 #avatar-image {
@@ -47,8 +51,28 @@
 #avatar-image label {
     display: block;
     text-align: center;
+    margin-top: 5px;
+    border-radius: 10px;
+    border: 0;
+    background-color: #28A745;
+}
+
+#avatar-image label:hover, #createBtn:hover {
+    background-color: #2d8e3f;
+    color: #9A9DA0;
+}
+
+#actor-creating input {
+    border: 0;
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 5px;
+    border-radius: 10px;
 }
 
 #actor .invalid {
     border: 1px solid red;
+}
+
+.invalid-text {
+    color: red;
 }

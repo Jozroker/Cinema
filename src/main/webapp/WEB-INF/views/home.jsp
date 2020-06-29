@@ -80,21 +80,6 @@
                 </c:otherwise>
             </c:choose>
         </c:forEach>
-        <%--        <c:forEach var="day" items="${days}" varStatus="loop">--%>
-        <%--            <c:set var="item" value="day.${day.name().toLowerCase()}"/>--%>
-        <%--            <c:choose>--%>
-        <%--                <c:when test="${loop.first}">--%>
-        <%--                    <div class="column">--%>
-        <%--                        <span id="day${loop.index}" class="active day"><spring:message code="${item}"/></span>--%>
-        <%--                    </div>--%>
-        <%--                </c:when>--%>
-        <%--                <c:otherwise>--%>
-        <%--                    <div class="column">--%>
-        <%--                        <span id="day${loop.index}" class="day"><spring:message code="${item}"/></span>--%>
-        <%--                    </div>--%>
-        <%--                </c:otherwise>--%>
-        <%--            </c:choose>--%>
-        <%--        </c:forEach>--%>
         <div class="col-sm"></div>
         <div class="col-sm"></div>
         <div class="col-sm"></div>
@@ -115,20 +100,6 @@
             </tr>
             </thead>
             <tbody id="schedule-body">
-            <%--            <c:forEach var="seance" items="${schedule}" varStatus="loop">--%>
-            <%--                <tr>--%>
-            <%--                    <th scope="row" class="spacing first seance${seance.id}">${loop.index + 1}</th>--%>
-            <%--                    <td class="movie spacing seance${seance.id}">${seance.movie.name}</td>--%>
-            <%--                    <td class="spacing seance${seance.id}">${seance.beginTimeToString()}</td>--%>
-            <%--                    <td class="spacing seance${seance.id}">${seance.hall.id}</td>--%>
-            <%--                    <td class="spacing seance${seance.id}">${seance.hall.type.type}</td>--%>
-            <%--                    <td class="spacing seance${seance.id}">${seance.ticketPrice} UAH</td>--%>
-            <%--                    <td--%>
-            <%--                            class="spacing last seance${seance.id}"><a class="pill"--%>
-            <%--                                                                       href="${contextPath}/seance/order?seanceId=${seance.id}"><spring:message code="ticket.buy"/></a>--%>
-            <%--                    </td>--%>
-            <%--                </tr>--%>
-            <%--            </c:forEach>--%>
             </tbody>
         </table>
     </div>

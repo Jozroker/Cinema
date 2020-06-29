@@ -54,7 +54,27 @@ a, span, div {
 .hero {
     display: inline-block;
     position: absolute;
-    top: 18em;
+    top: 15.5em;
+}
+
+.details a {
+    text-decoration: none;
+    font-size: 16px;
+    width: 70px;
+    display: block;
+    margin-left: 50px;
+    text-align: center;
+    border: 0;
+    border-radius: 10px;
+    background-color: #28a745;
+    color: #16181b;
+    padding: 3px;
+}
+
+.details a:hover {
+    background-color: #257434;
+    color: #9A9DA0;
+    text-decoration: none;
 }
 
 .title1 {

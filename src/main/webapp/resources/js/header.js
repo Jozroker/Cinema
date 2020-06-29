@@ -11,9 +11,9 @@ $(document).ready(
             }
         });
 
-        $('.navbar .dropdown-item').on('click', function (e) {
-            var $el = $(this).children('.dropdown-toggle');
-            var $parent = $el.offsetParent(".dropdown-menu");
+        $(document).on('click', '.navbar .dropdown-item', function (e) {
+            let $el = $(this).children('.dropdown-toggle');
+            let $parent = $el.offsetParent('.dropdown-menu');
             $(this).parent("li").toggleClass('open');
 
             if (!$parent.parent().hasClass('navbar-nav')) {
@@ -21,9 +21,9 @@ $(document).ready(
                     $parent.removeClass('show');
                     $el.next().removeClass('show');
                     $el.next().css({"top": -999, "left": -999});
-            } else {
-                $parent.parent().find('.show').removeClass('show');
-                $parent.addClass('show');
+                } else {
+                    $parent.parent().find('.show').removeClass('show');
+                    $parent.addClass('show');
                 $el.next().addClass('show');
                 $el.next().css({
                     "top": $el[0].offsetTop,
@@ -60,11 +60,11 @@ $(document).ready(
 $(document).ready(function () {
 
     if (window.location.pathname === '/schedule') {
-        $('#schedule-link').addClass('selected')
+        $('#schedule-link').addClass('selected-item')
     } else if (window.location.pathname === '/movies') {
-        $('#movies-link').addClass('selected')
+        $('#movies-link').addClass('selected-item')
     } else if (window.location.pathname === '/admin/create/movie') {
-        $('#create-movie-link').addClass('selected')
+        $('#create-movie-link').addClass('selected-item')
     }
 
     $.ajax({

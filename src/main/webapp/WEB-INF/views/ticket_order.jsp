@@ -27,31 +27,42 @@
     </script>
 </head>
 <body id="body">
+<div id="header">
+    <jsp:include page="header.jsp"/>
+</div>
+<div id="alert">
+    <div id="alertText"><p></p></div>
+    <div id="alertBtn"><a>OK</a></div>
+</div>
 <div class="register-photo">
     <div class="form-container">
         <div id="image" class="image-holder">
             <img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie poster"/>
         </div>
         <div style="display: flex">
-            <sec:authorize access="hasAuthority('USER')">
-            <form id="order" method="POST" action="/order/user/ticket">
+            <sec:authorize access="hasAuthority('USER') || hasAuthority('ADMIN')">
+            <form id="order" method="POST" action="${contextPath}/order/user/ticket">
                 </sec:authorize>
                 <sec:authorize access="hasAuthority('WORKER')">
-                <form id="order" method="POST" action="/order/ticket">
+                <form id="order" method="POST" action="${contextPath}/order/ticket">
                     </sec:authorize>
                     <div id="form">
                         <h3 class="text-center"><strong><spring:message code="home.buy.ticket"/></strong></h3>
                         <h2><strong>${movie.name}</strong></h2>
                         <div id="info">
                             <div id="date" class="form-group">
-                                <spring:message code="schedules.date"/>:
+                                <div class="text">
+                                    <spring:message code="schedules.date"/>:
+                                </div>
                                 <div id="calendar">
                                     <jsp:include page="calendar.jsp"/>
                                 </div>
                                 <input id="seanceDate" class="input">
                             </div>
                             <div id="time" class="form-group">
-                                <spring:message code="schedules.start.time"/>:
+                                <div class="text">
+                                    <spring:message code="schedules.start.time"/>:
+                                </div>
                                 <div id="time-list">
                                     <div id="time-container" class="list-group">
                                         <p class="list-group-item list-group-item-action"><spring:message code="state.date.not.match"/></p>
@@ -71,6 +82,9 @@
                 </form>
         </div>
     </div>
+</div>
+<div>
+    <jsp:include page="footer.jsp"/>
 </div>
 </body>
 </html>

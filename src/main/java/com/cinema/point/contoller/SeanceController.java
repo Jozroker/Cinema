@@ -58,8 +58,8 @@ public class SeanceController {
         this.userService = userService;
     }
 
-    @GetMapping("/seance/order")
-    public String orderBySeance(Model model, @RequestParam String seanceId) {
+    @GetMapping("/seance/order/{seanceId}")
+    public String orderBySeance(Model model, @PathVariable String seanceId) {
         SeanceDTO seance = seanceService.findById(Long.parseLong(seanceId));
         MovieDTO movie = movieService.findById(seance.getMovieId());
         Map<String, List<Integer>> validDates = findValidDates(movie.getId());
@@ -68,8 +68,8 @@ public class SeanceController {
         return "ticket_order";
     }
 
-    @GetMapping("/movie/order")
-    public String orderByMovie(Model model, @RequestParam String movieId) {
+    @GetMapping("/movie/order/{movieId}")
+    public String orderByMovie(Model model, @PathVariable String movieId) {
         MovieDTO movie = movieService.findById(Long.parseLong(movieId));
         Map<String, List<Integer>> validDates = findValidDates(movie.getId());
         model.addAttribute("movie", movie);
@@ -77,7 +77,7 @@ public class SeanceController {
         return "ticket_order";
     }
 
-    @GetMapping("order/times")
+    @GetMapping("/order/times")
     @ResponseBody
     public Map<Integer, List<Integer>> getValidTimes(@RequestParam String movieId,
                                                      @RequestParam String date) {

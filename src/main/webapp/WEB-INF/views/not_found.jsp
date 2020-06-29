@@ -25,10 +25,10 @@
                     <h1 class="m-0">404</h1>
                     <c:choose>
                         <c:when test="${message == null}">
-                            <h6>Page not found</h6>
+                            <h6><spring:message code="state.page.not.found"/></h6>
                         </c:when>
                         <c:otherwise>
-                            <h6>Resource not found</h6>
+                            <h6><spring:message code="state.resource.not.found"/></h6>
                         </c:otherwise>
                     </c:choose>
                     <p>${message}</p>

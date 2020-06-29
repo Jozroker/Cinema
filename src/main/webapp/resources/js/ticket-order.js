@@ -18,6 +18,11 @@ $(document).ready(function () {
 
     });
 
+    $('#alert a').on('click', function () {
+        $('#alert').hide();
+        $('input, textarea').prop('disabled', false);
+    })
+
 })
 
 function createseating(rows, cols, reserved) {
@@ -155,13 +160,19 @@ $(document).on('click', '#buy', function () {
     })
 
     if ($('.selected').length === 0) {
-        alert('Please choose place')
+        $('#alert').find('p').text('Please choose place');
+        $('#alert').show();
+        $('#alert').css('animation', 'show-alert 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both')
+        $('input, textarea').prop('disabled', true);
     } else {
+        console.log(1)
+        console.log($('.selected').length)
         for (let i = 0; i < $('.selected').length; i++) {
             let row = $($('.selected')[i]).attr('class').split(/\s+/)[0];
             let column = $($('.selected')[i]).attr('class').split(/\s+/)[1];
             let url = window.location.origin + $('#order').attr('action') + '?row=' + row + '&column=' + column +
                 '&seanceId=' + seanceId + '&date=' + date + '&time=' + time;
+            console.log(url)
             $.ajax({
                 url: url,
                 method: 'POST',

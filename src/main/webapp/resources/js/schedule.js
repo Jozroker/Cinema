@@ -45,13 +45,13 @@ $(document).on('click', '#create', function () {
         '<div class="checkbox"><input type="checkbox" id="SUNDAY" name="SUNDAY"><label for="SUNDAY">' + sunday + '</label></div>';
 
     let creationForm = '<tr>' +
-        '<td class="movie spacing"><input name="movieName" id="movie-input" type="text"></td>' +
+        '<td class="movie spacing first"><input name="movieName" id="movie-input" type="text"></td>' +
         '<td class="spacing"><input name="time" type="time" id="timepicker" value="00:00"></td>' +
         '<td class="spacing" colspan="2"><input name="hallId" id="hall-input" type="number" min="1" max="7" value="1"></td>' +
         '<td class="spacing"><input name="dateFrom" type="date" id="date-from" value="' + dateStr + '"></td>' +
         '<td class="spacing"><input name="dateTo" type="date" id="date-to" value="' + dateStr + '"></td>' +
         '<td class="spacing">' + creationDays + '</td>' +
-        '<td class="spacing"><input name="price" id="price-input" type="number" step="0.01" value="0.00"> UAH</td>' +
+        '<td class="spacing"><input name="price" id="price-input" type="number" step="0.01" value="0.00" min="0.01"> UAH</td>' +
         '<td class="spacing last"><button id="confirm">' + create + '</button></td>' +
         '</tr>';
 
@@ -111,12 +111,12 @@ $(document).ready(function () {
 
 $(document).ready(function () {
 
-    $(document).on('mouseenter', '.table-row', function () {
+    $(document).on('mouseenter', '.changing', function () {
         $(this).find('td').css({'background-color': '#565c65'});
         $(this).find('th').css({'background-color': '#565c65'});
     })
 
-    $(document).on('mouseleave', '.table-row', function () {
+    $(document).on('mouseleave', '.changing', function () {
         $(this).find('td').css({'background-color': '#343A40'});
         $(this).find('th').css({'background-color': '#343A40'});
     })
@@ -211,7 +211,7 @@ $(document).on('click', '#confirm', function () {
             $(parent).find('#timepicker').removeClass('invalid')
             $(parent).find('#date-from').removeClass('invalid')
             $(parent).find('#date-to').removeClass('invalid')
-            $('#create-container').hide();
+            $('#create-container').hide(1000);
         }
     })
 })

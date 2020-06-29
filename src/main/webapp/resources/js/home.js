@@ -40,7 +40,7 @@ $(document).ready(function () {
 
     $('#buy').on('click', function () {
         let movieId = $('.main-pos').attr('class').split(/\s+/)[0];
-        let url = window.location.origin + '/movie/order?movieId=' + movieId;
+        let url = window.location.origin + '/movie/order/' + movieId;
         window.location.href = url
     })
 
@@ -142,7 +142,7 @@ function getSchedule(url) {
                 '<td class="spacing">' + data[elem]['hall']['type'].slice(1) + '</td>' +
                 '<td class="spacing">' + data[elem]['ticketPrice'] + ' UAH</td>' +
                 '<td class="spacing last"><a class="pill"' +
-                'href="' + window.location.origin + '/seance/order?seanceId=' + data[elem]['id'] + '">' + buy + '</a>' +
+                'href="' + window.location.origin + '/seance/order/' + data[elem]['id'] + '">' + buy + '</a>' +
                 '</td>' +
                 '</tr>');
         }

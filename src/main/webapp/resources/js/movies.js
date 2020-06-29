@@ -9,7 +9,7 @@ $(document).ready(function () {
         location.reload();
     })
 
-    $('a').on('click', function () {
+    $('#container a').on('click', function () {
         window.location.href = window.location.origin + '/movie/' + $(this).attr('id');
     })
 })

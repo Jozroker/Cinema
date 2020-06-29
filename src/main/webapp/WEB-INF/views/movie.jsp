@@ -40,7 +40,9 @@
 
                 <div class="title1">${movie.name}</div>
                 <sec:authorize access="hasAuthority('ADMIN')">
-                    <a href="${contextPath}/admin/change/movie?movieId=${movie.id}"><spring:message code="create.change"/></a>
+                    <div id="changeBtn">
+                        <a href="${contextPath}/admin/change/movie/${movie.id}"><spring:message code="create.change"/></a>
+                    </div>
                 </sec:authorize>
 
                 <!-- todo rating -->

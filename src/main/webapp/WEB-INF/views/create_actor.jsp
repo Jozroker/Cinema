@@ -25,21 +25,23 @@
 
 <springForm:form method="POST" modelAttribute="actor" action="${contextPath}/admin/create/actor" enctype="multipart/form-data">
     <div id="avatar-image">
-        <img id="avatar-image-container" class="avatar" src="${contextPath}/resources/image/default-avatar.png" alt="actor avatar"/>
+        <img id="avatar-image-container" class="avatar" src="${contextPath}/resources/image/default-avatar.jpg" alt="actor avatar"/>
         <label for="file">IMG</label>
         <input name="file" id="file" type="file"/>
     </div>
     <div class="group">
         <spring:message code="create.actor.first.name" var="firstName"/>
         <springForm:input path="firstName" class="input" placeholder="${firstName}" cssErrorClass="invalid"/>
+        <springForm:errors path="firstName" cssClass="invalid-text" element="div"/>
     </div>
     <div class="group">
         <spring:message code="create.actor.last.name" var="lastName"/>
         <springForm:input path="lastName" class="input" placeholder="${lastName}" cssErrorClass="invalid"/>
+        <springForm:errors path="lastName" cssClass="invalid-text" element="div"/>
     </div>
     <div class="create">
         <spring:message code="create.actor" var="create"/>
-        <input id="createBtn" type="submit" class="button" value="${create}" onclick="return false">
+        <button id="createBtn" type="submit" class="button" onclick="return false">${create}</button>
     </div>
 </springForm:form>
 

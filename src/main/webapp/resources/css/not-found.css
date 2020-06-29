@@ -11,6 +11,11 @@
     color: #9A9DA0;
 }
 
+a, span, div {
+    user-input: none;
+    user-select: none;
+}
+
 .text-center {
     margin-top: 10%;
 }

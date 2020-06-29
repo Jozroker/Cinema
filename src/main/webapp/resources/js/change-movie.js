@@ -36,6 +36,9 @@ $(document).ready(function () {
 
     $(document).on('click', '.bi', function () {
         $(this).parent().remove();
+        if (!$('#current-actors').find('li').length) {
+            $('#current-actors').hide();
+        }
     })
 
     $("#search-actor").on("keyup", function () {
@@ -62,6 +65,7 @@ $(document).ready(function () {
             $(this).html() + '</li>');
         let content = $('.actors').html() + Array.from(actors);
         $('.actors').html(content);
+        $('#current-actors').show();
         $('#all-actors').hide()
     })
 

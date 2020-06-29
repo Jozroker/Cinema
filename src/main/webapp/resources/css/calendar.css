@@ -1,27 +1,29 @@
-html, body {
+#calendar html, #calendar body {
     margin: 0;
     padding: 0;
 }
 
-table {
+#calendar table {
     border-collapse: unset !important;
     font-family: Georgia, Times, serif;
 }
 
-.divcalendar {
+#calendar .divcalendar {
     padding: 15px;
     float: left;
     width: 320px;
     background-color: #E3E6EB;
     border-radius: 30px;
     color: #242529;
+    position: relative;
+    z-index: 1000;
 }
 
-.divcalendar table, .divcalendar tbody, .divcalendar tr {
+#calendar .divcalendar table, #calendar .divcalendar tbody, #calendar .divcalendar tr {
     width: 100%;
 }
 
-* {
+#calendar * {
     box-sizing: unset !important;
 }
 
@@ -74,7 +76,7 @@ table {
     height: 100%;
 }
 
-.divcalendar th {
+#calendar .divcalendar th {
     width: 40px;
     height: 40px;
     border-radius: 100%;
@@ -83,7 +85,7 @@ table {
     padding: 0;
 }
 
-.divcalendar td {
+#calendar .divcalendar td {
     width: 40px;
     height: 40px;
     border-radius: 100%;
@@ -96,7 +98,7 @@ table {
     color: #B0B4BD;
 }
 
-.not-used {
+#calendar .not-used {
     background-color: #d1d3d7;
     color: #B0B4BD;
 }

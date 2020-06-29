@@ -37,10 +37,13 @@
 
     </script>
 </head>
-<body>
+<body id="body">
+<div id="header">
+    <jsp:include page="header.jsp"/>
+</div>
 <div id="container">
     <div id="date">
-        <spring:message code="schedules.date"/>:
+        <span class="text"><spring:message code="schedules.date"/>:</span>
         <div id="calendar">
             <jsp:include page="calendar.jsp"/>
         </div>
@@ -79,9 +82,15 @@
                 </thead>
                 <tbody id="creating-table-body"></tbody>
             </table>
-            <button id="create"><spring:message code="create.default"/></button>
+            <div id="createBtn">
+                <!-- todo create custom checkboxes -->
+                <button id="create"><spring:message code="create.default"/></button>
+            </div>
         </div>
     </sec:authorize>
+</div>
+<div id="footer">
+    <jsp:include page="footer.jsp"/>
 </div>
 </body>
 </html>

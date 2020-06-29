@@ -23,21 +23,25 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resources/js/create-actor.js"></script>
     <script src="${contextPath}/resources/js/create-movie.js"></script>
-    <script src="${contextPath}/resources/js/duration-picker.js"></script>
     <script>
         let contextPath = '<c:out value="${contextPath}"/>';
     </script>
 </head>
-<body>
+<body id="body">
+<div>
+    <jsp:include page="header.jsp"/>
+</div>
 <div id="alert">
-    <p></p>
-    <a>OK</a>
+    <div id="text"><p></p></div>
+    <div id="button"><a>OK</a></div>
 </div>
 <div class="main">
     <div class="image-holder">
         <div id="image">
             <img id="image-container" alt="movie poster" src="">
-            <label for="fileToUpload">IMG</label>
+            <div id="uploadLabel">
+                <label for="fileToUpload">IMG</label>
+            </div>
             <input name="file" id="fileToUpload" type="file"/>
         </div>
         <!-- todo custom button -->
@@ -45,27 +49,27 @@
     </div>
     <div id="form">
         <form method="POST" action="${contextPath}/admin/create/movie" autocomplete="off">
-            <spring:message code="create.name"/>
+            <span class="text"><spring:message code="create.name"/></span>
             <div>
                 <input name="name" id="name" type="text">
             </div>
-            <spring:message code="create.description"/>
+            <span class="text"><spring:message code="create.description"/></span>
             <div>
                 <textarea name="description" id="description" rows="4" cols="50"></textarea>
             </div>
-            <spring:message code="create.duration"/>
+            <span class="text"><spring:message code="create.duration"/></span>
             <div>
                 <input id="time">
             </div>
             <div>
-                <spring:message code="create.actors"/>
+                <span class="text"><spring:message code="create.actors"/></span>
                 <ul id="current-actors">
                     <div class="actors">
                     </div>
                 </ul>
-                <spring:message code="navbar.search.button" var="search"/>
+                <spring:message code="create.actor" var="createActor"/>
                 <div>
-                    <input id="search-actor" class="form-control mr-sm-2" type="text" placeholder="${search}"
+                    <input id="search-actor" class="form-control mr-sm-2" type="text" placeholder="${createActor}"
                            aria-label="Search">
                     <div id="actor-creating"></div>
                 </div>
@@ -78,6 +82,9 @@
         </form>
     </div>
 </div>
-
+<div>
+    <jsp:include page="footer.jsp"/>
+</div>
+<script src="${contextPath}/resources/js/duration-picker.js"></script>
 </body>
 </html>

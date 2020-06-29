@@ -47,7 +47,7 @@
                     <li>
                         <p>
                             <img class="icon" src="${contextPath}/resources/image/phone.png" alt="phone image">
-                            <a>+1 016-627-2318</a>
+                            <a>+38 032-627-2318</a>
                         </p>
                     </li>
                 </ul>

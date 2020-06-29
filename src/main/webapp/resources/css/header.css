@@ -12,6 +12,16 @@ header {
     font-size: 20px;
 }
 
+a, span, div {
+    user-input: none;
+    user-select: none;
+}
+
+#search-line:focus {
+    box-shadow: 0 0 0 .2rem rgba(60, 177, 48, 0.41);
+    border: #28a745;
+}
+
 #user-dropdown {
     width: 10%;
     font-size: 15px;
@@ -39,7 +49,7 @@ header {
     width: 5%;
 }
 
-.selected {
+.selected-item {
     color: #28A745;
 }
 

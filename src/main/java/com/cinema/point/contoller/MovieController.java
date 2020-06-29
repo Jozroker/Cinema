@@ -92,8 +92,8 @@ public class MovieController {
         return "create_movie";
     }
 
-    @GetMapping("/admin/change/movie")
-    public String changeMovie(Model model, @RequestParam Long movieId) {
+    @GetMapping("/admin/change/movie/{movieId}")
+    public String changeMovie(Model model, @PathVariable Long movieId) {
         MovieDTO movie = movieService.findById(movieId);
         List<ActorDTO> actors = actorService.findByMovieId(movieId);
         model.addAttribute("movie", movie);
