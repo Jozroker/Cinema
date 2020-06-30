@@ -23,6 +23,45 @@ $(document).ready(function () {
         $('input, textarea').prop('disabled', false);
     })
 
+    if (currentDate.length) {
+        let time = currentTime.slice(0, -3)
+        $('#seanceDate').val(currentDate);
+        $('#seanceTime').val(time);
+
+        let url1 = window.location.origin + '/movie/hall?movieId=' + movieId +
+            '&date=' + currentDate + '&time=' + time;
+        let url2 = window.location.origin + '/movie/hall/reserved?movieId=' + movieId +
+            '&date=' + currentDate + '&time=' + time;
+
+        let rows = 0;
+        let columns = 0;
+        $.ajax({
+            url: url1,
+            async: false
+        }).done(function (data) {
+            rows = parseInt(data['rows']);
+            columns = parseInt(data['columns']);
+            $('#time-list').hide()
+        })
+
+        $.ajax({
+            url: url2,
+        }).done(function (data) {
+            let reserved = new Map();
+            for (let row in data) {
+                for (let column in data[row]) {
+                    if (!reserved.has(parseInt(row))) {
+                        reserved.set(parseInt(row), [])
+                    }
+                    reserved.get(parseInt(row)).push(parseInt(data[row][column]));
+                }
+            }
+            createseating(rows, columns, reserved);
+            $('#places').show();
+        })
+    }
+
+
 })
 
 function createseating(rows, cols, reserved) {

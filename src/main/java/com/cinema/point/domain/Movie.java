@@ -26,6 +26,7 @@ public class Movie {
     private String name;
 
     @Column
+    @Lob
     private String description;
 
     @Column(nullable = false)

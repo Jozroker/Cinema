@@ -113,6 +113,7 @@ public class MovieController {
     @GetMapping("/admin/get/actors")
     @ResponseBody
     public List<ActorDTO> getActors() {
+        //todo create name comparator
         return actorService.findAll();
     }
 
@@ -127,9 +128,11 @@ public class MovieController {
         if (file.isEmpty()) {
             //todo set relative path
             //todo move this to service level
+            //todo check actor is already created
             File imagePath = new File("F:\\PC_Educate\\Programming\\java" +
                     "\\cinema" +
-                    "\\src\\main\\webapp\\resources\\image\\default-avatar.png");
+                    "\\src\\main\\webapp\\resources\\image\\default-avatar" +
+                    ".jpg");
             BufferedImage image = ImageIO.read(imagePath);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", bos);

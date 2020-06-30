@@ -37,8 +37,8 @@
         <div class="hero">
 
             <div class="details">
-
                 <div class="title1">${movie.name}</div>
+                <!-- todo create english movie name under this -->
                 <sec:authorize access="hasAuthority('ADMIN')">
                     <div id="changeBtn">
                         <a href="${contextPath}/admin/change/movie/${movie.id}"><spring:message code="create.change"/></a>

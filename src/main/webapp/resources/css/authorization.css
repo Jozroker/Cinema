@@ -7,6 +7,15 @@ body {
     background-size: 100%;
 }
 
+.button:hover {
+    background-color: #257434 !important;
+    color: #9A9DA0 !important;
+}
+
+.tab:hover {
+    color: #9A9DA0 !important;
+}
+
 .invalid {
     border: 1px solid red;
     color: red;

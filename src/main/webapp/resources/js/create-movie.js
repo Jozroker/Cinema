@@ -90,7 +90,9 @@ $(document).ready(function () {
     $(document).on('click', '#createMovieBtn', function () {
 
         function miliseconds(hrs, min) {
-            return ((hrs * 360 + min * 60) * 1000);
+            console.log(hrs)
+            console.log(min)
+            return ((hrs * 60000 * 60) + (min * 60000));
         }
 
         let picture = Array.from(new Uint8Array(imageBytes));
@@ -142,7 +144,7 @@ $(document).ready(function () {
                     $('#alert').show();
                     $('#alert').css('animation', 'show-alert 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both')
                 } else {
-                    window.location.href = contextPath + '/home'
+                    window.location.href = contextPath + '/movies'
                 }
             }).fail(function (data) {
                 let state = data.responseText;
@@ -152,7 +154,7 @@ $(document).ready(function () {
                     $('#alert').show();
                     $('#alert').css('animation', 'show-alert 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both')
                 } else {
-                    window.location.href = contextPath + '/home'
+                    window.location.href = contextPath + '/movies'
                 }
             })
         }
@@ -185,6 +187,8 @@ $(document).ready(function () {
             url: contextPath + '/admin/create/actor'
         }).done(function (data) {
             $('#actor-creating').html(data)
+            $('#firstName').val('')
+            $('#lastName').val('')
             getActors();
         })
     })
@@ -208,7 +212,7 @@ $(document).ready(function () {
                     '</li>';
                 list.push(element);
             }
-            list.push('<li id="create-actor" class="list-group-item">Create new actor</li>');
+            list.push('<li id="create-actor" class="list-group-item">' + createActor + '</li>');
             $('#all-actors').html(list)
         })
     }

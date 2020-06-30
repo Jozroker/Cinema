@@ -37,13 +37,9 @@ public class UserValidator implements Validator {
         if (!userDTO.getFirstName().equals("") || !userDTO.getLastName().equals("")) {
             if (userDTO.getFirstName().equals("")) {
                 errors.rejectValue("firstName", "state.required.field");
-            } else if (userDTO.getFirstName().matches(".*[0-9].*")) {
-                errors.rejectValue("firstName", "state.cannot.contain.number");
             }
             if (userDTO.getLastName().equals("")) {
                 errors.rejectValue("lastName", "state.required.field");
-            } else if (userDTO.getLastName().matches(".*[0-9].*")) {
-                errors.rejectValue("lastName", "state.cannot.contain.number");
             }
         }
         UserDTO findByUsername =

@@ -4,4 +4,8 @@ $(document).ready(function () {
         let url = window.location.origin + '/ticket?id=' + id;
         window.location.href = url
     })
+
+    if ($('.table').length) {
+        $('#tickets').removeClass('empty');
+    }
 })

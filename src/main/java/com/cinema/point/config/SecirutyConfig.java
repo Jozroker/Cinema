@@ -17,8 +17,9 @@ public class SecirutyConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
+                .antMatchers("/movie/order/**").authenticated()
                 .antMatchers("/resources/**", "/register", "/login",
-                        "/schedule/*", "/", "/movies/**", "/movie/**",
+                        "/schedule/**", "/", "/movies/**", "/movie/**",
                         "/home", "/authorization").permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()

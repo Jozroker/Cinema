@@ -58,13 +58,16 @@ public class SeanceController {
         this.userService = userService;
     }
 
-    @GetMapping("/seance/order/{seanceId}")
-    public String orderBySeance(Model model, @PathVariable String seanceId) {
+    @GetMapping("/seance/order/{seanceId}/{date}")
+    public String orderBySeance(Model model, @PathVariable String seanceId,
+                                @PathVariable String date) {
         SeanceDTO seance = seanceService.findById(Long.parseLong(seanceId));
         MovieDTO movie = movieService.findById(seance.getMovieId());
         Map<String, List<Integer>> validDates = findValidDates(movie.getId());
         model.addAttribute("movie", movie);
         model.addAttribute("dates", validDates);
+        model.addAttribute("seanceMovieTime", seance.getMovieBeginTime().toString());
+        model.addAttribute("seanceDate", date);
         return "ticket_order";
     }
 

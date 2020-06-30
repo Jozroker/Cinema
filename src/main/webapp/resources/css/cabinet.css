@@ -9,6 +9,10 @@
     margin-left: 5%;
 }
 
+.empty {
+    height: 200px;
+}
+
 .col p {
     font-size: 20px;
 }

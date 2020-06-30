@@ -57,6 +57,10 @@ a, span, div {
     top: 15.5em;
 }
 
+.details {
+    margin-bottom: 20px;
+}
+
 .details a {
     text-decoration: none;
     font-size: 16px;
@@ -87,7 +91,7 @@ a, span, div {
     position: relative;
     top: 20px;
     margin-left: 20px;
-    font-size: 150%;
+    font-size: 18px;
     color: #9A9DA0;
 }
 
@@ -101,7 +105,7 @@ a, span, div {
 }
 
 .schedule {
-    margin-top: 2%;
+    margin-top: 50px;
 }
 
 #schedule {

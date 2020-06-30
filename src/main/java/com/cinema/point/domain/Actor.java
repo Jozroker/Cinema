@@ -13,6 +13,7 @@ public class Actor {
 
     @Id
     @GeneratedValue
+    //todo all generated values identity strategy
     @Column(nullable = false)
     private Long id;
 

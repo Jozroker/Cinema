@@ -183,36 +183,38 @@ $(document).on('click', '#confirm', function () {
     })
     let parent = $(this).parent().parent();
 
-    $.ajax({
-        url: path,
-        method: 'POST',
-        async: false,
-        dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        cache: false,
-        data: JSON.stringify({
-            "hallId": hallId,
-            "ticketPrice": price,
-            "movieBeginTime": movieBeginTime,
-            "seanceDateFrom": dateFrom,
-            "seanceDateTo": dateTo,
-            "day": days
+    if (!(hallId < 1 || hallId > 7)) {
+        $.ajax({
+            url: path,
+            method: 'POST',
+            async: false,
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            data: JSON.stringify({
+                "hallId": hallId,
+                "ticketPrice": price,
+                "movieBeginTime": movieBeginTime,
+                "seanceDateFrom": dateFrom,
+                "seanceDateTo": dateTo,
+                "day": days
+            })
+        }).fail(function (data) {
+            if (data.responseText === 'exists') {
+                $(parent).find('#timepicker').addClass('invalid')
+                $(parent).find('#date-from').addClass('invalid')
+                $(parent).find('#date-to').addClass('invalid')
+            } else if (data.responseText === 'fail movie') {
+                console.log('hi')
+                $(parent).find('#movie-input').addClass('invalid')
+            } else {
+                $(parent).find('#timepicker').removeClass('invalid')
+                $(parent).find('#date-from').removeClass('invalid')
+                $(parent).find('#date-to').removeClass('invalid')
+                $('#create-container').hide(1000);
+            }
         })
-    }).fail(function (data) {
-        if (data.responseText === 'exists') {
-            $(parent).find('#timepicker').addClass('invalid')
-            $(parent).find('#date-from').addClass('invalid')
-            $(parent).find('#date-to').addClass('invalid')
-        } else if (data.responseText === 'fail movie') {
-            console.log('hi')
-            $(parent).find('#movie-input').addClass('invalid')
-        } else {
-            $(parent).find('#timepicker').removeClass('invalid')
-            $(parent).find('#date-from').removeClass('invalid')
-            $(parent).find('#date-to').removeClass('invalid')
-            $('#create-container').hide(1000);
-        }
-    })
+    }
 })
 
 $(document).on('click', '.change', function () {
@@ -323,5 +325,11 @@ function getSchedule(status) {
             seances.push(seance);
         }
         $('#table-body').html(seances);
+        if (seances.length) {
+            $('#container').removeClass('empty');
+        } else {
+            $('#container').addClass('empty');
+        }
+
     })
 }

@@ -25,6 +25,8 @@
     <script>
         let movieId = '<c:out value="${movie.id}"/>';
         let chooseError = '<spring:message code="state.place.not.selected"/>';
+        let currentTime = '<c:out value="${seanceMovieTime}"/>';
+        let currentDate = '<c:out value="${seanceDate}"/>';
     </script>
 </head>
 <body id="body">

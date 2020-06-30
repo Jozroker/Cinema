@@ -11,6 +11,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
+    <!-- todo create filters to seances -->
     <title>Home</title>
     <link rel="stylesheet" href="${contextPath}/resources/css/home.css">
     <link rel="stylesheet"
@@ -37,17 +38,20 @@
                     <c:forEach var="movie" items="${movies}" varStatus="loop">
                         <c:choose>
                             <c:when test="${loop.first}">
-                                <li class="${movie.id} items main-pos" id="1"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/></li>
+                                <li class="${movie.id} items main-pos"
+                                    id="1"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image" title="${movie.name}"/></li>
                             </c:when>
                             <c:when test="${loop.last}">
                                 <li class="${movie.id} items left-pos"
-                                    id="${loop.count}"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/></li>
+                                    id="${loop.count}"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image" title="${movie.name}"/></li>
                             </c:when>
                             <c:when test="${loop.index == 1}">
-                                <li class="${movie.id} items right-pos" id="2"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/></li>
+                                <li class="${movie.id} items right-pos" id="2"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"
+                                                                                    title="${movie.name}"/></li>
                             </c:when>
                             <c:otherwise>
-                                <li class="${movie.id} items back-pos" id="${loop.index + 1}"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"/>
+                                <li class="${movie.id} items back-pos" id="${loop.index + 1}"><img src="data:image/jpeg;base64,${movie.pictureString}" alt="movie image"
+                                                                                                   title="${movie.name}"/>
                                 </li>
                             </c:otherwise>
                         </c:choose>
@@ -88,6 +92,7 @@
         <div class="col-sm"></div>
     </div>
     <div id="schedule">
+        <!-- todo add loading gif -->
         <table class="table">
             <thead>
             <tr id="title">

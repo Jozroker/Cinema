@@ -96,7 +96,7 @@ $(document).ready(function () {
     $(document).on('click', '#changeMovieBtn', function () {
 
         function miliseconds(hrs, min) {
-            return ((hrs * 360 + min * 60) * 1000);
+            return ((hrs * 60000 * 60) + (min * 60000));
         }
 
         let movieId = parseInt($('#form').find('form').attr('class'));
@@ -144,7 +144,7 @@ $(document).ready(function () {
                     $('#alert').css('animation', 'show-alert 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both')
                     $('input, textarea').prop('disabled', true);
                 } else {
-                    window.location.href = contextPath + '/home'
+                    window.location.href = contextPath + '/movies'
                 }
             }).fail(function (data) {
                 let state = data.responseText;
@@ -154,7 +154,7 @@ $(document).ready(function () {
                     $('#alert').css('animation', 'show-alert 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both')
                     $('input, textarea').prop('disabled', true);
                 } else {
-                    window.location.href = contextPath + '/home'
+                    window.location.href = contextPath + '/movies'
                 }
             })
         }
@@ -187,6 +187,8 @@ $(document).ready(function () {
             url: contextPath + '/admin/create/actor'
         }).done(function (data) {
             $('#actor-creating').html(data)
+            $('#firstName').val('')
+            $('#lastName').val('')
             getActors();
         })
     })
@@ -210,7 +212,7 @@ $(document).ready(function () {
                     '</li>';
                 list.push(element);
             }
-            list.push('<li id="create-actor">Create new actor</li>');
+            list.push('<li id="create-actor">' + createActor + '</li>');
             $('#all-actors').html(list)
         })
     }

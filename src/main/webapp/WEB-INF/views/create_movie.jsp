@@ -27,6 +27,7 @@
         let contextPath = '<c:out value="${contextPath}"/>';
         let hourChar = '<spring:message code="create.hour.character"/>'
         let minuteChar = '<spring:message code="create.minute.character"/>'
+        let createActor = '<spring:message code="create.new.actor"/>'
     </script>
 </head>
 <body id="body">

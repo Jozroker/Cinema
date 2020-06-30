@@ -28,7 +28,7 @@
         let tuesday = '<spring:message code="day.tuesday"/>'
         let wednesday = '<spring:message code="day.wednesday"/>'
         let thursday = '<spring:message code="day.thursday"/>'
-        let friday = '<spring:message code="day.friday"/>'
+        let friday = "<spring:message code="day.friday"/>"
         let saturday = '<spring:message code="day.saturday"/>'
         let sunday = '<spring:message code="day.sunday"/>'
         <sec:authorize access="hasAuthority('ADMIN')">
@@ -41,7 +41,7 @@
 <div id="header">
     <jsp:include page="header.jsp"/>
 </div>
-<div id="container">
+<div id="container" class="empty">
     <div id="date">
         <span class="text"><spring:message code="schedules.date"/>:</span>
         <div id="calendar">
@@ -67,6 +67,7 @@
         </table>
     </div>
     <sec:authorize access="hasAuthority('ADMIN')">
+        <!-- todo movies list -->
         <div id="create-seance">
             <table id="create-container">
                 <thead>

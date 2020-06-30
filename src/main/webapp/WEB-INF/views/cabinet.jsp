@@ -51,7 +51,7 @@
             </div>
         </div>
     </div>
-    <div id="tickets">
+    <div id="tickets" class="empty">
         <h4><spring:message code="cabinet.tickets"/></h4>
         <c:forEach var="ticket" items="${tickets}" varStatus="loop">
             <table class="table">

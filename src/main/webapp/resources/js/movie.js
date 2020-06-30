@@ -35,6 +35,8 @@ function getSchedule(url) {
     }).done(function (data) {
         let seances = [];
         let counter = 1;
+        let number = $('.active').attr('id').slice(3);
+        let date = getDate(number);
         for (let elem in data) {
             seances.push('<tr>' +
                 '<th scope="row" class="spacing first">' + counter++ + '</th>' +
@@ -44,7 +46,7 @@ function getSchedule(url) {
                 '<td class="spacing">' + data[elem]['hall']['type'].slice(1) + '</td>' +
                 '<td class="spacing">' + data[elem]['ticketPrice'] + ' UAH</td>' +
                 '<td class="spacing last"><a class="pill"' +
-                'href="' + window.location.origin + '/seance/order/' + data[elem]['id'] + '">' + buy + '</a>' +
+                'href="' + window.location.origin + '/seance/order/' + data[elem]['id'] + '/' + date + '">' + buy + '</a>' +
                 '</td>' +
                 '</tr>');
         }

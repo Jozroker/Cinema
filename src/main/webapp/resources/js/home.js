@@ -1,14 +1,6 @@
 $(document).ready(function () {
 
-    let currentDate = new Date(Date.now());
-    let currentYear = '' + currentDate.getFullYear();
-    let currentMonth = '' + (currentDate.getMonth() + 1);
-    let currentDay = '' + currentDate.getDate();
-    if (currentMonth.length < 2)
-        currentMonth = '0' + currentMonth;
-    if (currentDay.length < 2)
-        currentDay = '0' + currentDay;
-    let currentDateStr = currentYear + "-" + currentMonth + "-" + currentDay;
+    let currentDateStr = getStringDate(0);
     let startingUrl = window.location.origin + '/schedule/seances?date=' + currentDateStr;
     getSchedule(startingUrl);
 
@@ -18,16 +10,7 @@ $(document).ready(function () {
         let number = $(this).attr('id').slice(-1);
         $('.day').removeClass('active');
         $(this).addClass('active');
-        let date = new Date(Date.now());
-        date.setDate(date.getDate() + parseInt(number));
-        let year = '' + date.getFullYear();
-        let month = '' + (date.getMonth() + 1);
-        let day = '' + date.getDate();
-        if (month.length < 2)
-            month = '0' + month;
-        if (day.length < 2)
-            day = '0' + day;
-        let dateStr = year + "-" + month + "-" + day;
+        let dateStr = getStringDate(number);
 
         let url = new URL('http://localhost:8080/schedule/seances')
 
@@ -132,6 +115,8 @@ function getSchedule(url) {
     }).done(function (data) {
         let seances = [];
         let counter = 1;
+        let number = $('.active').attr('id').slice(3);
+        let date = getStringDate(number);
         for (let elem in data) {
             seances.push('<tr>' +
                 '<th scope="row" class="spacing first">' + counter++ + '</th>' +
@@ -141,12 +126,25 @@ function getSchedule(url) {
                 '<td class="spacing">' + data[elem]['hall']['type'].slice(1) + '</td>' +
                 '<td class="spacing">' + data[elem]['ticketPrice'] + ' UAH</td>' +
                 '<td class="spacing last"><a class="pill"' +
-                'href="' + window.location.origin + '/seance/order/' + data[elem]['id'] + '">' + buy + '</a>' +
+                'href="' + window.location.origin + '/seance/order/' + data[elem]['id'] + '/' + date + '">' + buy + '</a>' +
                 '</td>' +
                 '</tr>');
         }
         $('#schedule-body').html(seances);
     })
+}
+
+function getStringDate(number) {
+    let date = new Date(Date.now());
+    date.setDate(date.getDate() + parseInt(number));
+    let year = '' + date.getFullYear();
+    let month = '' + (date.getMonth() + 1);
+    let day = '' + date.getDate();
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+    return year + "-" + month + "-" + day;
 }
 
 
