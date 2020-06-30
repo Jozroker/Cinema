@@ -24,9 +24,13 @@ import java.util.stream.Collectors;
 public class SeanceServiceImpl implements SeanceService {
 
     private final SeanceRepository seanceRepository;
+
     private final HallRepository hallRepository;
+
     private final MovieRepository movieRepository;
+
     private final SeanceMapper seanceMapper;
+
     private final TicketService ticketService;
 
     public SeanceServiceImpl(SeanceRepository seanceRepository,
@@ -67,9 +71,7 @@ public class SeanceServiceImpl implements SeanceService {
     @Override
     public void deleteById(Long id) {
         log.debug("deleting seance by id {}", id);
-        ticketService.findBySeanceId(id).forEach(ticket -> {
-            ticketService.deleteById(ticket.getId());
-        });
+        ticketService.findBySeanceId(id).forEach(ticket -> ticketService.deleteById(ticket.getId()));
         deleteDays(id);
         seanceRepository.deleteById(id);
     }

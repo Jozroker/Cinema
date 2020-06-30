@@ -1,12 +1,12 @@
 $(document).ready(function () {
     $("#time").durationPicker({
         hours: {
-            label: "h",
+            label: hourChar,
             min: 0,
             max: 23
         },
         minutes: {
-            label: "m",
+            label: minuteChar,
             min: 0,
             max: 59
         },

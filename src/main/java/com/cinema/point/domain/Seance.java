@@ -55,6 +55,7 @@ public class Seance {
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
 
+    //todo move this to DTO level
     public String beginTimeToString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm", Locale.US);
         LocalTime time = movieBeginTime.toLocalTime();

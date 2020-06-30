@@ -34,7 +34,7 @@ body {
 
 .error-main {
     background-color: #9A9DA0;
-    box-shadow: 0px 0px 15px 15px #9A9DA0;
+    box-shadow: 0 0 15px 15px #9A9DA0;
 }
 
 .error-main h1 {

@@ -2,7 +2,6 @@ package com.cinema.point.contoller;
 
 import com.cinema.point.domain.Day;
 import com.cinema.point.dto.SimpleMovieDTO;
-import com.cinema.point.repository.SeanceRepository;
 import com.cinema.point.service.MovieService;
 import com.cinema.point.service.SeanceService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,13 +22,10 @@ public class InfoController {
 
     private final SeanceService seanceService;
 
-    private final SeanceRepository seanceRepository;
-
     private final MovieService movieService;
 
-    public InfoController(SeanceService seanceService, SeanceRepository seanceRepository, MovieService movieService) {
+    public InfoController(SeanceService seanceService, MovieService movieService) {
         this.seanceService = seanceService;
-        this.seanceRepository = seanceRepository;
         this.movieService = movieService;
     }
 

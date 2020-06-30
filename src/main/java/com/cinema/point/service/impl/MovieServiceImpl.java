@@ -23,8 +23,11 @@ import java.util.stream.Collectors;
 public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
+
     private final MovieMapper movieMapper;
+
     private final ActorRepository actorRepository;
+
     private final SeanceService seanceService;
 
     public MovieServiceImpl(MovieRepository movieRepository,

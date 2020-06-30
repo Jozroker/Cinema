@@ -21,6 +21,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
     <script>
+        //todo move this to js file
         $(document).ready(function () {
 
             let value = "${ticket.row}" + "." + "${ticket.column}" +

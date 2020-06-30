@@ -1,14 +1,10 @@
 package com.cinema.point.contoller;
 
 import com.cinema.point.domain.Day;
-import com.cinema.point.dto.ActorDTO;
-import com.cinema.point.dto.MovieDTO;
-import com.cinema.point.dto.SimpleMovieDTO;
+import com.cinema.point.domain.Hall;
+import com.cinema.point.dto.*;
 import com.cinema.point.errors.ResourceNotFoundException;
-import com.cinema.point.repository.SeanceRepository;
-import com.cinema.point.service.ActorService;
-import com.cinema.point.service.MovieService;
-import com.cinema.point.service.SeanceService;
+import com.cinema.point.service.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -26,12 +22,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @Slf4j
@@ -41,18 +40,22 @@ public class MovieController {
 
     private final SeanceService seanceService;
 
-    private final SeanceRepository seanceRepository;
-
     private final ActorService actorService;
+
+    private final TicketService ticketService;
+
+    private final HallService hallService;
 
     public MovieController(MovieService movieService,
                            SeanceService seanceService,
-                           SeanceRepository seanceRepository,
-                           ActorService actorService) {
+                           ActorService actorService,
+                           TicketService ticketService,
+                           HallService hallService) {
         this.movieService = movieService;
         this.seanceService = seanceService;
-        this.seanceRepository = seanceRepository;
         this.actorService = actorService;
+        this.ticketService = ticketService;
+        this.hallService = hallService;
     }
 
     @GetMapping("/movies")
@@ -66,7 +69,6 @@ public class MovieController {
     public String movie(Model model, @PathVariable Long id) {
         MovieDTO movie = movieService.findById(id);
         Date dateNow = Date.valueOf(LocalDate.now());
-//        cleanData(dateNow);
         List<Day> days = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             days.add(Day.valueOf(String.valueOf(dateNow.toLocalDate().getDayOfWeek())));
@@ -166,5 +168,42 @@ public class MovieController {
     public String deleteMovie(@RequestParam Long movieId) {
         movieService.deleteById(movieId);
         return "movies";
+    }
+
+    @GetMapping("/movie/hall/reserved")
+    @ResponseBody
+    public Map<Integer, List<Integer>> getReservedPlaces(@RequestParam String date,
+                                                         @RequestParam String time,
+                                                         @RequestParam String movieId) {
+        Map<Integer, List<Integer>> reservedPlaces = new HashMap<>();
+        SeanceDTO seance = seanceService.findByDateBetween(Date.valueOf(date)).stream()
+                .filter(s -> s.getMovieBeginTime().equals(Time.valueOf(time + ":00")))
+                .filter(s -> s.getMovieId().equals(Long.parseLong(movieId)))
+                .findFirst().orElseThrow(() -> new ResourceNotFoundException("Seance", ""));
+        List<TicketDTO> tickets =
+                ticketService.findBySeanceId(seance.getId()).stream()
+                        .filter(ticket -> ticket.getSeanceDate().equals(Date.valueOf(date)))
+                        .collect(Collectors.toList());
+        tickets.forEach(t -> {
+            int row = t.getRow();
+            int column = t.getColumn();
+            if (!reservedPlaces.containsKey(row)) {
+                reservedPlaces.put(row, new ArrayList<>());
+            }
+            reservedPlaces.get(row).add(column);
+        });
+        return reservedPlaces;
+    }
+
+    @GetMapping("/movie/hall")
+    @ResponseBody
+    public Hall getHallByMovie(@RequestParam String date,
+                               @RequestParam String time,
+                               @RequestParam String movieId) {
+        SeanceDTO seance = seanceService.findByDateBetween(Date.valueOf(date)).stream()
+                .filter(s -> s.getMovieBeginTime().equals(Time.valueOf(LocalTime.parse(time))))
+                .filter(s -> s.getMovieId().equals(Long.parseLong(movieId)))
+                .findFirst().orElseThrow(() -> new ResourceNotFoundException("Seance", ""));
+        return hallService.findById(seance.getHallId());
     }
 }

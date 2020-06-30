@@ -59,7 +59,6 @@ $(document).on('click', '#create', function () {
     $('#create-container').toggle();
 
     $('#create-seance').css({'margin-right': '30%'})
-    // $('#confirm').css({'width': '0'})
 })
 
 $(document).ready(function () {

@@ -24,6 +24,7 @@
     <script src="${contextPath}/resources/js/ticket-order.js"></script>
     <script>
         let movieId = '<c:out value="${movie.id}"/>';
+        let chooseError = '<spring:message code="state.place.not.selected"/>';
     </script>
 </head>
 <body id="body">

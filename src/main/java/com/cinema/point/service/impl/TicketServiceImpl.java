@@ -29,10 +29,15 @@ import java.util.stream.Collectors;
 public class TicketServiceImpl implements TicketService {
 
     private final TicketRepository ticketRepository;
+
     private final TicketMapper ticketMapper;
+
     private final UserMapper userMapper;
+
     private final UserService userService;
+
     private final SeanceRepository seanceRepository;
+
     private final HallRepository hallRepository;
 
     public TicketServiceImpl(TicketRepository ticketRepository,

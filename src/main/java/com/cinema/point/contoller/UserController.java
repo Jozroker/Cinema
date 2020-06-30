@@ -51,7 +51,6 @@ public class UserController {
         dataBinder.addValidators(userValidator);
     }
 
-    //todo return error fields
     @GetMapping("/authorization")
     public String get(Model model) {
         LoginUserDTO loginUserDTO = new LoginUserDTO();

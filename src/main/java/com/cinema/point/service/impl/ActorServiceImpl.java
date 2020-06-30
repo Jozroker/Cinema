@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class ActorServiceImpl implements ActorService {
 
     private final ActorRepository actorRepository;
+
     private final ActorMapper actorMapper;
 
     public ActorServiceImpl(ActorRepository actorRepository, ActorMapper actorMapper) {

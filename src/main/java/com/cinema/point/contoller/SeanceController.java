@@ -1,7 +1,6 @@
 package com.cinema.point.contoller;
 
 import com.cinema.point.domain.Day;
-import com.cinema.point.domain.Hall;
 import com.cinema.point.domain.Seance;
 import com.cinema.point.domain.comparator.SeanceTimeComparator;
 import com.cinema.point.dto.MovieDTO;
@@ -10,7 +9,10 @@ import com.cinema.point.dto.SeanceDTO;
 import com.cinema.point.dto.TicketDTO;
 import com.cinema.point.errors.ResourceNotFoundException;
 import com.cinema.point.repository.SeanceRepository;
-import com.cinema.point.service.*;
+import com.cinema.point.service.MovieService;
+import com.cinema.point.service.SeanceService;
+import com.cinema.point.service.TicketService;
+import com.cinema.point.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SeanceController {
 
+    //todo change all RequestParam to JSON body
+
     private final TicketService ticketService;
 
     private final MovieService movieService;
@@ -40,21 +44,17 @@ public class SeanceController {
 
     private final SeanceRepository seanceRepository;
 
-    private final HallService hallService;
-
     private final UserService userService;
 
     public SeanceController(TicketService ticketService,
                             MovieService movieService,
                             SeanceService seanceService,
                             SeanceRepository seanceRepository,
-                            HallService hallService,
                             UserService userService) {
         this.ticketService = ticketService;
         this.movieService = movieService;
         this.seanceService = seanceService;
         this.seanceRepository = seanceRepository;
-        this.hallService = hallService;
         this.userService = userService;
     }
 
@@ -97,18 +97,6 @@ public class SeanceController {
         return times;
     }
 
-    @GetMapping("/movie/hall")
-    @ResponseBody
-    public Hall getHallByMovie(@RequestParam String date,
-                               @RequestParam String time,
-                               @RequestParam String movieId) {
-        SeanceDTO seance = seanceService.findByDateBetween(Date.valueOf(date)).stream()
-                .filter(s -> s.getMovieBeginTime().equals(Time.valueOf(LocalTime.parse(time))))
-                .filter(s -> s.getMovieId().equals(Long.parseLong(movieId)))
-                .findFirst().orElseThrow(() -> new ResourceNotFoundException("Seance", ""));
-        return hallService.findById(seance.getHallId());
-    }
-
     @GetMapping("/seance")
     @ResponseBody
     public SeanceDTO getSeance(@RequestParam String date,
@@ -118,30 +106,6 @@ public class SeanceController {
                 .filter(s -> s.getMovieBeginTime().equals(Time.valueOf(LocalTime.parse(time))))
                 .filter(s -> s.getMovieId().equals(Long.parseLong(movieId)))
                 .findFirst().orElseThrow(() -> new ResourceNotFoundException("Seance", ""));
-    }
-
-    @GetMapping("/movie/hall/reserved")
-    @ResponseBody
-    public Map<Integer, List<Integer>> getReservedPlaces(@RequestParam String date,
-                                                         @RequestParam String time,
-                                                         @RequestParam String movieId) {
-        Map<Integer, List<Integer>> reservedPlaces = new HashMap<>();
-        SeanceDTO seance = seanceService.findByDateBetween(Date.valueOf(date)).stream()
-                .filter(s -> s.getMovieBeginTime().equals(Time.valueOf(time + ":00")))
-                .filter(s -> s.getMovieId().equals(Long.parseLong(movieId)))
-                .findFirst().orElseThrow(() -> new ResourceNotFoundException("Seance", ""));
-        List<TicketDTO> tickets =
-                ticketService.findBySeanceId(seance.getId()).stream()
-                        .filter(ticket -> ticket.getSeanceDate().equals(Date.valueOf(date))).collect(Collectors.toList());
-        tickets.forEach(t -> {
-            int row = t.getRow();
-            int column = t.getColumn();
-            if (!reservedPlaces.containsKey(row)) {
-                reservedPlaces.put(row, new ArrayList<>());
-            }
-            reservedPlaces.get(row).add(column);
-        });
-        return reservedPlaces;
     }
 
     @PostMapping("/order/user/ticket")

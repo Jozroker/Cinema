@@ -48,8 +48,6 @@ public interface SeanceRepository extends JpaRepository<Seance, Long> {
 
     @Transactional
     @Modifying
-//    @Query("delete from Seance s where s.movie in (select m from Movie m " +
-//            "where m.id = ?1)")
     void deleteByMovieId(Long id);
 
     @Transactional

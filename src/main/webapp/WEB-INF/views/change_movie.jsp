@@ -26,6 +26,8 @@
     <script>
         let contextPath = '<c:out value="${contextPath}"/>';
         let durationTime = '<c:out value="${movie.duration}"/>';
+        let hourChar = '<spring:message code="create.hour.character"/>'
+        let minuteChar = '<spring:message code="create.minute.character"/>'
     </script>
 </head>
 <body id="body">
@@ -41,12 +43,10 @@
         <div id="image">
             <img id="image-container" alt="movie poster" src="data:image/jpeg;base64,${movie.pictureString}">
             <div id="uploadLabel">
-                <label for="fileToUpload">IMG</label>
+                <label for="fileToUpload"><spring:message code="create.upload"/></label>
             </div>
             <input name="file" id="fileToUpload" type="file"/>
         </div>
-        <!-- todo custom button -->
-
     </div>
     <div id="form">
         <form class="${movie.id}" method="POST" action="${contextPath}/admin/change/movie" autocomplete="off">

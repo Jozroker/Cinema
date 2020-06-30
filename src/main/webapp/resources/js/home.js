@@ -48,7 +48,6 @@ $(document).ready(function () {
     let startItem = 1;
     let position = 0;
     let itemCount = $('.carousel li.items').length;
-    let leftpos = itemCount;
     let resetCount = itemCount;
 
     $('li.items').each(function (index) {

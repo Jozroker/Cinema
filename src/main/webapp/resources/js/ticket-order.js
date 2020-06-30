@@ -160,7 +160,7 @@ $(document).on('click', '#buy', function () {
     })
 
     if ($('.selected').length === 0) {
-        $('#alert').find('p').text('Please choose place');
+        $('#alert').find('p').text(chooseError);
         $('#alert').show();
         $('#alert').css('animation', 'show-alert 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both')
         $('input, textarea').prop('disabled', true);
