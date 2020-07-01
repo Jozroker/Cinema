@@ -8,6 +8,7 @@ import com.cinema.point.errors.ResourceNotFoundException;
 import com.cinema.point.repository.ActorRepository;
 import com.cinema.point.repository.MovieRepository;
 import com.cinema.point.service.MovieService;
+import com.cinema.point.service.SeanceService;
 import com.cinema.point.service.mapper.MovieMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,39 +22,47 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MovieServiceImpl implements MovieService {
 
-    MovieRepository movieRepository;
-    MovieMapper movieMapper;
-    ActorRepository actorRepository;
+    private final MovieRepository movieRepository;
 
-    public MovieServiceImpl(MovieRepository movieRepository, MovieMapper movieMapper, ActorRepository actorRepository) {
+    private final MovieMapper movieMapper;
+
+    private final ActorRepository actorRepository;
+
+    private final SeanceService seanceService;
+
+    public MovieServiceImpl(MovieRepository movieRepository,
+                            MovieMapper movieMapper,
+                            ActorRepository actorRepository,
+                            SeanceService seanceService) {
         this.movieRepository = movieRepository;
         this.movieMapper = movieMapper;
         this.actorRepository = actorRepository;
+        this.seanceService = seanceService;
     }
 
     @Override
     @Transactional
-    public MovieDTO create(MovieDTO movieDTO) {
+    public MovieDTO save(MovieDTO movieDTO) {
         log.debug("creating new movie {}", movieDTO);
         Movie movie = movieMapper.toEntity(movieDTO);
         Set<Actor> actors = movieDTO.getActorsIds().stream()
                 .map(id -> actorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Actor", id)))
                 .collect(Collectors.toSet());
         movie.setActors(actors);
+        if (movieDTO.getPicture().length == 0 && movieDTO.getId() != null) {
+            Movie currentMovie =
+                    movieRepository.findById(movieDTO.getId())
+                            .orElseThrow(() -> new ResourceNotFoundException("Movie", movieDTO.getId()));
+            movie.setPicture(currentMovie.getPicture());
+        }
         return movieMapper.toDTO(movieRepository.save(movie));
     }
 
     @Override
     public void deleteById(Long id) {
         log.debug("deleting movie by id {}", id);
+        seanceService.deleteByMovieId(id);
         movieRepository.deleteById(id);
-    }
-
-    @Override
-    public MovieDTO update(MovieDTO movieDTO) {
-        log.debug("updating movie {}", movieDTO);
-        Movie movie = movieMapper.toEntity(movieDTO);
-        return movieMapper.toDTO(movieRepository.save(movie));
     }
 
     @Override

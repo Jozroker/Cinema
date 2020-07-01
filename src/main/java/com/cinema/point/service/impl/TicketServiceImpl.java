@@ -17,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,14 +28,24 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TicketServiceImpl implements TicketService {
 
-    TicketRepository ticketRepository;
-    TicketMapper ticketMapper;
-    UserMapper userMapper;
-    UserService userService;
-    SeanceRepository seanceRepository;
-    HallRepository hallRepository;
+    private final TicketRepository ticketRepository;
 
-    public TicketServiceImpl(TicketRepository ticketRepository, TicketMapper ticketMapper, UserMapper userMapper, UserService userService, SeanceRepository seanceRepository, HallRepository hallRepository) {
+    private final TicketMapper ticketMapper;
+
+    private final UserMapper userMapper;
+
+    private final UserService userService;
+
+    private final SeanceRepository seanceRepository;
+
+    private final HallRepository hallRepository;
+
+    public TicketServiceImpl(TicketRepository ticketRepository,
+                             TicketMapper ticketMapper,
+                             UserMapper userMapper,
+                             UserService userService,
+                             SeanceRepository seanceRepository,
+                             HallRepository hallRepository) {
         this.ticketRepository = ticketRepository;
         this.ticketMapper = ticketMapper;
         this.userMapper = userMapper;
@@ -51,7 +63,8 @@ public class TicketServiceImpl implements TicketService {
                 .orElseThrow(() -> new ResourceNotFoundException("Seance",
                         ticketDTO.getSeanceId()));
         ticket.setSeance(seance);
-        return ticketMapper.toDTO(ticketRepository.save(ticket));
+        ticket = ticketRepository.save(ticket);
+        return ticketMapper.toDTO(ticket);
     }
 
     @Override
@@ -67,26 +80,27 @@ public class TicketServiceImpl implements TicketService {
                 .orElseThrow(() -> new ResourceNotFoundException("Seance", ticket.getSeance().getId()));
         ticket.setSeance(seance);
         user.addTicket(ticket);
-        userService.update(userMapper.toDTO(user));
+        userService.save(userMapper.toDTO(user));
         return ticketDTO;
-    }
-
-    @Override
-    @Transactional
-    public TicketDTO update(TicketDTO ticketDTO) {
-        log.debug("updating ticket {}", ticketDTO);
-        Ticket ticket = ticketMapper.toEntity(ticketDTO);
-        Seance seance = seanceRepository.findById(ticketDTO.getSeanceId())
-                .orElseThrow(() -> new ResourceNotFoundException("Seance",
-                        ticketDTO.getSeanceId()));
-        ticket.setSeance(seance);
-        return ticketMapper.toDTO(ticketRepository.save(ticket));
     }
 
     @Override
     public void deleteById(Long id) {
         log.debug("deleting ticket by id {}", id);
         ticketRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteByDate(Date date, Time time) {
+        log.debug("deleting ticket where date less then {} and time less then" +
+                " {}", date, time);
+        ticketRepository.deleteTicketsByDate(date, time);
+    }
+
+    @Override
+    public void deleteBySeanceId(Long id) {
+        log.debug("deleting ticket by seance id {}", id);
+        ticketRepository.deleteBySeanceId(id);
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.cinema.point.repository.UserRepository;
 import com.cinema.point.service.UserService;
 import com.cinema.point.service.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,20 +21,29 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-    UserRepository userRepository;
-    UserMapper userMapper;
-    TicketRepository ticketRepository;
+    private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, TicketRepository ticketRepository) {
+    private final UserMapper userMapper;
+
+    private final TicketRepository ticketRepository;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public UserServiceImpl(UserRepository userRepository,
+                           UserMapper userMapper,
+                           TicketRepository ticketRepository,
+                           BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.ticketRepository = ticketRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
-    public UserDTO create(RegisterUserDTO userDTO) {
+    public UserDTO save(RegisterUserDTO userDTO) {
         log.debug("creating new user {}", userDTO);
         User user = userMapper.toEntity(userDTO);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userMapper.toDTO(userRepository.save(user));
     }
 
@@ -44,15 +54,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO update(RegisterUserDTO userDTO) {
-        log.debug("updating user {}", userDTO);
-        User user = userMapper.toEntity(userDTO);
-        return userMapper.toDTO(userRepository.save(user));
-    }
-
-    @Override
     @Transactional
-    public UserDTO update(UserDTO userDTO) {
+    public UserDTO save(UserDTO userDTO) {
         log.debug("updating user {}", userDTO);
         User user = userMapper.toEntity(userDTO);
         List<Ticket> tickets =
@@ -85,14 +88,6 @@ public class UserServiceImpl implements UserService {
                 .orElse(null));
     }
 
-//    @Override
-//    public LoginUserDTO findByEmailLogin(String email) {
-//        log.debug("finding user by email {}: to user login dto", email);
-//        return userMapper.toDTO(userRepository.findByEmail(email)
-//                .orElseThrow(() -> new ResourceNotFoundException("User",
-//                        "(email) " + email)));
-//    }
-
     @Override
     public UserDTO findByPhone(String phone) {
         log.debug("finding user by phone {}", phone);
@@ -107,15 +102,17 @@ public class UserServiceImpl implements UserService {
                 .orElse(null));
     }
 
-//    @Override
-//    public LoginUserDTO findByUsernameLogin(String username) {
-//        return null;
-//    }
-
     @Override
     public List<UserDTO> findAll() {
         log.debug("finding all users");
         return userRepository.findAll().stream()
                 .map(userMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDTO findByEmailOrUsername(String emailOrUsername) {
+        log.debug("finding user by username or email {}", emailOrUsername);
+        return userMapper.toDTO(userRepository.findByEmailOrUsername(emailOrUsername)
+                .orElse(null));
     }
 }

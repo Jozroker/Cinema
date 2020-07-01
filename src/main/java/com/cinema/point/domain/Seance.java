@@ -9,7 +9,10 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 @Entity
@@ -44,11 +47,24 @@ public class Seance {
     @JoinColumn(name = "hall_id", nullable = false)
     private Hall hall;
 
-    @ElementCollection(targetClass = Day.class)
+    @ElementCollection(targetClass = Day.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Day> day = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
+
+    //todo move this to DTO level
+    public String beginTimeToString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm", Locale.US);
+        LocalTime time = movieBeginTime.toLocalTime();
+        return formatter.format(time);
+    }
+
+    public String endTimeToString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm", Locale.US);
+        LocalTime time = movieEndTime.toLocalTime();
+        return formatter.format(time);
+    }
 }

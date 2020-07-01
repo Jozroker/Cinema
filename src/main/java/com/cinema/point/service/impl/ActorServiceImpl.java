@@ -16,8 +16,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ActorServiceImpl implements ActorService {
 
-    ActorRepository actorRepository;
-    ActorMapper actorMapper;
+    private final ActorRepository actorRepository;
+
+    private final ActorMapper actorMapper;
 
     public ActorServiceImpl(ActorRepository actorRepository, ActorMapper actorMapper) {
         this.actorRepository = actorRepository;

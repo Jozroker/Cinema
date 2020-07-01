@@ -12,81 +12,10 @@
 <html>
 <head>
     <title>Error</title>
-    <style>
-        /*#home-button {*/
-        /*    border-color: #303235;*/
-        /*}*/
-
-        /*#home-button:hover {*/
-        /*    background-color: #303235;*/
-        /*}*/
-
-        #home {
-            text-decoration: none;
-            color: #303235;
-            padding: 2% 15% 2% 15%;
-            border: 1px solid #303235;
-            border-radius: 5px;
-        }
-
-        #home:hover {
-            background-color: #303235;
-            color: #9A9DA0;
-        }
-
-        .text-center {
-            margin-top: 10%;
-        }
-
-        /*#home:hover {*/
-        /*    color: #9A9DA0;*/
-        /*}*/
-
-        /*.home:hover {*/
-        /*    background-color: #303235;*/
-        /*    color: #9A9DA0;*/
-        /*}*/
-
-        #main {
-            background-color: #303235;
-        }
-
-        body {
-            margin-top: 150px;
-            /*background-color: #8B8C82;*/
-        }
-
-        .container {
-            margin-top: 50px;
-        }
-
-        .error-main {
-            /*background-color: #4E5053;*/
-            background-color: #9A9DA0;
-            box-shadow: 0px 0px 15px 15px #9A9DA0;
-        }
-
-        .error-main h1 {
-            font-weight: bold;
-            color: #303235;
-            font-size: 200px;
-            text-shadow: 2px 4px 5px #000000;
-        }
-
-        .error-main h6 {
-            font-size: 30px;
-            color: #303235;
-        }
-
-        .error-main p {
-            color: #303235;
-            font-size: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="${contextPath}/resources/css/not-found.css">
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
-<%--<jsp:include page="header.jsp"/>--%>
 <body id="main">
 <div class="container">
     <div class="row text-center">
@@ -96,16 +25,13 @@
                     <h1 class="m-0">404</h1>
                     <c:choose>
                         <c:when test="${message == null}">
-                            <h6>Page not found</h6>
+                            <h6><spring:message code="state.page.not.found"/></h6>
                         </c:when>
                         <c:otherwise>
-                            <h6>Resource not found</h6>
+                            <h6><spring:message code="state.resource.not.found"/></h6>
                         </c:otherwise>
                     </c:choose>
                     <p>${message}</p>
-                    <%--                    <button id="home-button" class="btn home" type="submit">--%>
-                    <%--                        <a id="home" class="home" href="${contextPath}/home"><spring:message code="navbar.home"/></a>--%>
-                    <%--                    </button>--%>
                     <a id="home" href="${contextPath}/home"><spring:message code="navbar.home"/></a>
                 </div>
             </div>

@@ -2,43 +2,63 @@ package com.cinema.point.dto;
 
 import com.cinema.point.domain.Role;
 import lombok.Data;
+import org.apache.tomcat.util.codec.binary.Base64;
 
+import javax.imageio.ImageIO;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 @Data
 public class RegisterUserDTO {
 
     private Long id;
 
-    @NotEmpty(message = "username value is required")
+    @NotEmpty(message = "{state.required.field}")
     private String username;
 
-    @Pattern(regexp = "\\D*", message = "first name cannot contain numbers")
+    @Pattern(regexp = "\\D*", message = "{state.cannot.contain.number}")
     private String firstName;
 
-    @Pattern(regexp = "\\D*", message = "first name cannot contain numbers")
+    @Pattern(regexp = "\\D*", message = "{state.cannot.contain.number}")
     private String lastName;
 
-    @NotEmpty(message = "email value is required")
-    @Email(message = "invalid mail value")
+    @NotEmpty(message = "{state.required.field}")
+    @Email(message = "{state.email.invalid}")
     private String email;
 
-    @NotEmpty(message = "phone value is required")
-    @Pattern(regexp = "^\\d+$", message = "phone cannot contain letters")
-    @Size(min = 10, max = 10, message = "invalid phone value")
     private String phone;
 
-    @NotEmpty(message = "password value is required")
+    @NotEmpty(message = "{state.required.field}")
     private String password;
 
-    @NotEmpty(message = "confirm password value is required")
+    @NotEmpty(message = "{state.required.field}")
     private String confirmPassword;
 
     private Role role = Role.USER;
 
-    private byte[] picture;
+    private String pictureString = getByteImage();
+
+    private String getByteImage() {
+        String base64Image = null;
+        try {
+            BufferedImage bufferedImage = ImageIO.read(new File("F" +
+                    ":\\PC_Educate\\Programming\\java\\cinema\\src\\main" +
+                    "\\webapp\\resources\\image\\default-avatar.jpg"));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "jpg", baos);
+            baos.flush();
+            byte[] imageInByte = baos.toByteArray();
+            baos.close();
+            base64Image = Base64.encodeBase64String(imageInByte);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return base64Image;
+
+    }
 
 }

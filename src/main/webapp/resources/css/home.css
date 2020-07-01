@@ -1,5 +1,117 @@
+body {
+    overflow-x: hidden;
+}
+
 #table {
     background: #595C5F;
+}
+
+#schedule table {
+    border-collapse: unset;
+    border-spacing: 0 5px;
+}
+
+#schedule {
+    margin-left: 5%;
+    margin-right: 30%;
+}
+
+.movie {
+    width: 30%;
+}
+
+#title th {
+    background-color: #16181B;
+    color: #28a745;
+    border: 0;
+}
+
+.first {
+    border-radius: 10px 0 0 10px;
+    text-align: center;
+    width: 10%;
+}
+
+.last {
+    border-radius: 0 10px 10px 0;
+}
+
+.spacing {
+    margin-top: 5px;
+}
+
+#schedule tbody th, #schedule tbody td {
+    background-color: #343A40;
+    color: #9A9DA0;
+    border: 0;
+}
+
+.section {
+    height: 300px;
+}
+
+.buy-button {
+    height: 50px;
+    margin-bottom: 20px;
+}
+
+.day, .badge {
+    cursor: pointer;
+    position: relative;
+    z-index: 1000;
+}
+
+.active {
+    color: #28A745;
+}
+
+.days span {
+    text-decoration: none;
+    z-index: 50;
+}
+
+.days span:hover {
+    color: #28A745;
+}
+
+.pill {
+    border: 0;
+    display: block;
+    border-radius: 10px;
+    margin-left: auto;
+    width: 90%;
+    height: 1.4em;
+    text-align: center;
+    background-color: #28A745;
+    color: whitesmoke;
+}
+
+.column {
+    margin-right: 20px;
+}
+
+.pill:hover {
+    text-decoration: none;
+    background-color: #257434;
+    color: #cdcdcd;
+}
+
+#buy {
+    margin: auto;
+    width: 10%;
+    height: 80%;
+    background-color: #28A745;
+    color: whitesmoke;
+    border: 0;
+    border-radius: 20px;
+    font-size: 125%;
+    z-index: 1;
+    outline: none;
+}
+
+#buy:hover {
+    background-color: #257434;
+    color: #cdcdcd;
 }
 
 #triangle-right {
@@ -11,19 +123,21 @@
     border-bottom: 30px solid transparent;
     position: absolute;
     top: 30%;
-    left: 27%;
+    left: 34%;
 }
 
 #triangle-right:hover {
     border-top: 32px solid transparent;
     border-bottom: 32px solid transparent;
     border-left: 21px solid #28A745;
+    cursor: pointer;
 }
 
 #triangle-left:hover {
     border-top: 32px solid transparent;
     border-bottom: 32px solid transparent;
     border-right: 21px solid #28A745;
+    cursor: pointer;
 }
 
 #triangle-left {
@@ -35,15 +149,14 @@
     border-bottom: 30px solid transparent;
     position: absolute;
     top: 30%;
-    right: 27%;
+    right: 34%;
 }
 
 section {
-    width: 40em;
+    width: 100%;
     height: 25em;
     margin: 0 auto;
     position: relative;
-    right: 2.5%;
 }
 
 section li {
@@ -55,6 +168,10 @@ section li {
     -moz-transition: all .3s ease-in-out;
     transition: all .3s ease-in-out;
     overflow: hidden;
+}
+
+section img {
+    width: 100%;
 }
 
 section li p {
@@ -72,7 +189,6 @@ section li p {
 .main-pos {
     margin-left: 2em !important;
     z-index: 3000;
-    /*background-image: url('https://dl.dropbox.com/u/32649907/imgs/shadow.png');*/
 }
 
 .left-pos {
@@ -106,4 +222,13 @@ section span {
     margin: 0 auto;
     left: 17em;
     top: 20em;
+}
+
+#content {
+    padding-top: 5%;
+}
+
+.carousel {
+    position: relative;
+    left: -2.6em;
 }

@@ -8,6 +8,7 @@ import com.cinema.point.repository.HallRepository;
 import com.cinema.point.repository.MovieRepository;
 import com.cinema.point.repository.SeanceRepository;
 import com.cinema.point.service.SeanceService;
+import com.cinema.point.service.TicketService;
 import com.cinema.point.service.mapper.SeanceMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,21 +23,31 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SeanceServiceImpl implements SeanceService {
 
-    SeanceRepository seanceRepository;
-    HallRepository hallRepository;
-    MovieRepository movieRepository;
-    SeanceMapper seanceMapper;
+    private final SeanceRepository seanceRepository;
 
-    public SeanceServiceImpl(SeanceRepository seanceRepository, HallRepository hallRepository, MovieRepository movieRepository, SeanceMapper seanceMapper) {
+    private final HallRepository hallRepository;
+
+    private final MovieRepository movieRepository;
+
+    private final SeanceMapper seanceMapper;
+
+    private final TicketService ticketService;
+
+    public SeanceServiceImpl(SeanceRepository seanceRepository,
+                             HallRepository hallRepository,
+                             MovieRepository movieRepository,
+                             SeanceMapper seanceMapper,
+                             TicketService ticketService) {
         this.seanceRepository = seanceRepository;
         this.hallRepository = hallRepository;
         this.movieRepository = movieRepository;
         this.seanceMapper = seanceMapper;
+        this.ticketService = ticketService;
     }
 
     @Override
     @Transactional
-    public SeanceCreationDTO create(SeanceCreationDTO seanceDTO) {
+    public SeanceCreationDTO save(SeanceCreationDTO seanceDTO) {
         log.debug("creating new seance {}", seanceDTO);
         Seance seance = seanceMapper.toEntity(seanceDTO);
         Hall hall = hallRepository.findById(seanceDTO.getHallId())
@@ -51,25 +62,18 @@ public class SeanceServiceImpl implements SeanceService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        log.debug("deleting seance by id {}", id);
-        seanceRepository.deleteById(id);
+    public SeanceCreationDTO findCreationById(Long id) {
+        log.debug("finding seance creation by id {}", id);
+        return seanceMapper.toCreationDTO(seanceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Seance", id)));
     }
 
     @Override
-    @Transactional
-    public SeanceDTO update(SeanceCreationDTO seanceDTO) {
-        log.debug("updating seance {}", seanceDTO);
-        Seance seance = seanceMapper.toEntity(seanceDTO);
-        Hall hall = hallRepository.findById(seanceDTO.getHallId())
-                .orElseThrow(() -> new ResourceNotFoundException("Hall",
-                        seanceDTO.getHallId()));
-        Movie movie = movieRepository.findById(seanceDTO.getMovieId())
-                .orElseThrow(() -> new ResourceNotFoundException("Movie",
-                        seanceDTO.getMovieId()));
-        seance.setHall(hall);
-        seance.setMovie(movie);
-        return seanceMapper.toDTO(seanceRepository.save(seance));
+    public void deleteById(Long id) {
+        log.debug("deleting seance by id {}", id);
+        ticketService.findBySeanceId(id).forEach(ticket -> ticketService.deleteById(ticket.getId()));
+        deleteDays(id);
+        seanceRepository.deleteById(id);
     }
 
     @Override
@@ -101,17 +105,24 @@ public class SeanceServiceImpl implements SeanceService {
     }
 
     @Override
-    public SeanceDTO findByTimeLineInSeance(Time time) {
-        log.debug("finding seance by time {}", time);
-        return seanceMapper.toDTO(seanceRepository.findByTimeLineInSeance(time)
-                .orElseThrow(() -> new ResourceNotFoundException("Seance",
-                        "(time) " + time)));
+    public List<SeanceCreationDTO> findBySeanceDates(Date dateFrom, Date dateTo) {
+        log.debug("finding seances by date from {} and date to {}", dateFrom,
+                dateTo);
+        return seanceRepository.findBySeanceDates(dateFrom, dateTo).stream()
+                .map(seanceMapper::toCreationDTO).collect(Collectors.toList());
     }
 
     @Override
-    public List<SeanceDTO> findByHall(Hall hall) {
-        log.debug("finding seances by hall {}", hall);
-        return seanceRepository.findByHall(hall).stream()
+    public List<SeanceCreationDTO> findByTimeLineInSeance(Time time) {
+        log.debug("finding seance by time {}", time);
+        return seanceRepository.findByTimeLineInSeance(time).stream()
+                .map(seanceMapper::toCreationDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SeanceDTO> findByHallId(Long id) {
+        log.debug("finding seances by hall id {}", id);
+        return seanceRepository.findByHallId(id).stream()
                 .map(seanceMapper::toDTO).collect(Collectors.toList());
     }
 
@@ -130,10 +141,17 @@ public class SeanceServiceImpl implements SeanceService {
     }
 
     @Override
-    public List<SeanceDTO> findByMovie(Movie movie) {
-        log.debug("finding seances by movie {}", movie);
-        return seanceRepository.findByMovie(movie).stream()
+    public List<SeanceDTO> findByMovieId(Long id) {
+        log.debug("finding seances by movie id {}", id);
+        return seanceRepository.findByMovieId(id).stream()
                 .map(seanceMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SeanceCreationDTO> findCreationByMovieId(Long id) {
+        log.debug("finding seances by movie id {}", id);
+        return seanceRepository.findByMovieId(id).stream()
+                .map(seanceMapper::toCreationDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -148,5 +166,28 @@ public class SeanceServiceImpl implements SeanceService {
         log.debug("finding seances by date between {}", date);
         return seanceRepository.findByDateBetween(date).stream()
                 .map(seanceMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SeanceCreationDTO> findCreationByDateBetween(Date date) {
+        log.debug("finding seances creation by date between {}", date);
+        return seanceRepository.findByDateBetween(date).stream()
+                .map(seanceMapper::toCreationDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteByMovieId(Long id) {
+        log.debug("deleting seances by movie id {}", id);
+        seanceRepository.findByMovieId(id).forEach(seance -> {
+            deleteDays(seance.getId());
+            ticketService.deleteBySeanceId(seance.getId());
+        });
+        seanceRepository.deleteByMovieId(id);
+    }
+
+    @Override
+    public void deleteDays(Long id) {
+        log.debug("deleting values from seance_day table by seance id {}", id);
+        seanceRepository.deleteDays(id);
     }
 }

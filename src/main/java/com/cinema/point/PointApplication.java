@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 @SpringBootApplication
-//@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 @EnableGlobalMethodSecurity(
 		prePostEnabled = true,
 		securedEnabled = true,

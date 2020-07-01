@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ApplicationExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public String handle(ResourceNotFoundException exception, Model model) {
+    public String handleResource(ResourceNotFoundException exception,
+                                 Model model) {
         model.addAttribute("message", exception.getMessage());
         log.error("resource not found", exception);
         return "not_found";

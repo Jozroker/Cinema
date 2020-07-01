@@ -14,33 +14,34 @@ public class UserDTO {
 
     private Long id;
 
-    @NotEmpty(message = "username value is required")
+    @NotEmpty(message = "{username value is required}")
     private String username;
 
-    @NotEmpty(message = "first name value is required")
-    @Pattern(regexp = "\\D*")
+    @NotEmpty(message = "{first name value is required}")
+    @Pattern(regexp = "\\D*", message = "{state.cannot.contain.number}")
     private String firstName;
 
-    @NotEmpty(message = "last name value  is required")
-    @Pattern(regexp = "\\D*")
+    @NotEmpty(message = "{last name value  is required}")
+    @Pattern(regexp = "\\D*", message = "{state.cannot.contain.number}")
     private String lastName;
 
-    @NotEmpty(message = "email value is required")
-    @Email(message = "invalid mail value")
+    @NotEmpty(message = "{email value is required}")
+    @Email(message = "{invalid mail value}")
     private String email;
 
-    @NotEmpty(message = "phone value is required")
-    @Size(min = 10, max = 10, message = "invalid phone value")
+    @NotEmpty(message = "{phone value is required")
+    @Size(min = 10, max = 10, message = "{invalid phone value}")
     private String phone;
 
-    @NotEmpty(message = "password value is required")
+    @NotEmpty(message = "{password value is required}")
     private String password;
 
-    @NotEmpty(message = "role is empty")
+    @NotEmpty(message = "{role is empty}")
     private Role role;
 
     private byte[] picture;
 
-    //    private List<TicketDTO> tickets;
+    private String pictureString;
+
     private List<Long> ticketsId;
 }

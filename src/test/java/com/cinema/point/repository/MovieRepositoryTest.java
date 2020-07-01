@@ -54,7 +54,6 @@ class MovieRepositoryTest {
     @Test
     @Order(6)
     void findByHallId() {
-        //todo create this test
 //        System.out.println(mr.findByHallId());
     }
 

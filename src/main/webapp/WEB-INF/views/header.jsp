@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%--<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>--%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,6 +19,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resources/js/header.js"></script>
+    <script>
+        let contextPath = '<c:out value="${contextPath}"/>';
+    </script>
 </head>
 <header>
     <a class="navbar-brand" href="${contextPath}/home">
@@ -34,25 +37,34 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-1">
                 <li class="nav-item">
-                    <a class="nav-link" href="${contextPath}/schedules">
-                        <span class="selected"><spring:message code="navbar.schedule"/></span>
+                    <a class="nav-link" href="${contextPath}/schedule">
+                        <span id="schedule-link"><spring:message code="navbar.schedule"/></span> <!-- selected -->
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="${contextPath}/movies">
-                        <span><spring:message code="navbar.movies"/></span>
+                        <span id="movies-link"><spring:message code="navbar.movies"/></span>
                     </a>
                 </li>
+                <sec:authorize access="hasAuthority('ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${contextPath}/admin/create/movie">
+                            <span id="create-movie-link"><spring:message code="create.movie"/></span>
+                        </a>
+                    </li>
+                </sec:authorize>
             </ul>
-            <form id="search-bar" class="form-inline mt-2 mt-md-0">
+            <form id="search-bar" class="form-inline mt-2 mt-md-0" autocomplete="off">
                 <spring:message code="navbar.search.button" var="search"/>
+                <!-- todo create page from search result -->
                 <input id="search-line" class="form-control mr-sm-2" type="text" placeholder="${search}"
-                       aria-label="Search">
+                       aria-label="Search" autocomplete="false">
+                <ul class="list-group" id="movies"></ul>
                 <button id="search-button" class="btn btn-outline-success my-2 my-sm-0" type="submit">
                     ${search}
                 </button>
             </form>
-            <ul class="navbar-nav ml-auto">
+            <ul id="right" class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link lang" href="?language=en">EN</a>
                 </li>
@@ -63,33 +75,36 @@
                     <a class="nav-link lang" href="?language=ua">UA</a>
                 </li>
                 <li id="sign-in">
-                    <c:choose>
-                    <c:when test="${user.id == null}">
+                    <sec:authorize access="isAuthenticated()">
+                        <sec:authentication var="user" property="principal"/>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="user"
+                       data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">${user.username}</a>
+                    <ul id="user-dropdown" class="dropdown-menu" aria-labelledby="dropdown1">
+                        <a class="link" href="${contextPath}/cabinet">
+                            <li class="dropdown-item">
+                                <spring:message code="cabinet.default"/>
+                            </li>
+                        </a>
+                        <a class="link" href="${contextPath}/cabinet#tickets-point">
+                            <li class="dropdown-item">
+                                <spring:message code="cabinet.tickets"/>
+                            </li>
+                        </a>
+                        <a class="link" href="${contextPath}/logout">
+                            <li id="logout" class="dropdown-item">
+                                <spring:message code="navbar.signout"/>
+                            </li>
+                        </a>
+                    </ul>
+                </li>
+                </sec:authorize>
+                <sec:authorize access="!isAuthenticated()">
                     <button id="sign-in-button" class="btn btn-outline-success my-2 my-sm-0" type="button">
                         <spring:message code="navbar.signin"/>
                     </button>
-                    </c:when>
-                    <c:otherwise>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="user-dropdown"
-                       data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">${user.username}</a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                        <li class="dropdown-item" href="${contextPath}/user/${user.id}">
-                            <a><spring:message code="cabinet.default"/></a>
-                        </li>
-                        <!-- todo check this link -->
-                        <li class="dropdown-item" href="${contextPath}/user/${user.id}#tickets">
-                            <a><spring:message code="cabinet.tickets"/></a>
-                        </li>
-
-                        <li id="logout" class="dropdown-item" href="${contextPath}/logout">
-                            <a><spring:message code="navbar.signout"/></a>
-                        </li>
-                    </ul>
-                </li>
-                </c:otherwise>
-                </c:choose>
+                </sec:authorize>
                 </li>
             </ul>
         </div>

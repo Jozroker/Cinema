@@ -6,6 +6,9 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 @Data
 public class SeanceDTO {
@@ -22,6 +25,11 @@ public class SeanceDTO {
     @NotEmpty(message = "hall isn't selected")
     private Long hallId;
 
-//    private MovieDTO movie;
-private Long movieId;
+    private Long movieId;
+
+    public String timeToString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm", Locale.US);
+        LocalTime time = movieBeginTime.toLocalTime();
+        return formatter.format(time);
+    }
 }

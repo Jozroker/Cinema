@@ -1,0 +1,117 @@
+@import url(https://fonts.googleapis.com/css?family=Arvo);
+
+body {
+    background: url(https://subtlepatterns.com/patterns/broken_noise.png);
+    font-family: Arvo;
+}
+
+#box #image {
+    width: 100%;
+    border-radius: 20px;
+    border-bottom: 1px solid rgba(51, 51, 51, 0.3);
+}
+
+#box {
+    margin: 0px auto;
+    background: #FFF9EE url(https://subtlepatterns.com/patterns/lightpaperfibers.png);
+    color: #333;
+    text-transform: uppercase;
+    padding: 8px;
+    width: 460px;
+    font-weight: bold;
+    text-shadow: 0px 1px 0px #fff;
+    font-family: "arvo";
+    font-size: 11px;
+    border-left: 1px dashed rgba(51, 51, 51, 0.5);
+    -webkit-filter: drop-shadow(0 5px 18px #000);
+}
+
+#space {
+    height: 100px;
+}
+
+#box .inner {
+    border: 2px dashed rgba(51, 51, 51, 0.5);
+    min-height: 100px;
+    padding: 8px;
+
+}
+
+#box .inner h1 {
+    padding: 5px 0px;
+    margin: 0 0 10px 0;
+    font-size: 24px;
+    border-bottom: 1px solid rgba(51, 51, 51, 0.3);
+    text-align: center;
+}
+
+#box .info {
+    width: 100%;
+    margin-top: 5px;
+}
+
+#box .info .wp {
+    float: left;
+    padding: 5px;
+    width: 83px;
+    text-align: center;
+}
+
+#box .info .wp-2 {
+    float: left;
+    padding: 5px;
+    width: 166px;
+    text-align: center;
+}
+
+#box .info .wp-3 {
+    float: left;
+    padding: 5px;
+    width: 249px;
+    text-align: center;
+}
+
+#box .info .wp h2 {
+    margin: 8px;
+}
+
+#box .total {
+    border-top: 1px solid rgba(51, 51, 51, 0.3);
+}
+
+#box .clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+#box .total h2 {
+    padding-left: 2%;
+    margin: 10px 0px;
+    font-size: 20px;
+}
+
+#box .total p {
+    float: right;
+    margin: 0px;
+    margin-right: 15px;
+}
+
+#box a.buy {
+    color: #fff;
+    text-align: center;
+    font-size: 25px;
+    text-decoration: none;
+    display: block;
+    width: 200px;
+    margin: 0px auto;
+    margin-top: 50px;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#barcode {
+    width: 100%;
+}

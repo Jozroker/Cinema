@@ -14,4 +14,6 @@ public class SimpleMovieDTO {
 
     @NotEmpty(message = "picture is required")
     private byte[] picture;
+
+    private String pictureString;
 }

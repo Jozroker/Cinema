@@ -13,32 +13,17 @@
 <html>
 <head>
     <title>Login page</title>
-    <style>
-        .invalid {
-            border: 1px solid red;
-            color: red;
-            padding: 15px 20px;
-            border-radius: 25px;
-            background: rgba(255, 255, 255, .1);
-            width: 100%;
-        }
-
-        .invalid-text {
-            color: red;
-            margin-left: 5%;
-        }
-    </style>
     <link rel="stylesheet" href="${contextPath}/resources/css/authorization.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="${contextPath}/resources/js/authorisation.js"></script>
 </head>
 <jsp:include page="header.jsp"/>
 <body>
-<div id="header">
-
-</div>
-
 <div class="login-wrap">
-
-
     <div class="login-html">
         <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab"><spring:message code="login.default"/></label>
         <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"><spring:message code="registration"/></label>
@@ -47,13 +32,13 @@
                 <div class="sign-in-htm">
                     <div class="group">
                         <spring:message code="login.email_or_name" var="loginEmailOrUsername"/>
-                        <springForm:input path="usernameOrEmail" class="input" placeholder="${loginEmailOrUsername}" cssErrorClass="invalid"/>
-                        <springForm:errors path="usernameOrEmail" cssClass="invalid-text" element="div"/>
+                        <springForm:input path="username" class="input" placeholder="${loginEmailOrUsername}" cssErrorClass="invalid"/>
+                        <springForm:errors path="username" cssClass="invalid-text" element="div"/>
                     </div>
                     <div class="group">
                         <spring:message code="login.password" var="loginPassword"/>
-                        <springForm:password path="pass" class="input" placeholder="${loginPassword}" cssErrorClass="invalid"/>
-                        <springForm:errors path="pass" cssClass="invalid-text" element="div"/>
+                        <springForm:password path="password" class="input" placeholder="${loginPassword}" cssErrorClass="invalid"/>
+                        <springForm:errors path="password" cssClass="invalid-text" element="div"/>
                     </div>
                     <div class="group">
                     </div>
@@ -63,7 +48,6 @@
                     </div>
                 </div>
             </springForm:form>
-
 
             <springForm:form method="POST" modelAttribute="registerUser" action="/register">
                 <div class="sign-up-htm">
@@ -109,52 +93,8 @@
                 </div>
             </springForm:form>
 
-
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(
-        function () {
-            $('.selected').removeClass('selected');
-
-            $('#tab-1').on('change', function () {
-                if (window.location.pathname === '/login') {
-                    $('.login-html').animate({height: '50%'})
-                } else {
-                    $('.login-html').animate({height: '43%'})
-                }
-            });
-
-            $('#tab-1').on('change', function () {
-                if (window.location.pathname === '/authorization') {
-                    $('.login-html').animate({height: '43%'})
-                }
-            });
-
-            $('#tab-2').on('change', function () {
-                if (window.location.pathname === '/register') {
-                    $('.login-html').animate({height: '100%'})
-                } else {
-                    $('.login-html').animate({height: '80%'})
-                }
-            })
-
-            let url = new URL(window.location)
-
-            if (url.searchParams.get('type') === 'registration') {
-                $('#tab-2').click()
-            }
-
-            if (window.location.pathname === '/register') {
-                $('#tab-2').click()
-            }
-
-            if (window.location.pathname === '/login') {
-                $('.login-html').animate({height: '50%'})
-            }
-        }
-    )
-</script>
 </body>
 </html>

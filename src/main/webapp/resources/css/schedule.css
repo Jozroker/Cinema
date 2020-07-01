@@ -1,0 +1,171 @@
+#calendar {
+    position: absolute;
+    float: left;
+    display: none;
+}
+
+#body {
+    background-color: #595C5F;
+}
+
+#header {
+    height: 150px;
+}
+
+#container {
+    margin: 0 50px 0 50px;
+}
+
+.empty {
+    height: 500px;
+}
+
+#movie-input {
+    width: 180px;
+}
+
+#hall-input, #price-input {
+    width: 50px;
+}
+
+.day {
+    margin: 0;
+}
+
+.active-day {
+    color: #28A745;
+}
+
+.input {
+    pointer-events: none;
+}
+
+#table {
+    background: #595C5F;
+}
+
+#schedule table {
+    border-collapse: unset;
+    border-spacing: 0 5px;
+}
+
+#schedule, #create-seance {
+    margin-left: 5%;
+    margin-right: 35%;
+}
+
+.checkbox {
+    width: 50px;
+}
+
+.movie {
+    width: 40%;
+}
+
+#create-seance .spacing {
+    background-color: #343A40;
+    padding: 5px;
+}
+
+input {
+    border: 0;
+}
+
+#creating-table-body input, #schedule input {
+    padding: 5px;
+    border-radius: 20px;
+    background-color: rgba(32, 124, 52, .7);
+    color: #9A9DA0;
+}
+
+#create-seance .first {
+    width: 330px;
+}
+
+#movie-input {
+    width: 90%;
+}
+
+#create-seance .last {
+    width: 110px;
+}
+
+#create, #confirm, #change {
+    width: 100px;
+    padding: 5px;
+    border: 0;
+    border-radius: 20px;
+    background-color: #28A745;
+    outline: 0;
+}
+
+#createBtn {
+    width: 110px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+#create:hover, #confirm:hover, #change:hover {
+    background-color: #257434;
+    color: #9A9DA0;
+}
+
+.title th {
+    background-color: #16181B;
+    color: #28a745;
+    border: 0 !important;
+}
+
+.first {
+    border-radius: 10px 0 0 10px;
+    text-align: center;
+    width: 10%;
+}
+
+#price-input {
+    width: 60px;
+}
+
+.last {
+    border-radius: 0 10px 10px 0;
+    width: 15%;
+}
+
+.spacing {
+    margin-top: 5px;
+}
+
+#schedule tbody th, #schedule tbody td {
+    background-color: #343A40;
+    color: #9A9DA0;
+    border: 0 !important;
+}
+
+.column {
+    margin-right: 20px;
+}
+
+.invalid {
+    border: 1px solid red;
+}
+
+#create-container {
+    display: none;
+}
+
+#date {
+    margin-left: 5%;
+    margin-bottom: 15px;
+}
+
+#date input {
+    padding: 10px;
+    border: 0;
+    border-radius: 30px;
+    background-color: rgba(32, 124, 52, .7);
+    color: #9A9DA0;
+}
+
+.text {
+    font-size: 20px;
+}
