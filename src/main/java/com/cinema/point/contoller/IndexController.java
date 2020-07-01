@@ -13,7 +13,6 @@ public class IndexController implements ErrorController {
 
     @RequestMapping(value = PATH)
     public String error(Model model) {
-        model.addAttribute("message", null);
         return "not_found";
     }
 
