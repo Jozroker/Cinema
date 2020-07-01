@@ -154,23 +154,20 @@ public class MovieController {
             movieService.findByName(movieDTO.getName());
         } catch (ResourceNotFoundException e) {
             movieService.save(movieDTO);
-            return "redirect:/movies";
         }
         return "exists";
     }
 
     @PostMapping(value = "/admin/change/movie", consumes =
             {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public String changeMovie(@RequestBody String movie) throws JsonProcessingException {
+    public void changeMovie(@RequestBody String movie) throws JsonProcessingException {
         MovieDTO movieDTO = new ObjectMapper().readValue(movie, MovieDTO.class);
         movieService.save(movieDTO);
-        return "movies";
     }
 
     @PostMapping("/admin/delete/movie")
-    public String deleteMovie(@RequestParam Long movieId) {
+    public void deleteMovie(@RequestParam Long movieId) {
         movieService.deleteById(movieId);
-        return "movies";
     }
 
     @GetMapping("/movie/hall/reserved")

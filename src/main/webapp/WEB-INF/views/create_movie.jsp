@@ -47,8 +47,6 @@
             </div>
             <input name="file" id="fileToUpload" type="file"/>
         </div>
-        <!-- todo custom button -->
-
     </div>
     <div id="form">
         <form method="POST" action="${contextPath}/admin/create/movie" autocomplete="off">
