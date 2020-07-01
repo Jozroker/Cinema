@@ -1,0 +1,55 @@
+#home {
+    text-decoration: none;
+    color: #303235;
+    padding: 2% 15% 2% 15%;
+    border: 1px solid #303235;
+    border-radius: 5px;
+}
+
+#home:hover {
+    background-color: #303235;
+    color: #9A9DA0;
+}
+
+a, span, div {
+    user-input: none;
+    user-select: none;
+}
+
+.text-center {
+    margin-top: 10%;
+}
+
+#main {
+    background-color: #303235;
+}
+
+body {
+    margin-top: 150px;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.error-main {
+    background-color: #9A9DA0;
+    box-shadow: 0 0 15px 15px #9A9DA0;
+}
+
+.error-main h1 {
+    font-weight: bold;
+    color: #303235;
+    font-size: 200px;
+    text-shadow: 2px 4px 5px #000000;
+}
+
+.error-main h6 {
+    font-size: 30px;
+    color: #303235;
+}
+
+.error-main p {
+    color: #303235;
+    font-size: 20px;
+}
