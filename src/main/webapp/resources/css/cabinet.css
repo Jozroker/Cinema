@@ -1,0 +1,81 @@
+#body {
+    background-color: #595C5F;
+    color: #212529;
+    height: 100%;
+}
+
+#container {
+    padding-top: 7%;
+    margin-left: 5%;
+}
+
+.empty {
+    height: 200px;
+}
+
+.col p {
+    font-size: 20px;
+}
+
+#container img {
+    float: left;
+    border-radius: 50%;
+    -webkit-shape-outside: circle();
+    shape-outside: circle();
+    margin-right: 20px;
+    width: 200px;
+}
+
+#tickets {
+    margin-top: 3%;
+}
+
+#tickets .table {
+    margin-top: 1%;
+    margin-left: 3%;
+    width: 50%;
+}
+
+#tickets h4 {
+    margin-left: 5%;
+}
+
+#tickets th, #tickets td {
+    border: 0;
+    color: #9A9DA0;
+}
+
+#tickets .first {
+    border-radius: 20px 0 0 0;
+}
+
+#tickets .last {
+    border-radius: 0 20px 0 0;
+}
+
+#tickets .first-td {
+    border-radius: 0 0 0 20px;
+}
+
+#tickets .last-td {
+    border-radius: 0 0 20px 0;
+}
+
+#tickets td {
+    background-color: #343A40;
+}
+
+#tickets th {
+    border: 0;
+    background-color: #16181B;
+}
+
+#tickets .movie {
+    width: 40%;
+}
+
+#tickets .table:hover {
+    width: 52%;
+    margin-left: 2%;
+}
+
