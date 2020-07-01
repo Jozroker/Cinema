@@ -189,9 +189,8 @@ public class SeanceController {
     }
 
     @PostMapping("/admin/delete/seance")
-    public String deleteSeance(@RequestParam Long seanceId) {
+    public void deleteSeance(@RequestParam Long seanceId) {
         seanceService.deleteById(seanceId);
-        return "schedule";
     }
 
     //todo move this to service level
